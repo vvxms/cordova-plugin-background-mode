@@ -32,7 +32,7 @@ import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.PowerManager;
+//import android.os.PowerManager;
 
 import org.json.JSONObject;
 
@@ -116,13 +116,13 @@ public class ForegroundService extends Service {
             startForeground(NOTIFICATION_ID, makeNotification());
         }
 
-        PowerManager pm = (PowerManager)
+        /*PowerManager pm = (PowerManager)
                 getSystemService(POWER_SERVICE);
 
         wakeLock = pm.newWakeLock(
                 PARTIAL_WAKE_LOCK, "BackgroundMode");
 
-        wakeLock.acquire();
+        wakeLock.acquire();*/
     }
 
     /**
@@ -132,10 +132,10 @@ public class ForegroundService extends Service {
         stopForeground(true);
         getNotificationManager().cancel(NOTIFICATION_ID);
 
-        if (wakeLock != null) {
+        /*if (wakeLock != null) {
             wakeLock.release();
             wakeLock = null;
-        }
+        }*/
     }
 
     /**
