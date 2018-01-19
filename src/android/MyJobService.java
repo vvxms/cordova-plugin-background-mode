@@ -1,4 +1,4 @@
-package in.lucasdup.bringtofront;
+package de.appplant.cordova.plugin.background;
 
 import android.app.ActivityManager;
 import android.app.job.JobParameters;
@@ -38,7 +38,7 @@ public class MyJobService extends JobService {
 //             Toast.makeText(MyJobService.this,"MyJobService》》》》》》啥都没干", Toast.LENGTH_SHORT).show();
             
             //启动一个服务
-            if(!isServiceWork(getApplicationContext(),"in.lucasdup.bringtofront.VVServer")){
+            if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.VVServer")){
                Intent i = new Intent(getApplicationContext(), VVServer.class);
                startService(i);
                 Log.e("MyJobService", "开始启动服务");
