@@ -23,6 +23,19 @@ var exec    = require('cordova/exec'),
     channel = require('cordova/channel');
 
 
+
+// exports.restartForceBackgroundService = function() {
+//     if (this.isEnabled())
+//         return;
+
+//     var fn = function() {
+//             exports._isEnabled = true;
+//             exports.fireEvent('enable');
+//         };
+
+//     cordova.exec(fn, null, 'BackgroundMode', 'restartForceBackgroundService', []);
+// };
+
 /*************
  * INTERFACE *
  *************/
