@@ -1,4 +1,4 @@
-package in.lucasdup.bringtofront;
+package de.appplant.cordova.plugin.background;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
