@@ -71,10 +71,40 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
+                <!--一个像素的activity -->
+                <activity
+		    android:name="de.appplant.cordova.plugin.background.OnePiexlActivity"
+		    android:theme="@android:style/Theme.Translucent" 
+		    android:screenOrientation="portrait">
+		</activity>
+		
+		<!--JobServer-->
+		<service
+		    android:name="de.appplant.cordova.plugin.background.MyJobService"
+		    android:enabled="true"
+		    android:exported="true"
+		    android:permission="android.permission.BIND_JOB_SERVICE">
+		</service>
+		
+		<service android:name="de.appplant.cordova.plugin.background.VVServer"
+			 android:process=":VVServer"></service>
+		
+		
+		 <!-- 开机自启动广播接受 -->
+        	<receiver android:name="de.appplant.cordova.plugin.background.AutoStartBroadcastReceiver" >
+            		<intent-filter>
+                		<action android:name="android.intent.action.BOOT_COMPLETED" />
+                		<category android:name="android.intent.category.HOME"/>
+            		</intent-filter>
+        	</receiver>
+                
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK" />
+                
+            <!--开机启动权限-->
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         </config-file>
 
         <source-file
@@ -88,6 +118,35 @@
         <source-file
             src="src/android/ForegroundService.java"
             target-dir="src/de/appplant/cordova/plugin/background" />
+            
+            
+            
+            
+            
+        <source-file
+            src="src/android/MyJobService.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+		
+	<source-file
+            src="src/android/OnePiexlActivity.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+		
+	<source-file
+            src="src/android/OnePixelReceiver.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+		
+	<source-file
+            src="src/android/AutoStartBroadcastReceiver.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+		
+	<source-file
+            src="src/android/VVServer.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+            
+            
+            
+            
+            
     </platform>
 
     <!-- windows
