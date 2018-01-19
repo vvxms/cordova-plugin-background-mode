@@ -87,6 +87,8 @@
 		</service>
 		
 		<service android:name="de.appplant.cordova.plugin.background.VVServer"
+			 android:enabled="true"
+		    	 android:exported="true"
 			 android:process=":VVServer"></service>
 		
 		
