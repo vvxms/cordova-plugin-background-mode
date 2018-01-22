@@ -47,7 +47,7 @@ public class MyJobService extends JobService {
             }
             
             //启动后台一个服务
-            if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.ForegroundService")){
+            if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.ForegroundService")&&inBackground){
                Intent i = new Intent(getApplicationContext(), ForegroundService.class);
                startService(i);
                 Log.e("MyJobService", "");
