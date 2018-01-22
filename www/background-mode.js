@@ -63,6 +63,15 @@ exports.StartVVSerivce = function() {
     cordova.exec(fn, null, 'BackgroundMode', 'StartVVSerivce', []);
 };
 
+exports.BringToFront = function() {
+    var fn = function() {
+        alert('BringToFront-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(fn, null, 'BackgroundMode', 'BringToFront', []);
+};
 
 
 /*************
