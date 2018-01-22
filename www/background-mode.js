@@ -29,12 +29,38 @@ exports.StartJobServer = function() {
         return;
 
     var fn = function() {
-        alert('v');
+        alert('v0');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
 
     cordova.exec(fn, null, 'BackgroundMode', 'StartJobServer', []);
+};
+
+exports.StartOnPixelActivityWhenScreenOff = function() {
+    if (this.isEnabled())
+        return;
+
+    var fn = function() {
+        alert('v1');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(fn, null, 'BackgroundMode', 'StartOnPixelActivityWhenScreenOff', []);
+};
+
+exports.StartVVSerivce = function() {
+    if (this.isEnabled())
+        return;
+
+    var fn = function() {
+        alert('v2');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(fn, null, 'BackgroundMode', 'StartVVSerivce', []);
 };
 
 /*************
