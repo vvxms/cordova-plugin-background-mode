@@ -24,11 +24,8 @@ var exec    = require('cordova/exec'),
 
 
 exports.GotoAutoStartManagerPage = function() {
-    if (this.isEnabled())
-        return;
-
     var fn = function() {
-        alert('v2');
+        alert('GotoAutoStartManagerPage-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
@@ -37,11 +34,8 @@ exports.GotoAutoStartManagerPage = function() {
 };
 
 exports.StartJobServer = function() {
-    if (this.isEnabled())
-        return;
-
     var fn = function() {
-        alert('v0');
+        alert('StartJobServer-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
@@ -50,11 +44,8 @@ exports.StartJobServer = function() {
 };
 
 exports.StartOnPixelActivityWhenScreenOff = function() {
-    if (this.isEnabled())
-        return;
-
     var fn = function() {
-        alert('v1');
+        alert('StartOnPixelActivityWhenScreenOff-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
@@ -63,11 +54,8 @@ exports.StartOnPixelActivityWhenScreenOff = function() {
 };
 
 exports.StartVVSerivce = function() {
-    if (this.isEnabled())
-        return;
-
     var fn = function() {
-        alert('v2');
+        alert('StartVVSerivce-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
