@@ -42,6 +42,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.util.Log;
 
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
