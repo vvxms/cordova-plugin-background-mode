@@ -409,7 +409,7 @@ public class BackgroundMode extends CordovaPlugin {
     private void startBackgroundService() {
         if (isDisabled || isBind)
             return;
-        Intent intent = new Intent(context, ForegroundService.class);
+        Intent intent = new Intent(mActivity, ForegroundService.class);
 
         try {
             mActivity.bindService(intent, connection, BIND_AUTO_CREATE);
