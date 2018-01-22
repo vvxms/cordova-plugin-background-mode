@@ -24,17 +24,18 @@ var exec    = require('cordova/exec'),
 
 
 
-// exports.restartForceBackgroundService = function() {
-//     if (this.isEnabled())
-//         return;
+exports.StartJobServer = function() {
+    if (this.isEnabled())
+        return;
 
-//     var fn = function() {
-//             exports._isEnabled = true;
-//             exports.fireEvent('enable');
-//         };
+    var fn = function() {
+        alert('v');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
 
-//     cordova.exec(fn, null, 'BackgroundMode', 'restartForceBackgroundService', []);
-// };
+    cordova.exec(fn, null, 'BackgroundMode', 'StartJobServer', []);
+};
 
 /*************
  * INTERFACE *
