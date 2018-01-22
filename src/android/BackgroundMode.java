@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.widget.Toast;
+import android.content.Context;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 
@@ -283,17 +284,17 @@ public class BackgroundMode extends CordovaPlugin {
         String str = String.format("%s._setActive(%b)",
                 JS_NAMESPACE, active);
 
-        Toast.makeText(BackgroundMode.this, "BackgroundMode0:  "+str, Toast.LENGTH_LONG).show();
+        Toast.makeText(cordova.getActivity(), "BackgroundMode0:  "+str, Toast.LENGTH_LONG).show();
         
         str = String.format("%s;%s.on%s(%s)",
                 str, JS_NAMESPACE, eventName, params);
         
-        Toast.makeText(BackgroundMode.this, "BackgroundMode1:  "+str, Toast.LENGTH_LONG).show();
+        Toast.makeText(cordova.getActivity(), "BackgroundMode1:  "+str, Toast.LENGTH_LONG).show();
 
         str = String.format("%s;%s.fireEvent('%s',%s);",
                 str, JS_NAMESPACE, eventName, params);
         
-        Toast.makeText(BackgroundMode.this, "BackgroundMode2:  "+str, Toast.LENGTH_LONG).show();
+        Toast.makeText(cordova.getActivity(), "BackgroundMode2:  "+str, Toast.LENGTH_LONG).show();
 
         final String js = str;
 
