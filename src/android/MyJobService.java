@@ -57,7 +57,7 @@ public class MyJobService extends JobService {
         } catch (Exception e) {
            
         }
-        isBind = true;
+        BackgroundMode.isBind = true;
     }    
     
     private Handler handler = new Handler(new Handler.Callback() {
