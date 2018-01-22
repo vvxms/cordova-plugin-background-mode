@@ -80,7 +80,7 @@ public class BackgroundMode extends CordovaPlugin {
     private ForegroundService service;
 
     // Used to (un)bind the service to with the activity
-    private static final ServiceConnection connection = new ServiceConnection() {
+    private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ForegroundBinder binder = (ForegroundBinder) service;
