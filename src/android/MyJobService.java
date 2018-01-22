@@ -80,8 +80,10 @@ public class MyJobService extends JobService {
             if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.VVServer")){
                Intent i = new Intent(getApplicationContext(), VVServer.class);
                startService(i);
-                Log.e("MyJobService", "开始启动服务");
+               Log.e("MyJobService", "开始启动服务");
+               Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
             }else {
+                Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
                 Log.e("MyJobService", "服务已启动");
             }
             
