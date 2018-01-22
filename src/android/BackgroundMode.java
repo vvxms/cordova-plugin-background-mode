@@ -68,10 +68,10 @@ public class BackgroundMode extends CordovaPlugin {
     public static boolean inBackground = false;
 
     // Flag indicates if the plugin is enabled or disabled
-    private boolean isDisabled = true;
+    private static boolean isDisabled = true;
 
     // Flag indicates if the service is bind
-    private boolean isBind = false;
+    private static boolean isBind = false;
 
     // Default settings for the notification
     private static JSONObject defaultSettings = new JSONObject();
@@ -80,7 +80,7 @@ public class BackgroundMode extends CordovaPlugin {
     private ForegroundService service;
 
     // Used to (un)bind the service to with the activity
-    private final ServiceConnection connection = new ServiceConnection() {
+    private static final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ForegroundBinder binder = (ForegroundBinder) service;
@@ -413,10 +413,9 @@ public class BackgroundMode extends CordovaPlugin {
 
         try {
             mActivity.bindService(intent, connection, BIND_AUTO_CREATE);
-            fireEvent(Event.ACTIVATE, null);
             mActivity.startService(intent);
         } catch (Exception e) {
-            fireEvent(Event.FAILURE, String.format("'%s'", e.getMessage()));
+           
         }
         isBind = true;
     }    
