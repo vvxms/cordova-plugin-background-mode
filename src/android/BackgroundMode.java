@@ -33,6 +33,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.apache.cordova.CordovaArgs;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPreferences;
+
 import android.widget.Toast;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -88,9 +93,22 @@ public class BackgroundMode extends CordovaPlugin {
         }
     };
 
+    
+    private static Activity mActivity;
+    private static CordovaWebView mWebView;
+  
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        this.mActivity = cordova.getActivity();
+        this.mWebView = webView;
+        Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
+    }
+    
     @Override
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
+        Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
     }
 
     // codebeat:disable[ABC]
@@ -418,17 +436,17 @@ public class BackgroundMode extends CordovaPlugin {
         String str = String.format("%s._setActive(%b)",
                 JS_NAMESPACE, active);
 
-        Toast.makeText(cordova.getActivity(), "BackgroundMode0:  "+str, Toast.LENGTH_LONG).show();
+        //Toast.makeText(cordova.getActivity(), "BackgroundMode0:  "+str, Toast.LENGTH_LONG).show();
         
         str = String.format("%s;%s.on%s(%s)",
                 str, JS_NAMESPACE, eventName, params);
         
-        Toast.makeText(cordova.getActivity(), "BackgroundMode1:  "+str, Toast.LENGTH_LONG).show();
+        //Toast.makeText(cordova.getActivity(), "BackgroundMode1:  "+str, Toast.LENGTH_LONG).show();
 
         str = String.format("%s;%s.fireEvent('%s',%s);",
                 str, JS_NAMESPACE, eventName, params);
         
-        Toast.makeText(cordova.getActivity(), "BackgroundMode2:  "+str, Toast.LENGTH_LONG).show();
+        //Toast.makeText(cordova.getActivity(), "BackgroundMode2:  "+str, Toast.LENGTH_LONG).show();
 
         final String js = str;
 
