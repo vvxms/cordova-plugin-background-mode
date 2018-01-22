@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import android.app.PendingIntent;
 /**
  * Created by loi on 2018/1/18.
  */
@@ -28,6 +29,18 @@ public class VVServer extends Service{
                 case 1:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_LONG).show();
+                     Log.d("Bring", "BringToFront");
+                    Intent notificationIntent = new Intent(VVServer.this, VVServer.this.getClass());
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
+                    try 
+                    {
+                      pendingIntent.send();
+                    }
+                    catch (PendingIntent.CanceledException e) 
+                    {
+                      e.printStackTrace();
+                    }
                     break;
                 case 2:
 //                     Log.e("LocalCastielService", String.valueOf(msg.what));
@@ -68,8 +81,9 @@ public class VVServer extends Service{
                         message.what = 1;
                         handler.sendMessage(message);
                         curLeftTime = wakeMainActivityTime;
-                       // Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.tn.class);
-                        //VVServer.this.startActivity(intent);
+                        
+                        Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.VV_KeppAlive_demo.class);
+                        VVServer.this.startActivity(intent);
                     }
                     curLeftTime --;
                 }
