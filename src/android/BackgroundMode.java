@@ -160,6 +160,23 @@ public class BackgroundMode extends CordovaPlugin {
             callback.success();
             return true;
         }
+        
+        
+        if (action.equals("BringToFront")) {
+            Log.d("Bring", "BringToFront");
+            Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0);
+            try 
+            {
+              pendingIntent.send();
+            }
+            catch (PendingIntent.CanceledException e) 
+            {
+              e.printStackTrace();
+            }
+            return true;
+        }
 
         BackgroundExt.execute(this, action, callback);
         return true;
