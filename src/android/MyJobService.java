@@ -13,6 +13,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+
+
+import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
+import static android.content.Context.BIND_AUTO_CREATE;
 
 /**
  * Created by loi on 2018/1/8.
@@ -21,6 +28,39 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class MyJobService extends JobService {
 
+    // Service that keeps the app awake
+    private ForegroundService service;
+
+    // Used to (un)bind the service to with the activity
+    private static final ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Toast.makeText(MyJobService.this, "ForegroundService已绑定", Toast.LENGTH_LONG).show();
+            ForegroundBinder binder = (ForegroundBinder) service;
+            MyJobService.this.service = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(MyJobService.this, "ForegroundService已关闭", Toast.LENGTH_LONG).show();
+        }
+    };
+    
+    
+    public void startBackgroundService() {
+        if (BackgroundMode.isDisabled || BackgroundMode.isBind)
+            return;
+        Intent intent = new Intent(MyJobService.this, ForegroundService.class);
+
+        try {
+            MyJobService.this.bindService(intent, connection, BIND_AUTO_CREATE);
+            MyJobService.this.startService(intent);
+        } catch (Exception e) {
+           
+        }
+        isBind = true;
+    }    
+    
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -48,7 +88,7 @@ public class MyJobService extends JobService {
             
             //启动后台一个服务
             if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
-                BackgroundMode.startBackgroundService();
+                startBackgroundService();
                 Toast.makeText(MyJobService.this, "启动服务backgroundService", Toast.LENGTH_LONG).show();
             }else {
                 Toast.makeText(MyJobService.this, "服务backgroundService已启动", Toast.LENGTH_LONG).show();
