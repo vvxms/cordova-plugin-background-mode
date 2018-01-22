@@ -65,7 +65,7 @@ public class BackgroundMode extends CordovaPlugin {
             "cordova.plugins.backgroundMode";
 
     // Flag indicates if the app is in background or foreground
-    private boolean inBackground = false;
+    public static boolean inBackground = false;
 
     // Flag indicates if the plugin is enabled or disabled
     private boolean isDisabled = true;
