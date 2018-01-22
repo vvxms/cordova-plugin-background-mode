@@ -23,6 +23,18 @@ var exec    = require('cordova/exec'),
     channel = require('cordova/channel');
 
 
+exports.GotoAutoStartManagerPage = function() {
+    if (this.isEnabled())
+        return;
+
+    var fn = function() {
+        alert('v2');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(fn, null, 'BackgroundMode', 'GotoAutoStartManagerPage', []);
+};
 
 exports.StartJobServer = function() {
     if (this.isEnabled())
@@ -62,6 +74,8 @@ exports.StartVVSerivce = function() {
 
     cordova.exec(fn, null, 'BackgroundMode', 'StartVVSerivce', []);
 };
+
+
 
 /*************
  * INTERFACE *
