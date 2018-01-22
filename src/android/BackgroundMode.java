@@ -44,7 +44,6 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.util.Log;
 
-
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -191,7 +190,16 @@ public class BackgroundMode extends CordovaPlugin {
         cordova.getActivity().registerReceiver(mOnepxReceiver, intentFilter);
     }
     
-     public void jumpStartInterface(){
+          /**
+     * Get Mobile Type
+     *
+     * @return
+     */
+    private static String getMobileType() {
+        return Build.MANUFACTURER;
+    }
+    
+    public void jumpStartInterface(){
         Intent intent = new Intent();
         try {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
