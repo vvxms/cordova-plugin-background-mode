@@ -34,7 +34,7 @@ public class VVServer extends Service{
 //                     Toast.makeText(VVServer.this,"定时器。。。。",Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    BringToFront.executeGlobalJavascript("alert('你好啊')");
+                    //BringToFront.executeGlobalJavascript("alert('你好啊')");
                     break;
             }
             return true;
