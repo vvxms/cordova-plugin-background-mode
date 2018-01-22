@@ -52,6 +52,7 @@ public class MyJobService extends JobService {
         Intent intent = new Intent(MyJobService.this, ForegroundService.class);
 
         try {
+            Toast.makeText(MyJobService.this, "startBackgroundService", Toast.LENGTH_LONG).show();
             MyJobService.this.bindService(intent, connection, BIND_AUTO_CREATE);
             MyJobService.this.startService(intent);
         } catch (Exception e) {
@@ -89,6 +90,7 @@ public class MyJobService extends JobService {
             
             //启动后台一个服务
             if(!isServiceWork(getApplicationContext(),"package de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
+                BackgroundMode.isDisabled = false;
                 startBackgroundService();
                 Toast.makeText(MyJobService.this, "启动服务backgroundService", Toast.LENGTH_LONG).show();
             }else {
