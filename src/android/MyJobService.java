@@ -27,12 +27,11 @@ import static android.content.Context.BIND_AUTO_CREATE;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class MyJobService extends JobService {
-
     // Service that keeps the app awake
     private ForegroundService service;
 
     // Used to (un)bind the service to with the activity
-    private static final ServiceConnection connection = new ServiceConnection() {
+    private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Toast.makeText(MyJobService.this, "ForegroundService已绑定", Toast.LENGTH_LONG).show();
