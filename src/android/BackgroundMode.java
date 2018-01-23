@@ -196,7 +196,12 @@ public class BackgroundMode extends CordovaPlugin {
             }
             return true;
         }
-
+          
+        if (action.equals("BringToFrontBySetTime")) {
+            VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
+            return true;
+        }
+        
         BackgroundExt.execute(this, action, callback);
         return true;
     }
