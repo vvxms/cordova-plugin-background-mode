@@ -44,7 +44,7 @@ public class VVServer extends Service{
                     break;
                 case 2:
                     //Log.e("LocalCastielService", String.valueOf(msg.what));
-                    //Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     //BringToFront.executeGlobalJavascript("alert('你好啊')");
