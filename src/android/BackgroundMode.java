@@ -96,19 +96,24 @@ public class BackgroundMode extends CordovaPlugin {
     
     public static Activity mActivity;
     public static CordovaWebView mWebView;
+    private boolean isOpenDebugModel = false;
   
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.mActivity = cordova.getActivity();
         this.mWebView = webView;
-        Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
+        
     }
     
     @Override
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
-        Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
+        
     }
 
     // codebeat:disable[ABC]
@@ -197,10 +202,12 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
           
-        Toast.makeText(cordova.getActivity(), "当前的action: "+action, Toast.LENGTH_LONG).show();
+        
+       
         if (action.equals("BringToFrontBySetTime")) {
             VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
-            Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
+            if(isOpenDebugModel)
+                Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
             return true;
         }
         
@@ -322,10 +329,10 @@ public class BackgroundMode extends CordovaPlugin {
      */
     @Override
     public void onDestroy() {
-        Toast.makeText(cordova.getActivity(), "onDestroy-start" + VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(cordova.getActivity(), "onDestroy" + VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
         stopService();
         super.onDestroy();
-        Toast.makeText(cordova.getActivity(), "onDestroy-end " + VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
         //android.os.Process.killProcess(android.os.Process.myPid()); //为什么要这样写？
     }
 
@@ -446,17 +453,14 @@ public class BackgroundMode extends CordovaPlugin {
         String str = String.format("%s._setActive(%b)",
                 JS_NAMESPACE, active);
 
-        //Toast.makeText(cordova.getActivity(), "BackgroundMode0:  "+str, Toast.LENGTH_LONG).show();
         
         str = String.format("%s;%s.on%s(%s)",
                 str, JS_NAMESPACE, eventName, params);
         
-        //Toast.makeText(cordova.getActivity(), "BackgroundMode1:  "+str, Toast.LENGTH_LONG).show();
 
         str = String.format("%s;%s.fireEvent('%s',%s);",
                 str, JS_NAMESPACE, eventName, params);
         
-        //Toast.makeText(cordova.getActivity(), "BackgroundMode2:  "+str, Toast.LENGTH_LONG).show();
 
         final String js = str;
 
