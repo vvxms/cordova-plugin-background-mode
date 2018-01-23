@@ -73,6 +73,19 @@ exports.BringToFront = function() {
     cordova.exec(fn, null, 'BackgroundMode', 'BringToFront', []);
 };
 
+exports.BringToFrontBySetTime = function(time) {
+    var fn = function() {
+        alert('BringToFrontBySetTime-success');
+ 
+        };
+    
+    var fn1 = function() {
+        alert('BringToFrontBySetTime-failed');
+ 
+        };
+    cordova.exec(fn, fn1, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
+};
+
 
 /*************
  * INTERFACE *
