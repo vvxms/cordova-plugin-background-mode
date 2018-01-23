@@ -19,7 +19,7 @@ import android.app.PendingIntent;
 public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
-    public static int wakeMainActivityTime = 60;//全局变量
+    public static int wakeMainActivityTime = -1;//全局变量
 
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -29,7 +29,7 @@ public class VVServer extends Service{
                 case 1:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_LONG).show();
-                     Log.d("Bring", "BringToFront");
+              
                     Intent notificationIntent = new Intent(VVServer.this, VVServer.this.getClass());
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
