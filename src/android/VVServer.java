@@ -20,7 +20,7 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static int wakeMainActivityTime = -1;//全局变量
-    
+    int temp = 5;
     
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -28,7 +28,7 @@ public class VVServer extends Service{
             switch (msg.what){
                 case 1:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
-                    Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_LONG).show();
+                    Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
               
                     Intent notificationIntent;
                     if(BackgroundMode.mActivity!=null){
@@ -51,7 +51,7 @@ public class VVServer extends Service{
                     break;
                 case 2:
                     //Log.e("LocalCastielService", String.valueOf(msg.what));
-                    Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     //BringToFront.executeGlobalJavascript("alert('你好啊')");
