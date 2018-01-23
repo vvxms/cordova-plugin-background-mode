@@ -105,7 +105,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
         
      
         if(timer == null){
