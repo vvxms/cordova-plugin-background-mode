@@ -86,6 +86,9 @@ exports.BringToFrontBySetTime = function(time) {
     cordova.exec(null, null, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
 };
 
+exports.moveTaskToBack = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'moveTaskToBack', []);
+};
 
 /*************
  * INTERFACE *
