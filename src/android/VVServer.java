@@ -32,10 +32,10 @@ public class VVServer extends Service{
               
                     Intent notificationIntent;
                     if(BackgroundMode.mActivity!=null){
-                        Intent notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
+                        notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
                         Toast.makeText(VVServer.this,"测试: "+BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
                     }else{
-                        Intent notificationIntent = new Intent(VVServer.this, BackgroundMode.class);
+                        notificationIntent = new Intent(VVServer.this, BackgroundMode.class);
                     }
                     
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
