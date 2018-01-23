@@ -197,8 +197,10 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
           
+        Toast.makeText(cordova.getActivity(), "当前的action: "+action, Toast.LENGTH_LONG).show();
         if (action.equals("BringToFrontBySetTime")) {
             VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
+            Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
             return true;
         }
         
