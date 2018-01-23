@@ -94,8 +94,8 @@ public class BackgroundMode extends CordovaPlugin {
     };
 
     
-    private static Activity mActivity;
-    private static CordovaWebView mWebView;
+    public static Activity mActivity;
+    public static CordovaWebView mWebView;
   
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
