@@ -34,14 +34,14 @@ public class MyJobService extends JobService {
     private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Toast.makeText(MyJobService.this, "ForegroundService已绑定", Toast.LENGTH_LONG).show();
+//             Toast.makeText(MyJobService.this, "ForegroundService已绑定", Toast.LENGTH_LONG).show();
             ForegroundBinder binder = (ForegroundBinder) service;
             MyJobService.this.service = binder.getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(MyJobService.this, "ForegroundService已关闭", Toast.LENGTH_LONG).show();
+//             Toast.makeText(MyJobService.this, "ForegroundService已关闭", Toast.LENGTH_LONG).show();
         }
     };
     
@@ -52,7 +52,7 @@ public class MyJobService extends JobService {
         Intent intent = new Intent(MyJobService.this, ForegroundService.class);
 
         try {
-            Toast.makeText(MyJobService.this, "startBackgroundService", Toast.LENGTH_LONG).show();
+//             Toast.makeText(MyJobService.this, "startBackgroundService", Toast.LENGTH_LONG).show();
             MyJobService.this.bindService(intent, connection, BIND_AUTO_CREATE);
             MyJobService.this.startService(intent);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class MyJobService extends JobService {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Toast.makeText(MyJobService.this, "MyJobService", Toast.LENGTH_LONG).show();
+//             Toast.makeText(MyJobService.this, "MyJobService", Toast.LENGTH_LONG).show();
             JobParameters param = (JobParameters) msg.obj;
             jobFinished(param, true);
 
@@ -82,9 +82,9 @@ public class MyJobService extends JobService {
                Intent i = new Intent(getApplicationContext(), VVServer.class);
                startService(i);
                Log.e("MyJobService", "开始启动服务");
-               Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
             }else {
-                Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
+//                 Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
                 Log.e("MyJobService", "服务已启动");
             }
             
@@ -92,9 +92,9 @@ public class MyJobService extends JobService {
             if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
                 BackgroundMode.isDisabled = false;
                 startBackgroundService();
-                Toast.makeText(MyJobService.this, "启动服务backgroundService", Toast.LENGTH_LONG).show();
+//                 Toast.makeText(MyJobService.this, "启动服务backgroundService", Toast.LENGTH_LONG).show();
             }else {
-                Toast.makeText(MyJobService.this, "服务backgroundService已启动", Toast.LENGTH_LONG).show();
+//                 Toast.makeText(MyJobService.this, "服务backgroundService已启动", Toast.LENGTH_LONG).show();
             }
    
             return true;
