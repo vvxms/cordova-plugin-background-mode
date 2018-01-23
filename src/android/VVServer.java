@@ -20,7 +20,7 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static int wakeMainActivityTime = -1;//全局变量
-    int temp = 5;
+    private boolean isOpenDebugModel = false;
     
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -28,12 +28,14 @@ public class VVServer extends Service{
             switch (msg.what){
                 case 1:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
-                    Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
-              
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     Intent notificationIntent;
                     if(BackgroundMode.mActivity!=null){
                         notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
-                        Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
+                        if(isOpenDebugModel)
+                            Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
+                        
                     }else{
                         notificationIntent = new Intent(VVServer.this, BackgroundMode.class);
                     }
@@ -64,14 +66,16 @@ public class VVServer extends Service{
   @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Toast.makeText(VVServer.this,"VVServer-onBind",Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onBind",Toast.LENGTH_LONG).show();
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
-
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
+    
         if(timer == null){
             //curLeftTime = wakeMainActivityTime;
             timer = new Timer();
@@ -107,25 +111,27 @@ public class VVServer extends Service{
 
     @Override
     public void onDestroy() {
-        Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
+        
         super.onDestroy();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
-        
-     
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
+
         if(timer == null){
             //curLeftTime = wakeMainActivityTime;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Message message0 = new Message();
-                    message0.what = 2;
-                    handler.sendMessage(message0);
+//                     Message message0 = new Message();
+//                     message0.what = 2;
+//                     handler.sendMessage(message0);
 
                     if( wakeMainActivityTime == 0 )
                     {
@@ -133,10 +139,7 @@ public class VVServer extends Service{
                         message.what = 1;
                         handler.sendMessage(message);
                         //curLeftTime = wakeMainActivityTime;
-           
-//                          Message messages = new Message();
-//                          messages.what = 3;
-//                          handler.sendMessage(messages);
+          
                     }
                     if(wakeMainActivityTime>=0){
                         wakeMainActivityTime --;
