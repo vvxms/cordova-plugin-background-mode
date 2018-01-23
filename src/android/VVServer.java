@@ -63,10 +63,10 @@ public class VVServer extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
+        Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
 
         if(timer == null){
-            curLeftTime = wakeMainActivityTime;
+            //curLeftTime = wakeMainActivityTime;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -75,17 +75,17 @@ public class VVServer extends Service{
                     message0.what = 2;
                     handler.sendMessage(message0);
 
-                    if(curLeftTime<=0)
+                    if(wakeMainActivityTime == 0)
                     {
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
-                        curLeftTime = wakeMainActivityTime;
+                        //curLeftTime = wakeMainActivityTime;
                         
-                        Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.VV_KeppAlive_demo.class);
-                        VVServer.this.startActivity(intent);
+//                         Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.VV_KeppAlive_demo.class);
+//                         VVServer.this.startActivity(intent);
                     }
-                    curLeftTime --;
+                    wakeMainActivityTime --;
                 }
             },0,1000);
         }
@@ -109,7 +109,7 @@ public class VVServer extends Service{
         
      
         if(timer == null){
-            curLeftTime = wakeMainActivityTime;
+            //curLeftTime = wakeMainActivityTime;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -118,21 +118,18 @@ public class VVServer extends Service{
                     message0.what = 2;
                     handler.sendMessage(message0);
 
-                    if(curLeftTime<=0)
+                    if( wakeMainActivityTime == 0 )
                     {
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
-                        curLeftTime = wakeMainActivityTime;
-                        //Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.tn.class);
-                        //VVServer.this.startActivity(intent);
-                        
-                        
-                          Message messages = new Message();
-                          messages.what = 3;
-                          handler.sendMessage(messages);
+                        //curLeftTime = wakeMainActivityTime;
+           
+//                          Message messages = new Message();
+//                          messages.what = 3;
+//                          handler.sendMessage(messages);
                     }
-                    curLeftTime --;
+                    wakeMainActivityTime --;
                 }
             },0,1000);
         }
