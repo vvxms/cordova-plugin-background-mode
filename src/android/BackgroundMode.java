@@ -211,6 +211,11 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
+        if(action.equals("moveTaskToBack")){
+            moveTaskToBack(true);
+            return true;
+        }
+        
         BackgroundExt.execute(this, action, callback);
         return true;
     }
