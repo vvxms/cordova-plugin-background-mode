@@ -30,7 +30,12 @@ public class VVServer extends Service{
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_LONG).show();
               
-                    Intent notificationIntent = new Intent(VVServer.this, VVServer.this.getClass());
+                    if(BackgroundMode.mActivity!=null){
+                        Intent notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
+                    }else{
+                        Intent notificationIntent = new Intent(VVServer.this, BackgroundMode.class);
+                    }
+                    
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
