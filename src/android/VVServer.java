@@ -85,7 +85,9 @@ public class VVServer extends Service{
 //                         Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //                         VVServer.this.startActivity(intent);
                     }
-                    wakeMainActivityTime --;
+                    if(wakeMainActivityTime>=0){
+                        wakeMainActivityTime --;
+                    }
                 }
             },0,1000);
         }
@@ -129,7 +131,10 @@ public class VVServer extends Service{
 //                          messages.what = 3;
 //                          handler.sendMessage(messages);
                     }
-                    wakeMainActivityTime --;
+                    if(wakeMainActivityTime>=0){
+                        wakeMainActivityTime --;
+                    }
+                    
                 }
             },0,1000);
         }
