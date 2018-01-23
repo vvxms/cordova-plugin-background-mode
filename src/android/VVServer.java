@@ -30,6 +30,7 @@ public class VVServer extends Service{
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_LONG).show();
               
+                    Intent notificationIntent;
                     if(BackgroundMode.mActivity!=null){
                         Intent notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
                         Toast.makeText(VVServer.this,"测试: "+BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
