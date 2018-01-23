@@ -25,22 +25,22 @@ var exec    = require('cordova/exec'),
 
 exports.GotoAutoStartManagerPage = function() {
     var fn = function() {
-        alert('GotoAutoStartManagerPage-success');
+        //alert('GotoAutoStartManagerPage-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
 
-    cordova.exec(fn, null, 'BackgroundMode', 'GotoAutoStartManagerPage', []);
+    cordova.exec(null, null, 'BackgroundMode', 'GotoAutoStartManagerPage', []);
 };
 
 exports.StartJobServer = function() {
     var fn = function() {
-        alert('StartJobServer-success');
+        //alert('StartJobServer-success');
             //exports._isEnabled = true;
             //exports.fireEvent('enable');
         };
 
-    cordova.exec(fn, null, 'BackgroundMode', 'StartJobServer', []);
+    cordova.exec(null, null, 'BackgroundMode', 'StartJobServer', []);
 };
 
 exports.StartOnPixelActivityWhenScreenOff = function() {
@@ -50,7 +50,7 @@ exports.StartOnPixelActivityWhenScreenOff = function() {
             //exports.fireEvent('enable');
         };
 
-    cordova.exec(fn, null, 'BackgroundMode', 'StartOnPixelActivityWhenScreenOff', []);
+    cordova.exec(null, null, 'BackgroundMode', 'StartOnPixelActivityWhenScreenOff', []);
 };
 
 exports.StartVVSerivce = function() {
@@ -60,7 +60,7 @@ exports.StartVVSerivce = function() {
             //exports.fireEvent('enable');
         };
 
-    cordova.exec(fn, null, 'BackgroundMode', 'StartVVSerivce', []);
+    cordova.exec(null, null, 'BackgroundMode', 'StartVVSerivce', []);
 };
 
 exports.BringToFront = function() {
@@ -70,7 +70,7 @@ exports.BringToFront = function() {
             //exports.fireEvent('enable');
         };
 
-    cordova.exec(fn, null, 'BackgroundMode', 'BringToFront', []);
+    cordova.exec(null, null, 'BackgroundMode', 'BringToFront', []);
 };
 
 exports.BringToFrontBySetTime = function(time) {
@@ -83,7 +83,7 @@ exports.BringToFrontBySetTime = function(time) {
         alert('BringToFrontBySetTime-failed');
  
         };
-    cordova.exec(fn, fn1, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
+    cordova.exec(null, null, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
 };
 
 
