@@ -147,7 +147,7 @@ public class VVServer extends Service{
                     }
                     if(wakeMainActivityTime>=0){
                         
-                        if(wakeMainActivityTime/4 = 0){
+                        if(wakeMainActivityTime%4 = 0){
                             Message messages = new Message();
                             messages.what = 2;
                             handler.sendMessage(messages);
