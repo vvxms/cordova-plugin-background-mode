@@ -129,10 +129,6 @@ public class VVServer extends Service{
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-//                     Message message0 = new Message();
-//                     message0.what = 2;
-//                     handler.sendMessage(message0);
-
                     if( wakeMainActivityTime == 0 )
                     {
                         Message message = new Message();
