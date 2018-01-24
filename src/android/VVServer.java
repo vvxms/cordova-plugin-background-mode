@@ -21,6 +21,8 @@ public class VVServer extends Service{
     private int curLeftTime;
     public static int wakeMainActivityTime = 60;//全局变量
     private boolean isOpenDebugModel = false;
+    private static String classNameStr = "";
+    Class<?> mClass;
     
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -37,8 +39,10 @@ public class VVServer extends Service{
                             Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
                         
                     }else{
-                        notificationIntent = new Intent(VVServer.this, BackgroundMode.class);
+                        notificationIntent = new Intent(VVServer.this, mClass);
                     }
+                    
+                    Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString()+"****"+mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
                     
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
@@ -120,6 +124,10 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        
+        classNameStr = BackgroundMode.mActivity.getClass().getName();
+        mClass = BackgroundMode.mActivity.getClass();
+        
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
 
