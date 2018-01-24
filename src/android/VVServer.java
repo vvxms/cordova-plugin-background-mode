@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.app.PendingIntent;
+import android.content.SharedPreferences;
 /**
  * Created by loi on 2018/1/18.
  */
@@ -42,7 +43,7 @@ public class VVServer extends Service{
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }
                     
-                    Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString()+"****"+mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
                     
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
