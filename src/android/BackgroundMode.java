@@ -48,6 +48,7 @@ import android.provider.Settings;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.util.Log;
+import android.content.SharedPreferences;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 
@@ -206,6 +207,10 @@ public class BackgroundMode extends CordovaPlugin {
        
         if (action.equals("BringToFrontBySetTime")) {
             VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
+            //存数据：
+            SharedPreferences alermTime = this.getSharedPreferences("alermTime", 0);
+            alermTime.edit().putString("name", args.getString(0)).commit();
+            
             if(isOpenDebugModel)
                 Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
             return true;
