@@ -22,7 +22,7 @@ public class VVServer extends Service{
     private int curLeftTime;
     public static int wakeMainActivityTime = 60;//全局变量
     private boolean isOpenDebugModel = false;
-    private static String classNameStr = "";
+    private static String classNameStr = "com.phonegap.helloworld.VV_KeppAlive_demo";
     Class<?> mClass;
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -30,6 +30,7 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
+                    Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
@@ -40,10 +41,12 @@ public class VVServer extends Service{
                             Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
                         
                     }else{
-                        notificationIntent = new Intent(VVServer.this, mClass);
+                        Toast.makeText(VVServer.this,"activity没了",Toast.LENGTH_SHORT).show();
+                        notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+//                         notificationIntent = new Intent(VVServer.this, mClass);
                     }
                     
-                    Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
                     
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
@@ -78,7 +81,14 @@ public class VVServer extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(isOpenDebugModel)
+        
+        //读数据
+        SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
+        if(alermTime!=null && !alermTime.getString("time", "").equals("")){
+            wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
+        }
+        
+//         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
     
         if(timer == null){
@@ -116,7 +126,7 @@ public class VVServer extends Service{
 
     @Override
     public void onDestroy() {
-        if(isOpenDebugModel)
+//         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
         
         super.onDestroy();
@@ -126,8 +136,8 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
         
-        classNameStr = BackgroundMode.mActivity.getClass().getName();
-        mClass = BackgroundMode.mActivity.getClass();
+        //classNameStr = BackgroundMode.mActivity.getClass().getName();
+        //mClass = BackgroundMode.mActivity.getClass();
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
