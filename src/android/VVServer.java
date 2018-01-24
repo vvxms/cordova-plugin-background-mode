@@ -131,7 +131,10 @@ public class VVServer extends Service{
         
         //读数据
         SharedPreferences alermTime  = this.getSharedPreferences("alermTime ", 0);
-        wakeMainActivityTime = Integer.parseInt(userInfo.getString("time", ""));
+        if(userInfo!=null && !userInfo.getString("time", "").equals("")){
+            wakeMainActivityTime = Integer.parseInt(userInfo.getString("time", ""));
+        }
+       
         
 //         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
