@@ -19,7 +19,7 @@ import android.app.PendingIntent;
 public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
-    public static int wakeMainActivityTime = -1;//全局变量
+    public static int wakeMainActivityTime = 60;//全局变量
     private boolean isOpenDebugModel = false;
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -52,8 +52,8 @@ public class VVServer extends Service{
                     }
                     break;
                 case 2:
-                    //Log.e("LocalCastielService", String.valueOf(msg.what));
-                    //Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
+                    Log.e("LocalCastielService", String.valueOf(msg.what));
+                    Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     //BringToFront.executeGlobalJavascript("alert('你好啊')");
@@ -138,6 +138,12 @@ public class VVServer extends Service{
           
                     }
                     if(wakeMainActivityTime>=0){
+                        
+                        if(wakeMainActivityTime/4 = 0){
+                            Message messages = new Message();
+                            messages.what = 2;
+                            handler.sendMessage(messages);
+                        }
                         wakeMainActivityTime --;
                     }
                     
