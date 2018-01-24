@@ -209,7 +209,7 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
             //存数据：
             SharedPreferences alermTime = this.getSharedPreferences("alermTime", 0);
-            alermTime.edit().putString("name", args.getString(0)).commit();
+            alermTime.edit().putString("time", args.getString(0)).commit();
             
             if(isOpenDebugModel)
                 Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
