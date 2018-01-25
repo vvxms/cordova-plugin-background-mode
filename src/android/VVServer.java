@@ -28,7 +28,7 @@ import android.support.v4.app.NotificationCompat;
  */
 
 public class VVServer extends Service{
-    private String TAG  = "Service1";
+    private String TAG  = "VVServer";
     private final int PID = android.os.Process.myPid();
     private AssistServiceConnection mConnection;
     private Timer timer;
@@ -211,29 +211,29 @@ public class VVServer extends Service{
     private class AssistServiceConnection implements ServiceConnection {
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG, "Service1: onServiceDisconnected");
+            Log.d(TAG, "VVServer: onServiceDisconnected");
         }
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            Log.d(TAG, "Service1: onServiceConnected");
+            Log.d(TAG, "VVServer: onServiceConnected");
 
             // sdk >=18
             // 的，会在通知栏显示service正在运行，这里不要让用户感知，所以这里的实现方式是利用2个同进程的service，利用相同的notificationID，
             // 2个service分别startForeground，然后只在1个service里stopForeground，这样即可去掉通知栏的显示
             Service assistService = ((AssistService.LocalBinder) binder)
                     .getService();
-            Service1.this.startForeground(PID, getNotification());
+            VVServer.this.startForeground(PID, getNotification());
             assistService.startForeground(PID, getNotification());
             assistService.stopForeground(true);
 
-            Service1.this.unbindService(mConnection);
+            VVServer.this.unbindService(mConnection);
             mConnection = null;
         }
     }
 
     private Notification getNotification() {
-        Notification notification = new NotificationCompat.Builder(Service1.this)
+        Notification notification = new NotificationCompat.Builder(VVServer.this)
                 .setContentTitle("保活服务")
                 /**设置通知的内容**/
                 .setContentText("点击跳转到MainActivity")
@@ -247,7 +247,7 @@ public class VVServer extends Service{
                 .setOngoing(false)
                 /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                .setContentIntent(PendingIntent.getActivity(Service1.this, 2, new Intent(Service1.this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
+                .setContentIntent(PendingIntent.getActivity(VVServer.this, 2, new Intent(VVServer.this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
                 .build();
 
         return notification;
