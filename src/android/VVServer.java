@@ -14,6 +14,10 @@ import java.util.TimerTask;
 import android.app.PendingIntent;
 import android.content.SharedPreferences;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import android.app.Notification;
 import android.app.Service;
@@ -236,9 +240,9 @@ public class VVServer extends Service{
 
     private Notification getNotification() {
         Notification notification = new NotificationCompat.Builder(VVServer.this)
-                .setContentTitle("保活服务")
+                .setContentTitle("VV")
                 /**设置通知的内容**/
-                .setContentText("点击跳转到MainActivity")
+                .setContentText("点击跳转")
                 /**通知产生的时间，会在通知信息里显示**/
                 .setWhen(System.currentTimeMillis())
                 /**设置该通知优先级**/
@@ -253,5 +257,26 @@ public class VVServer extends Service{
                 .build();
 
         return notification;
+    }
+    
+    
+    /**
+     * 起始时间为2010-01-01 00:00:00
+     * 将获取当前时间并转换为时间戳
+     *
+     * @return 时间戳
+     */
+    public static int getCurrentTime2Stamp() {
+        Date startTime = null;
+        try {
+            startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (startTime != null) {
+            return (int) ((System.currentTimeMillis() - startTime.getTime()) / 1000);
+        }
+        return -1;
     }
 }
