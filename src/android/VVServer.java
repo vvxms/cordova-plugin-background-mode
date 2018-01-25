@@ -13,6 +13,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.app.PendingIntent;
 import android.content.SharedPreferences;
+
+
+import android.app.Notification;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+
 /**
  * Created by loi on 2018/1/18.
  */
@@ -135,7 +145,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        
+        setForeground();
         //classNameStr = BackgroundMode.mActivity.getClass().getName();
         //mClass = BackgroundMode.mActivity.getClass();
         
@@ -178,5 +188,65 @@ public class VVServer extends Service{
             },0,1000);
         }
 
+    }
+    
+      public void setForeground() {
+        // sdk < 18 , 直接调用startForeground即可,不会在通知栏创建通知
+        if (Build.VERSION.SDK_INT < 18) {
+            VVServer.this.startForeground(PID, getNotification());
+            return;
+        }
+
+        if (null == mConnection) {
+            mConnection = new AssistServiceConnection();
+        }
+
+        this.bindService(new Intent(VVServer.this, AssistService.class), mConnection,
+                Service.BIND_AUTO_CREATE);
+    }
+
+    private class AssistServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "Service1: onServiceDisconnected");
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            Log.d(TAG, "Service1: onServiceConnected");
+
+            // sdk >=18
+            // 的，会在通知栏显示service正在运行，这里不要让用户感知，所以这里的实现方式是利用2个同进程的service，利用相同的notificationID，
+            // 2个service分别startForeground，然后只在1个service里stopForeground，这样即可去掉通知栏的显示
+            Service assistService = ((AssistService.LocalBinder) binder)
+                    .getService();
+            Service1.this.startForeground(PID, getNotification());
+            assistService.startForeground(PID, getNotification());
+            assistService.stopForeground(true);
+
+            Service1.this.unbindService(mConnection);
+            mConnection = null;
+        }
+    }
+
+    private Notification getNotification() {
+        Notification notification = new NotificationCompat.Builder(Service1.this)
+                .setContentTitle("保活服务")
+                /**设置通知的内容**/
+                .setContentText("点击跳转到MainActivity")
+                /**通知产生的时间，会在通知信息里显示**/
+                .setWhen(System.currentTimeMillis())
+                /**设置该通知优先级**/
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                /**设置这个标志当用户单击面板就可以让通知将自动取消**/
+                .setAutoCancel(true)
+                /**设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)**/
+                .setOngoing(false)
+                /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .setContentIntent(PendingIntent.getActivity(Service1.this, 2, new Intent(Service1.this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
+                .build();
+
+        return notification;
     }
 }
