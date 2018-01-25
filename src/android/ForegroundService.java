@@ -58,6 +58,7 @@ public class ForegroundService extends Service {
     
     private String TAG  = "ForegroundService";
     private final int PID = android.os.Process.myPid();
+    private AssistServiceConnection mConnection;
     
     // Fixed ID for the 'foreground' notification
     public static final int NOTIFICATION_ID = -574543954;
