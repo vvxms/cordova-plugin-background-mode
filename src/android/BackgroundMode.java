@@ -206,7 +206,7 @@ public class BackgroundMode extends CordovaPlugin {
         
        
         if (action.equals("BringToFrontBySetTime")) {
-            VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
+//             int VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
             //存数据：
             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
             alermTime.edit().putString("time", args.getString(0)).commit();
