@@ -33,7 +33,7 @@ public class VVServer extends Service{
     private AssistServiceConnection mConnection;
     private Timer timer;
     private int curLeftTime;
-    public static int wakeMainActivityTime = 60;//全局变量
+    public static int wakeMainActivityTime = -1;//全局变量
     private boolean isOpenDebugModel = false;
     private static String classNameStr = "com.phonegap.helloworld.VV_KeppAlive_demo";
     Class<?> mClass;
