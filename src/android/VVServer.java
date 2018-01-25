@@ -48,20 +48,22 @@ public class VVServer extends Service{
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     Intent notificationIntent;
-                    if(BackgroundMode.mActivity!=null){
-                        notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
-                        if(isOpenDebugModel)
-                            Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
+//                     if(BackgroundMode.mActivity!=null){
+//                         notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
+//                         if(isOpenDebugModel)
+//                             Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
                         
-                    }else{
-                        Toast.makeText(VVServer.this,"activity没了",Toast.LENGTH_SHORT).show();
-                        notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
-//                         notificationIntent = new Intent(VVServer.this, mClass);
-                    }
+//                     }else{
+//                         Toast.makeText(VVServer.this,"activity没了",Toast.LENGTH_SHORT).show();
+//                         notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+// //                         notificationIntent = new Intent(VVServer.this, mClass);
+//                     }
+                    
+                    notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                     VVServer.this.startActivity(notificationIntent);
 //                     Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
-                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
                     {
@@ -102,7 +104,7 @@ public class VVServer extends Service{
         }
         
 //         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
+//             Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
     
         if(timer == null){
             //curLeftTime = wakeMainActivityTime;
@@ -110,25 +112,22 @@ public class VVServer extends Service{
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Message message0 = new Message();
-                    message0.what = 2;
-                    handler.sendMessage(message0);
-
-                    if(wakeMainActivityTime == 0)
-                    {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                        //curLeftTime = wakeMainActivityTime;
-                        
-//                         Intent intent = new Intent(VVServer.this,com.phonegap.helloworld.VV_KeppAlive_demo.class);
-//                         VVServer.this.startActivity(intent);
-                    }
-                    if(wakeMainActivityTime>=0){
-                        wakeMainActivityTime --;
-                    }
+                    
+                     Message message = new Message();
+                     message.what = 1;
+                     handler.sendMessage(message); 
+                    
+//                     if(wakeMainActivityTime == 0)
+//                     {
+//                         Message message = new Message();
+//                         message.what = 1;
+//                         handler.sendMessage(message);               
+//                     }
+//                     if(wakeMainActivityTime>=0){
+//                         wakeMainActivityTime --;
+//                     }
                 }
-            },0,1000);
+            },0,30000);
         }
 
         return START_STICKY;
@@ -161,34 +160,37 @@ public class VVServer extends Service{
        
         
 //         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
+//             Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
 
         if(timer == null){
-            //curLeftTime = wakeMainActivityTime;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if( wakeMainActivityTime == 0 )
-                    {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                        //curLeftTime = wakeMainActivityTime;
-          
-                    }
-                    if(wakeMainActivityTime>=0){
+                    
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                    
+                    
+//                     if( wakeMainActivityTime == 0 )
+//                     {
+//                         Message message = new Message();
+//                         message.what = 1;
+//                         handler.sendMessage(message);
+//                     }
+//                     if(wakeMainActivityTime>=0){
                         
-                        if(wakeMainActivityTime%4 == 0){
-                            Message messages = new Message();
-                            messages.what = 2;
-                            handler.sendMessage(messages);
-                        }
-                        wakeMainActivityTime --;
-                    }
+//                         if(wakeMainActivityTime%4 == 0){
+//                             Message messages = new Message();
+//                             messages.what = 2;
+//                             handler.sendMessage(messages);
+//                         }
+//                         wakeMainActivityTime --;
+//                     }
                     
                 }
-            },0,1000);
+            },0,30000);
         }
 
     }
