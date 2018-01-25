@@ -127,7 +127,7 @@ public class VVServer extends Service{
 //                         wakeMainActivityTime --;
 //                     }
                 }
-            },0,30000);
+            },30000,30000);
         }
 
         return START_STICKY;
