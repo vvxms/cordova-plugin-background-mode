@@ -34,6 +34,16 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 
+
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Message;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONObject;
 
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
