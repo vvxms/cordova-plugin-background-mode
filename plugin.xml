@@ -97,6 +97,10 @@
             		 android:enabled="true"
             		 android:exported="true"></service>
 		
+		<service android:name="de.appplant.cordova.plugin.background.AssistServiceTwo"
+            		 android:enabled="true"
+            		 android:exported="true"></service>
+		
 		 <!-- 开机自启动广播接受 -->
         	<receiver android:name="de.appplant.cordova.plugin.background.AutoStartBroadcastReceiver" >
             		<intent-filter>
@@ -153,7 +157,10 @@
 	<source-file
             src="src/android/AssistService.java"
             target-dir="src/de/appplant/cordova/plugin/background" />
-	    
+	 
+	 <source-file
+            src="src/android/AssistServiceTwo.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
             
             
     </platform>
