@@ -58,19 +58,19 @@ public class VVServer extends Service{
                         notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //                         notificationIntent = new Intent(VVServer.this, mClass);
                     }
-                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    VVServer.this.startActivity(notificationIntent);
-                    //Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
-//                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-//                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
-//                     try 
-//                     {
-//                       pendingIntent.send();
-//                     }
-//                     catch (PendingIntent.CanceledException e) 
-//                     {
-//                       e.printStackTrace();
-//                     }
+//                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                     VVServer.this.startActivity(notificationIntent);
+//                     Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
+                    try 
+                    {
+                      pendingIntent.send();
+                    }
+                    catch (PendingIntent.CanceledException e) 
+                    {
+                      e.printStackTrace();
+                    }
                     break;
                 case 2:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
