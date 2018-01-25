@@ -61,7 +61,7 @@ public class VVServer extends Service{
 //                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                     VVServer.this.startActivity(notificationIntent);
 //                     Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
-                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
                     {
