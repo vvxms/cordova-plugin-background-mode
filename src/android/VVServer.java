@@ -28,6 +28,9 @@ import android.support.v4.app.NotificationCompat;
  */
 
 public class VVServer extends Service{
+    private String TAG  = "Service1";
+    private final int PID = android.os.Process.myPid();
+    private AssistServiceConnection mConnection;
     private Timer timer;
     private int curLeftTime;
     public static int wakeMainActivityTime = 60;//全局变量
