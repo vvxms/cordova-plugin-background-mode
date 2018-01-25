@@ -42,6 +42,46 @@ public class VVServer extends Service{
     private static String classNameStr = "com.phonegap.helloworld.VV_KeppAlive_demo";
     Class<?> mClass;
     
+    private Timer mTimer = null;
+    private TimerTask mTimerTask = null;
+    private boolean isStop = true;
+    
+    private void startTimer(Date date){
+        if (mTimer == null) {
+            mTimer = new Timer();
+        }
+        if (mTimerTask == null) {
+            mTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
+            };
+        }
+
+        if(mTimer != null && mTimerTask != null)
+        {
+            mTimer.schedule(mTimerTask, date);
+            isStop = false;
+        }
+            
+
+    }
+    
+    private void stopTimer(){    
+        if (mTimer != null) {    
+            mTimer.cancel();    
+            mTimer = null;    
+        }    
+        if (mTimerTask != null) {    
+            mTimerTask.cancel();    
+            mTimerTask = null;    
+        }       
+        isStop = true;  
+    }    
+    
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -103,36 +143,52 @@ public class VVServer extends Service{
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
-        if(alermTime!=null && !alermTime.getString("time", "").equals("")){
+       if(alermTime!=null){
             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
+            if(getCurrentTime2Stamp()>wakeMainActivityTime){
+                Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                if(isStop){
+                    Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                    startTimer(getStamp2Date(wakeMainActivityTime));
+                }else{
+                    Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                    stopTimer();
+                    startTimer(getStamp2Date(wakeMainActivityTime));
+                }
+               
+            }
+        }else{
+             Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
         }
         
 //         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
     
-        if(timer == null){
-            //curLeftTime = wakeMainActivityTime;
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
+//         if(timer == null){
+//             //curLeftTime = wakeMainActivityTime;
+//             timer = new Timer();
+//             timer.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
                     
-                     Message message = new Message();
-                     message.what = 1;
-                     handler.sendMessage(message); 
+//                      Message message = new Message();
+//                      message.what = 1;
+//                      handler.sendMessage(message); 
                     
-//                     if(wakeMainActivityTime == 0)
-//                     {
-//                         Message message = new Message();
-//                         message.what = 1;
-//                         handler.sendMessage(message);               
-//                     }
-//                     if(wakeMainActivityTime>=0){
-//                         wakeMainActivityTime --;
-//                     }
-                }
-            },30000,30000);
-        }
+// //                     if(wakeMainActivityTime == 0)
+// //                     {
+// //                         Message message = new Message();
+// //                         message.what = 1;
+// //                         handler.sendMessage(message);               
+// //                     }
+// //                     if(wakeMainActivityTime>=0){
+// //                         wakeMainActivityTime --;
+// //                     }
+//                 }
+//             },30000,30000);
+//         }
 
         return START_STICKY;
 //         return super.onStartCommand(intent, flags, startId);
@@ -157,45 +213,60 @@ public class VVServer extends Service{
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
-        if(alermTime!=null && !alermTime.getString("time", "").equals("")){
+        if(alermTime!=null){
             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
-            Toast.makeText(VVServer.this,"读取数据成功: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
-        }
-       Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        
-//         if(isOpenDebugModel)
-//             Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
-
-        if(timer == null){
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                    
-                    
-//                     if( wakeMainActivityTime == 0 )
-//                     {
-//                         Message message = new Message();
-//                         message.what = 1;
-//                         handler.sendMessage(message);
-//                     }
-//                     if(wakeMainActivityTime>=0){
-                        
-//                         if(wakeMainActivityTime%4 == 0){
-//                             Message messages = new Message();
-//                             messages.what = 2;
-//                             handler.sendMessage(messages);
-//                         }
-//                         wakeMainActivityTime --;
-//                     }
-                    
+            if(getCurrentTime2Stamp()>wakeMainActivityTime){
+                Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                if(isStop){
+                    Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                    startTimer(getStamp2Date(wakeMainActivityTime));
+                }else{
+                    Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+                    stopTimer();
+                    startTimer(getStamp2Date(wakeMainActivityTime));
                 }
-            },0,30000);
+            }
+        }else{
+             Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
         }
+        
+        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        
+        
+        
+        
+//         if(timer == null){
+//             timer = new Timer();
+//             timer.schedule(new TimerTask() {
+//                 @Override
+//                 public void run() {
+                    
+//                     Message message = new Message();
+//                     message.what = 1;
+//                     handler.sendMessage(message);
+                    
+                    
+// //                     if( wakeMainActivityTime == 0 )
+// //                     {
+// //                         Message message = new Message();
+// //                         message.what = 1;
+// //                         handler.sendMessage(message);
+// //                     }
+// //                     if(wakeMainActivityTime>=0){
+                        
+// //                         if(wakeMainActivityTime%4 == 0){
+// //                             Message messages = new Message();
+// //                             messages.what = 2;
+// //                             handler.sendMessage(messages);
+// //                         }
+// //                         wakeMainActivityTime --;
+// //                     }
+                    
+//                 }
+//             },0,30000);
+//         }
 
     }
     
@@ -279,4 +350,21 @@ public class VVServer extends Service{
         }
         return -1;
     }
+    
+    
+    /**
+     * 起始时间为2010-01-01 00:00:00
+     * 将时间戳转换为时间
+     *
+     * @return 时间
+     */
+    public static Date getStamp2Date(int time) {
+        try {
+            time = (int) (time * 1000 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00").getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date(time);
+    }
+    
 }
