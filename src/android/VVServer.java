@@ -104,7 +104,7 @@ public class VVServer extends Service{
         }
         
 //         if(isOpenDebugModel)
-//             Toast.makeText(VVServer.this,"VVServer-onStartCommand:" + wakeMainActivityTime,Toast.LENGTH_LONG).show();
+            Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
     
         if(timer == null){
             //curLeftTime = wakeMainActivityTime;
@@ -157,7 +157,7 @@ public class VVServer extends Service{
             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
             Toast.makeText(VVServer.this,"读取数据成功: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
         }
-       
+       Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         
 //         if(isOpenDebugModel)
 //             Toast.makeText(VVServer.this,"VVServer-onCreate: "+ wakeMainActivityTime,Toast.LENGTH_LONG).show();
