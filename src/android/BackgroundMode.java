@@ -342,7 +342,7 @@ public class BackgroundMode extends CordovaPlugin {
     public void onDestroy() {
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "onDestroy" + VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
-//         stopService();
+        stopService();
         super.onDestroy();
         //android.os.Process.killProcess(android.os.Process.myPid()); //为什么要这样写？
     }
