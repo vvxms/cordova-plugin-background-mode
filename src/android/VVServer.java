@@ -31,6 +31,7 @@ import java.util.Properties;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import android.content.Context;
 
 /**
  * Created by loi on 2018/1/18.
