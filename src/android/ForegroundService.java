@@ -357,9 +357,9 @@ public class ForegroundService extends Service {
                 .setOngoing(false)
                 /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                .setContentIntent(PendingIntent.getActivity(ForegroundService.this, 2, new Intent(ForegroundService.this, com.phonegap.helloworld.VV_KeppAlive_demo.class), PendingIntent.FLAG_CANCEL_CURRENT))
                 .build();
-
+//  .setContentIntent(PendingIntent.getActivity(ForegroundService.this, 2, new Intent(ForegroundService.this, com.phonegap.helloworld.VV_KeppAlive_demo.class), PendingIntent.FLAG_CANCEL_CURRENT))
+               
         return notification;
     }
 
