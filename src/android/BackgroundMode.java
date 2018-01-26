@@ -181,6 +181,11 @@ public class BackgroundMode extends CordovaPlugin {
         
         
         if (action.equals("BringToFront")) {
+            Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
+            cordova.getActivity().startService(intent);
+            Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
+            cordova.getActivity().startService(intent1);
+            
             Toast.makeText(cordova.getActivity(),cordova.getActivity().getClass().getName(), Toast.LENGTH_LONG).show();
             Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
