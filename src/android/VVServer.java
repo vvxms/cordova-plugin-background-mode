@@ -27,6 +27,11 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Properties;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 /**
  * Created by loi on 2018/1/18.
  */
@@ -382,6 +387,59 @@ public class VVServer extends Service{
             e.printStackTrace();
         }
         return new Date(time);
+    }
+    
+    
+    public static Properties prop;
+    public static void initPropertiesFile(Context context) {
+        prop = loadConfig(context, "/data/data/com.phonegap.helloworld/files/config.properties");
+        if (prop == null) {
+            // 配置文件不存在的时候创建配置文件 初始化配置信息
+            prop = new Properties();
+            prop.put("time","0");
+            saveConfig(context, "/data/data/encmap.navigation/files/config.properties", prop);
+        }
+    }
+
+    /**
+     * 保存配置文件
+     * <p>
+     * Title: saveConfig
+     * <p>
+     * <p>
+     * Description:
+     * </p>
+     *
+     * @param context
+     * @param file
+     * @param properties
+     * @return
+     */
+    public static boolean saveConfig(Context context, String file,
+                                     Properties properties) {
+        try {
+            File fil = new File(file);
+            if (!fil.exists())
+                fil.createNewFile();
+            FileOutputStream s = new FileOutputStream(fil);
+            properties.store(s, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static Properties loadConfig(Context context, String file) {
+        Properties properties = new Properties();
+        try {
+            FileInputStream s = new FileInputStream(file);
+            properties.load(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return properties;
     }
     
 }
