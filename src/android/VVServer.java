@@ -151,6 +151,9 @@ public class VVServer extends Service{
         
        initPropertiesFile(VVServer.this);
        wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
+       
+        Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+getStamp2Date(wakeMainActivityTime).toString()+" 储存的："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();        
+        
        if(getCurrentTime2Stamp()>wakeMainActivityTime)
        {
           Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
@@ -248,24 +251,24 @@ public class VVServer extends Service{
         //mClass = BackgroundMode.mActivity.getClass();
         
         
-       initPropertiesFile(VVServer.this);
-       wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
-       if(getCurrentTime2Stamp()>wakeMainActivityTime)
-       {
-          Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
-       }else 
-       {
-          Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-          if(isStop){
-             Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-             startTimer(getStamp2Date(wakeMainActivityTime));
-          }else{
-               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-               stopTimer();
-               startTimer(getStamp2Date(wakeMainActivityTime));
-          }
+//        initPropertiesFile(VVServer.this);
+//        wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
+//        if(getCurrentTime2Stamp()>wakeMainActivityTime)
+//        {
+//           Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+//        }else 
+//        {
+//           Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//           if(isStop){
+//              Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//              startTimer(getStamp2Date(wakeMainActivityTime));
+//           }else{
+//                Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                stopTimer();
+//                startTimer(getStamp2Date(wakeMainActivityTime));
+//           }
 
-       }
+//        }
         
 //         //读数据
 //         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
