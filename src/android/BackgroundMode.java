@@ -160,18 +160,12 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equalsIgnoreCase("StartJobServer")){
-//             Activity context = cordova.getActivity();
-//             Intent intent = new Intent(context, MyJobService.class);
-//             context.startService(intent);
             StartJobServer();
             callback.success();
             return true;
         }
         
         if(action.equalsIgnoreCase("StartOnPixelActivityWhenScreenOff")){
-//             Activity context = cordova.getActivity();
-//             Intent intent = new Intent(context, MyJobService.class);
-//             context.startService(intent);
             registerScnOnAndOffBroadcast();
             callback.success();
             return true;
@@ -188,7 +182,6 @@ public class BackgroundMode extends CordovaPlugin {
         
         if (action.equals("BringToFront")) {
             Toast.makeText(cordova.getActivity(),cordova.getActivity().getClass().getName(), Toast.LENGTH_LONG).show();
-            Log.d("Bring", "BringToFront");
             Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0);
@@ -205,13 +198,11 @@ public class BackgroundMode extends CordovaPlugin {
           
         
        
-        if (action.equals("BringToFrontBySetTime")) {             
+        if (action.equals("BringToFrontBySetTime")) {     
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
-       
             //当前时间的总秒数（相对于2010年的）
             long curTime = VVServer.getCurrentTime2Stamp();
-                
             //设定的时间
             long setTime = curTime + time;
             
@@ -221,6 +212,7 @@ public class BackgroundMode extends CordovaPlugin {
                 
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
+            VVServer.prop.put("class",cordova.getActivity().getClass().getName());
             VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/files/config.properties", VVServer.prop);
             return true;
         }
