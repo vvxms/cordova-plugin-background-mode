@@ -208,15 +208,15 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
          //存数据：
-            SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log", 0);
-            alermTime.edit().putString("time", "1").commit();
+            SharedPreferences alermTime0 = VVServer.this.getSharedPreferences("Log", 0);
+            alermTime0.edit().putString("time", "1").commit();
         
         Toast.makeText(VVServer.this,"VVServer-onCreate0",Toast.LENGTH_LONG).show();
         setForeground();
         //classNameStr = BackgroundMode.mActivity.getClass().getName();
         //mClass = BackgroundMode.mActivity.getClass();
-            SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log", 0);
-            alermTime.edit().putString("time", "2").commit();
+            SharedPreferences alermTime2 = VVServer.this.getSharedPreferences("Log", 0);
+            alermTime2.edit().putString("time", "2").commit();
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
@@ -239,8 +239,8 @@ public class VVServer extends Service{
              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
         }
         
-                    SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log", 0);
-                    alermTime.edit().putString("time", "3").commit();
+                    SharedPreferences alermTime3 = VVServer.this.getSharedPreferences("Log", 0);
+                    alermTime3.edit().putString("time", "3").commit();
         
         Toast.makeText(VVServer.this,"VVServer-onCreate1",Toast.LENGTH_LONG).show();
         
