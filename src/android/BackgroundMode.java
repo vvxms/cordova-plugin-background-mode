@@ -211,13 +211,9 @@ public class BackgroundMode extends CordovaPlugin {
        
             //当前时间的总秒数（相对于2010年的）
             int curTime = VVServer.getCurrentTime2Stamp();
-            
-            Toast.makeText(cordova.getActivity(), "2>>> " + curTime, Toast.LENGTH_SHORT).show();
-            
+                
             //设定的时间
             int setTime = curTime + time;
-            
-            Toast.makeText(cordova.getActivity(), "3>>>" + setTime, Toast.LENGTH_SHORT).show();
             
             //存数据：
             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
@@ -225,7 +221,7 @@ public class BackgroundMode extends CordovaPlugin {
                 
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
-            VVServer.saveConfig(cordova.getActivity(), "/data/data/com.phonegap.helloworld/files/config.properties", VVServer.prop);
+            VVServer.saveConfig(cordova.getActivity(), "/data/data/com.phonegap.helloworld/config.properties", VVServer.prop);
             return true;
         }
         
