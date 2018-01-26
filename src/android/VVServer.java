@@ -213,7 +213,7 @@ public class VVServer extends Service{
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
-        if(alermTime!=null){
+        if(alermTime!=null && !alermTime.getString("time", "").equals("")){
             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
             if(getCurrentTime2Stamp()>wakeMainActivityTime){
                 Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
