@@ -206,16 +206,24 @@ public class BackgroundMode extends CordovaPlugin {
         
        
         if (action.equals("BringToFrontBySetTime")) {
+            
+             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log0", 0);
+             alermTime.edit().putString("time", "1").commit();
+            
             //获取到的秒数
             int time = Integer.parseInt(args.getString(0));
             
             Toast.makeText(cordova.getActivity(), "1>>>" + time, Toast.LENGTH_LONG).show();
        
-            
+                         SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log0", 0);
+             alermTime.edit().putString("time", "2").commit();
             //当前时间的总秒数（相对于2010年的）
             int curTime = VVServer.getCurrentTime2Stamp();
             
             Toast.makeText(cordova.getActivity(), "2>>>" + curTime, Toast.LENGTH_LONG).show();
+            
+                         SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log0", 0);
+             alermTime.edit().putString("time", "3").commit();
             
             //设定的时间
             int setTime = curTime + time;
@@ -225,6 +233,9 @@ public class BackgroundMode extends CordovaPlugin {
             //存数据：
             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
             alermTime.edit().putString("time", String.valueOf(setTime)).commit();
+            
+                         SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("Log0", 0);
+             alermTime.edit().putString("time", "4").commit();
             
             Toast.makeText(cordova.getActivity(), "4>>>", Toast.LENGTH_LONG).show();
             
