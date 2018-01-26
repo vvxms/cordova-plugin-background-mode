@@ -82,9 +82,9 @@ public class MyJobService extends JobService {
                Intent i = new Intent(getApplicationContext(), VVServer.class);
                startService(i);
                Log.e("MyJobService", "开始启动服务");
-//                Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
+               Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
             }else {
-//                 Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
                 Log.e("MyJobService", "服务已启动");
             }
             
@@ -97,6 +97,19 @@ public class MyJobService extends JobService {
 //                 Toast.makeText(MyJobService.this, "服务backgroundService已启动", Toast.LENGTH_LONG).show();
             }
    
+            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.LocalCastielService")){
+                Log.e("MainActivity", "启动LocalCastielService");
+                startService(new Intent(getApplicationContext(), LocalCastielService.class));
+            }else {
+                Log.e("MainActivity", "LocalCastielService已启动");
+            }
+            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
+                Log.e("MainActivity", "启动RemoteCastielService");
+                startService(new Intent(getApplicationContext(), RemoteCastielService.class));
+            }else {
+                Log.e("MainActivity", "RemoteCastielService已启动");
+            }
+            
             return true;
         }
     });
