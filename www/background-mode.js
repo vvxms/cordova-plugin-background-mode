@@ -90,6 +90,10 @@ exports.moveTaskToBack = function() {
     cordova.exec(null, null, 'BackgroundMode', 'moveTaskToBack', []);
 };
 
+exports.StartIPC = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'StartIPC', []);
+};
+
 /*************
  * INTERFACE *
  *************/
