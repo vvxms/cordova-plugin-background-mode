@@ -215,9 +215,9 @@ public class BackgroundMode extends CordovaPlugin {
             //设定的时间
             long setTime = curTime + time;
             
-            //存数据：
-            SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
-            alermTime.edit().putString("time",  String.valueOf(setTime)).commit();
+//             //存数据：
+//             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
+//             alermTime.edit().putString("time",  String.valueOf(setTime)).commit();
                 
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
