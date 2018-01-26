@@ -147,36 +147,57 @@ public class VVServer extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(VVServer.this,"VVServer-onStartCommand0",Toast.LENGTH_LONG).show();
         //读数据
-       SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
-       if(alermTime!=null){
-            Toast.makeText(VVServer.this,"时间的值： " + alermTime.getString("time", ""),Toast.LENGTH_LONG).show();
-           if(!alermTime.getString("time", "").equals("")){
-               wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
-               if(getCurrentTime2Stamp()>wakeMainActivityTime){
-                    Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                    if(isStop){
-                        Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                        startTimer(getStamp2Date(wakeMainActivityTime));
-                    }else{
-                        Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                        stopTimer();
-                        startTimer(getStamp2Date(wakeMainActivityTime));
-                    }
+        
+       initPropertiesFile(VVServer.this);
+       wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
+       if(getCurrentTime2Stamp()>wakeMainActivityTime)
+       {
+          Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+       }else 
+       {
+          Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+          if(isStop){
+             Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+             startTimer(getStamp2Date(wakeMainActivityTime));
+          }else{
+               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+               stopTimer();
+               startTimer(getStamp2Date(wakeMainActivityTime));
+          }
 
-                }
-           }else{
-             Toast.makeText(VVServer.this,"time字段为空: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-           }
+       }
+        
+        
+        
+//        SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
+//        if(alermTime!=null){
+//             Toast.makeText(VVServer.this,"时间的值： " + alermTime.getString("time", ""),Toast.LENGTH_LONG).show();
+//            if(!alermTime.getString("time", "").equals("")){
+//                wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
+//                if(getCurrentTime2Stamp()>wakeMainActivityTime){
+//                     Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                 }else {
+//                     Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                     if(isStop){
+//                         Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                         startTimer(getStamp2Date(wakeMainActivityTime));
+//                     }else{
+//                         Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                         stopTimer();
+//                         startTimer(getStamp2Date(wakeMainActivityTime));
+//                     }
+
+//                 }
+//            }else{
+//              Toast.makeText(VVServer.this,"time字段为空: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//            }
            
             
-        }else{
-             Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-        }
+//         }else{
+//              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//         }
         
-//         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onStartCommand1",Toast.LENGTH_LONG).show();
+
     
 //         if(timer == null){
 //             //curLeftTime = wakeMainActivityTime;
@@ -219,16 +240,11 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-         //存数据：
-            SharedPreferences alermTime0 = VVServer.this.getSharedPreferences("Log", 0);
-            alermTime0.edit().putString("time", "1").commit();
-        
+ 
         Toast.makeText(VVServer.this,"VVServer-onCreate0",Toast.LENGTH_LONG).show();
         setForeground();
         //classNameStr = BackgroundMode.mActivity.getClass().getName();
         //mClass = BackgroundMode.mActivity.getClass();
-            SharedPreferences alermTime2 = VVServer.this.getSharedPreferences("Log", 0);
-            alermTime2.edit().putString("time", "2").commit();
         
         //读数据
         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
@@ -250,10 +266,7 @@ public class VVServer extends Service{
         }else{
              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
         }
-        
-                    SharedPreferences alermTime3 = VVServer.this.getSharedPreferences("Log", 0);
-                    alermTime3.edit().putString("time", "3").commit();
-        
+
         Toast.makeText(VVServer.this,"VVServer-onCreate1",Toast.LENGTH_LONG).show();
         
         
