@@ -115,7 +115,7 @@ public class MyJobService extends JobService {
     });
 
     // 判断服务是否正在运行
-    public boolean isServiceWork(Context mContext, String serviceName) {
+    public static boolean isServiceWork(Context mContext, String serviceName) {
         boolean isWork = false;
         ActivityManager myAM = (ActivityManager) mContext
                 .getSystemService(Context.ACTIVITY_SERVICE);
