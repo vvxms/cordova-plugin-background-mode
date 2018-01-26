@@ -170,11 +170,11 @@ public class VVServer extends Service{
           Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
           if(isStop){
              Toast.makeText(VVServer.this,"定时器未开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-             startTimer(new Date(wakeMainActivityTime).toString());
+             startTimer(new Date(wakeMainActivityTime));
           }else{
                Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
                stopTimer();
-               startTimer(new Date(wakeMainActivityTime).toString());
+               startTimer(new Date(wakeMainActivityTime));
           }
 
        }
