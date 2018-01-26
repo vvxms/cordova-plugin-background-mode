@@ -152,7 +152,7 @@ public class VVServer extends Service{
        initPropertiesFile(VVServer.this);
        wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
        
-        Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+getStamp2Date(wakeMainActivityTime).toString()+" 储存的："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();        
+        Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+getStamp2Date(wakeMainActivityTime)+" 储存的："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();        
         
        if(getCurrentTime2Stamp()>wakeMainActivityTime)
        {
