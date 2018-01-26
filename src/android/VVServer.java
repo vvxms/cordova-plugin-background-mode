@@ -421,8 +421,10 @@ public class VVServer extends Service{
      */
     public static Date getStamp2Date(int time) {
         try {
-            time = (int) (time * 1000 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00").getTime());
-        } catch (ParseException e) {
+            
+            time = (int) (time * 1000 + new Date().getTime());
+//             time = (int) (time * 1000 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00").getTime());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new Date(time);
