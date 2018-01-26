@@ -101,7 +101,8 @@ public class VVServer extends Service{
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
-                        notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+                        Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
+                        break;
                     }
 //                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                     VVServer.this.startActivity(notificationIntent);
