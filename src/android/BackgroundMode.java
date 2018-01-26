@@ -207,17 +207,17 @@ public class BackgroundMode extends CordovaPlugin {
        
         if (action.equals("BringToFrontBySetTime")) {             
             //获取到的秒数
-            int time = Integer.parseInt(args.getString(0));      
+            long time = Integer.parseInt(args.getString(0));      
        
             //当前时间的总秒数（相对于2010年的）
-            int curTime = VVServer.getCurrentTime2Stamp();
+            long curTime = VVServer.getCurrentTime2Stamp();
                 
             //设定的时间
-            int setTime = curTime + time;
+            long setTime = curTime + time;
             
             //存数据：
-            SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
-            alermTime.edit().putString("time", String.valueOf(setTime)).commit();
+            SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", MODE_PRIVATE);
+            alermTime.edit().putString("time", setTime).commit();
                 
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
