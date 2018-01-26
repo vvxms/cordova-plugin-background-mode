@@ -242,33 +242,52 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
  
-        Toast.makeText(VVServer.this,"VVServer-onCreate0",Toast.LENGTH_LONG).show();
+        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         setForeground();
         //classNameStr = BackgroundMode.mActivity.getClass().getName();
         //mClass = BackgroundMode.mActivity.getClass();
         
-        //读数据
-        SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
-        if(alermTime!=null && !alermTime.getString("time", "").equals("")){
-            wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
-            if(getCurrentTime2Stamp()>wakeMainActivityTime){
-                Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-            }else {
-                Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                if(isStop){
-                    Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                    startTimer(getStamp2Date(wakeMainActivityTime));
-                }else{
-                    Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-                    stopTimer();
-                    startTimer(getStamp2Date(wakeMainActivityTime));
-                }
-            }
-        }else{
-             Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-        }
+        
+       initPropertiesFile(VVServer.this);
+       wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
+       if(getCurrentTime2Stamp()>wakeMainActivityTime)
+       {
+          Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+       }else 
+       {
+          Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+          if(isStop){
+             Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+             startTimer(getStamp2Date(wakeMainActivityTime));
+          }else{
+               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+               stopTimer();
+               startTimer(getStamp2Date(wakeMainActivityTime));
+          }
 
-        Toast.makeText(VVServer.this,"VVServer-onCreate1",Toast.LENGTH_LONG).show();
+       }
+        
+//         //读数据
+//         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
+//         if(alermTime!=null && !alermTime.getString("time", "").equals("")){
+//             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
+//             if(getCurrentTime2Stamp()>wakeMainActivityTime){
+//                 Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//             }else {
+//                 Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                 if(isStop){
+//                     Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                     startTimer(getStamp2Date(wakeMainActivityTime));
+//                 }else{
+//                     Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//                     stopTimer();
+//                     startTimer(getStamp2Date(wakeMainActivityTime));
+//                 }
+//             }
+//         }else{
+//              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//         }
+
         
         
         
