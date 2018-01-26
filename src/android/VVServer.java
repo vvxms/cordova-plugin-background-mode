@@ -254,10 +254,7 @@ public class VVServer extends Service{
         super.onCreate();
  
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        setForeground();
-        //classNameStr = BackgroundMode.mActivity.getClass().getName();
-        //mClass = BackgroundMode.mActivity.getClass();
-        
+        setForeground();        
         
 //        initPropertiesFile(VVServer.this);
 //        wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
@@ -278,38 +275,9 @@ public class VVServer extends Service{
 
 //        }
         
-//         //读数据
-//         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", MODE_PRIVATE);
-        
-//         String restoredText = alermTime.getString("text", null);
-//         if (restoredText != null) {
-// //           String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
-//           wakeMainActivityTime = prefs.getInt("time", 0); //0 is the default value. and it requires API 11
-//         }else{
-            
-//         }
-//         if(alermTime!=null && !alermTime.getString("time", "").equals("")){
-//             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
-//             if(getCurrentTime2Stamp()>wakeMainActivityTime){
-//                 Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//             }else {
-//                 Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//                 if(isStop){
-//                     Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//                     startTimer(getStamp2Date(wakeMainActivityTime));
-//                 }else{
-//                     Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//                     stopTimer();
-//                     startTimer(getStamp2Date(wakeMainActivityTime));
-//                 }
-//             }
-//         }else{
-//              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//         }
 
         
-        
-        
+              
         
 //         if(timer == null){
 //             timer = new Timer();
@@ -416,12 +384,12 @@ public class VVServer extends Service{
     
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
-        prop = loadConfig(context, "/data/data/com.phonegap.helloworld/config.properties");
+        prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties");
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             prop = new Properties();
             prop.put("time","0");
-            saveConfig(context, "/data/data/encmap.navigation/files/config.properties", prop);
+            saveConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties", prop);
         }
     }
 
