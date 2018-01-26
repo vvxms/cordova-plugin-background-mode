@@ -43,7 +43,7 @@ public class VVServer extends Service{
     private AssistServiceConnection mConnection;
     private Timer timer;
     private int curLeftTime;
-    public static int wakeMainActivityTime = -1;//全局变量
+    public static long wakeMainActivityTime = -1;//全局变量
     private boolean isOpenDebugModel = false;
     private static String classNameStr = "com.phonegap.helloworld.VV_KeppAlive_demo";
     Class<?> mClass;
@@ -146,30 +146,35 @@ public class VVServer extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(VVServer.this,"VVServer-onStartCommand0",Toast.LENGTH_LONG).show();
+        Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         //读数据
         
        if(prop==null){
           initPropertiesFile(VVServer.this);
        }
        
-       wakeMainActivityTime = Integer.parseInt(prop.get("time").toString());
+       try {
+           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+       } catch (NumberFormatException nfe) {
+
+       }
        
-        Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+getCurrentTime2Stamp()+" 储存的："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();        
+       
+       Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+System.currentTimeMillis()+" 储存的："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();        
         
-       if(getCurrentTime2Stamp()>wakeMainActivityTime)
+       if(System.currentTimeMillis()>wakeMainActivityTime)
        {
-          Toast.makeText(VVServer.this,"时间点已错过: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+          Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
        }else 
        {
-          Toast.makeText(VVServer.this,"时间点未到达: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+          Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
           if(isStop){
-             Toast.makeText(VVServer.this,"定时器未开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-             startTimer(getStamp2Date(wakeMainActivityTime));
+             Toast.makeText(VVServer.this,"定时器未开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+             startTimer(new Date(wakeMainActivityTime).toString());
           }else{
-               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
                stopTimer();
-               startTimer(getStamp2Date(wakeMainActivityTime));
+               startTimer(new Date(wakeMainActivityTime).toString());
           }
 
        }
@@ -274,7 +279,15 @@ public class VVServer extends Service{
 //        }
         
 //         //读数据
-//         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
+//         SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", MODE_PRIVATE);
+        
+//         String restoredText = alermTime.getString("text", null);
+//         if (restoredText != null) {
+// //           String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
+//           wakeMainActivityTime = prefs.getInt("time", 0); //0 is the default value. and it requires API 11
+//         }else{
+            
+//         }
 //         if(alermTime!=null && !alermTime.getString("time", "").equals("")){
 //             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
 //             if(getCurrentTime2Stamp()>wakeMainActivityTime){
@@ -391,42 +404,12 @@ public class VVServer extends Service{
         return notification;
     }
     
-    
-    /**
-     * 起始时间为2010-01-01 00:00:00
-     * 将获取当前时间并转换为时间戳
-     *
-     * @return 时间戳
-     */
-    public static int getCurrentTime2Stamp() {
-        Date startTime = null;
-        try {
-            startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (startTime != null) {
-            return (int) ((System.currentTimeMillis() - startTime.getTime()) / 1000);
-        }
-        return -1;
+   
+    public static long getCurrentTime2Stamp() {
+        return  System.currentTimeMillis();
     }
-    
-    
-    /**
-     * 起始时间为2010-01-01 00:00:00
-     * 将时间戳转换为时间
-     *
-     * @return 时间
-     */
-    public static Date getStamp2Date(int time) {
-        try {
-            
-            time = (int) (time * 1000 + new Date().getTime());
-//             time = (int) (time * 1000 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2010-01-01 00:00:00").getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    public static Date getStamp2Date(long time) {
         return new Date(time);
     }
     
