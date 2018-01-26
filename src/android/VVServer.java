@@ -45,7 +45,6 @@ public class VVServer extends Service{
     private int curLeftTime;
     public static long wakeMainActivityTime = -1;//全局变量
     private boolean isOpenDebugModel = false;
-    private static String classNameStr = "com.phonegap.helloworld.VV_KeppAlive_demo";
     Class<?> mClass;
     
     private Timer mTimer = null;
@@ -98,16 +97,6 @@ public class VVServer extends Service{
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     Intent notificationIntent;
-//                     if(BackgroundMode.mActivity!=null){
-//                         notificationIntent = new Intent(VVServer.this, BackgroundMode.mActivity.getClass());
-//                         if(isOpenDebugModel)
-//                             Toast.makeText(VVServer.this,BackgroundMode.mActivity.getClass().toString(),Toast.LENGTH_SHORT).show();
-                        
-//                     }else{
-//                         Toast.makeText(VVServer.this,"activity没了",Toast.LENGTH_SHORT).show();
-//                         notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
-// //                         notificationIntent = new Intent(VVServer.this, mClass);
-//                     }
                     
                     notificationIntent = new Intent(VVServer.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
