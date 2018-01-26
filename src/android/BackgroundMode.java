@@ -221,7 +221,7 @@ public class BackgroundMode extends CordovaPlugin {
                 
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
-            VVServer.saveConfig(cordova.getActivity(), "/data/data/com.phonegap.helloworld/config.properties", VVServer.prop);
+            VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/files/config.properties", VVServer.prop);
             return true;
         }
         
