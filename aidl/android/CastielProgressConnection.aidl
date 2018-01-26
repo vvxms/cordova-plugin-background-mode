@@ -1,5 +1,5 @@
 // CastielProgressConnection.aidl
-package com.yima.testnotification;
+package de.appplant.cordova.plugin.background;
 
 // Declare any non-default types here with import statements
 
