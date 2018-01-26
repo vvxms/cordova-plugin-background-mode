@@ -140,9 +140,9 @@ public class VVServer extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        
+        Toast.makeText(VVServer.this,"VVServer-onStartCommand0",Toast.LENGTH_LONG).show();
         //读数据
-        SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
+       SharedPreferences alermTime  = VVServer.this.getSharedPreferences("alermTime ", 0);
        if(alermTime!=null){
             wakeMainActivityTime = Integer.parseInt(alermTime.getString("time", ""));
             if(getCurrentTime2Stamp()>wakeMainActivityTime){
@@ -164,7 +164,7 @@ public class VVServer extends Service{
         }
         
 //         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
+            Toast.makeText(VVServer.this,"VVServer-onStartCommand1",Toast.LENGTH_LONG).show();
     
 //         if(timer == null){
 //             //curLeftTime = wakeMainActivityTime;
@@ -207,6 +207,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        Toast.makeText(VVServer.this,"VVServer-onCreate0",Toast.LENGTH_LONG).show();
         setForeground();
         //classNameStr = BackgroundMode.mActivity.getClass().getName();
         //mClass = BackgroundMode.mActivity.getClass();
@@ -232,7 +233,7 @@ public class VVServer extends Service{
              Toast.makeText(VVServer.this,"未找到储存的数据: "+ getStamp2Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
         }
         
-        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        Toast.makeText(VVServer.this,"VVServer-onCreate1",Toast.LENGTH_LONG).show();
         
         
         
