@@ -206,10 +206,16 @@ public class BackgroundMode extends CordovaPlugin {
         
        
         if (action.equals("BringToFrontBySetTime")) {
-//             int VVServer.wakeMainActivityTime = Integer.parseInt(args.getString(0));
+            //获取到的秒数
+            int time = Integer.parseInt(args.getString(0));
+            //当前时间的总秒数（相对于2010年的）
+            int curTime = VVServer.getCurrentTime2Stamp();
+            //设定的时间
+            int setTime = curTime + time;
+            
             //存数据：
             SharedPreferences alermTime = cordova.getActivity().getSharedPreferences("alermTime", 0);
-            alermTime.edit().putString("time", args.getString(0)).commit();
+            alermTime.edit().putString("time", String.valueOf(setTime)).commit();
             
             if(isOpenDebugModel)
                 Toast.makeText(cordova.getActivity(), "当前的wakeMainActivityTime: "+VVServer.wakeMainActivityTime, Toast.LENGTH_LONG).show();
