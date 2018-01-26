@@ -431,7 +431,7 @@ public class VVServer extends Service{
     
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
-        prop = loadConfig(context, "/data/data/com.phonegap.helloworld/files/config.properties");
+        prop = loadConfig(context, "/data/data/com.phonegap.helloworld/config.properties");
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             prop = new Properties();
