@@ -197,12 +197,12 @@ public class BackgroundMode extends CordovaPlugin {
         }
           
         if(action.equals("StartIPC")){
-            if(MyJobService.isServiceWork(cordova.getActivity(),de.appplant.cordova.plugin.background.class)){
+            if(MyJobService.isServiceWork(cordova.getActivity(),de.appplant.cordova.plugin.background.LocalCastielService.class)){
                 Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
                 cordova.getActivity().startService(intent);
             }
             
-            if(MyJobService.isServiceWork(cordova.getActivity(),de.appplant.cordova.plugin.background.class)){
+            if(MyJobService.isServiceWork(cordova.getActivity(),de.appplant.cordova.plugin.background.RemoteCastielService.class)){
                 Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
                 cordova.getActivity().startService(intent1);
             }
