@@ -187,7 +187,7 @@ public class BackgroundMode extends CordovaPlugin {
         
         
         if (action.equals("BringToFront")) {
-            VVServer.wakeMainActivityTime = 60;
+            Toast.makeText(cordova.getActivity(),cordova.getActivity().getClass().getName();, Toast.LENGTH_LONG).show();
             Log.d("Bring", "BringToFront");
             Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
