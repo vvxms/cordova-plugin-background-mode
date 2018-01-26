@@ -40,6 +40,10 @@ public class LocalCastielService extends Service {
                 i++;
                 if(i>=360){
                   Toast.makeText(LocalCastielService.this, "LocalCastielService", Toast.LENGTH_SHORT).show();
+                  if(MyJobService.isServiceWork(LocalCastielService.this,de.appplant.cordova.plugin.background.VVServer.class)){
+                        Intent intent = new Intent(LocalCastielService.this, LocalCastielService.class);
+                        LocalCastielService.this.startService(intent);
+                  }
                    // startActivity(new Intent(LocalCastielService.this,MainActivity.class));
                     i=0;
                 }
@@ -83,9 +87,6 @@ public class LocalCastielService extends Service {
                 /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .build();
-        //NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        /**发起通知**/
-        //notificationManager.notify(0, notification);
         Log.e("LocalCastielService","notifyId"+String.valueOf(startId));
         startForeground(startId, notification);
     }
