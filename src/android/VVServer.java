@@ -148,16 +148,16 @@ public class VVServer extends Service{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                  if(prop==null){
-                    initPropertiesFile(m_instance);
-                   }
+//                   if(prop==null){
+//                     initPropertiesFile(m_instance);
+//                    }
 
-                   try {
-                        mClass = Class.forName(prop.get("class").toString());
-                        Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
-                   } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                   }
+//                    try {
+//                         mClass = Class.forName(prop.get("class").toString());
+//                         Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
+//                    } catch (ClassNotFoundException e) {
+//                         e.printStackTrace();
+//                    }
             }
         };
         timer.schedule(timerTask,5000);
