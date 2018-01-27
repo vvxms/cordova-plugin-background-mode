@@ -83,12 +83,6 @@ public class LocalCastielService extends Service {
         showNotification(this,startId );
         
         
-
-        
-        return START_STICKY;
-    }
-    
-    public static void test(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -103,15 +97,14 @@ public class LocalCastielService extends Service {
                             Message message = new Message();
                             message.what = 2;
                             handler.sendMessage(message);
-                        }
-                        
-                        
+                        }       
                 }
             }
         }, 10000, 10000);
+        
+        return START_STICKY;
     }
-    
-
+  
     public  class MyServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
