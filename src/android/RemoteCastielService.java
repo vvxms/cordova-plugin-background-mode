@@ -41,21 +41,16 @@ public class RemoteCastielService extends Service {
                 if(!MyJobService.isServiceWork(RemoteCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
                         Intent intent = new Intent(RemoteCastielService.this, VVServer.class);
                         RemoteCastielService.this.startService(intent);
-                        
-                        Message message = new Message();
-                        message.what = i;
-                        handler.sendMessage(message);
-                        i++;
                 }
             }
-        }, 15000, 300000);
+        }, 300000, 300000);
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             Log.e("LocalCastielService", String.valueOf(msg.what));
-            Toast.makeText(RemoteCastielService.this,"RemoteCastielService: "+ String.valueOf(msg.what), Toast.LENGTH_SHORT).show();
+//             Toast.makeText(RemoteCastielService.this,"RemoteCastielService: "+ String.valueOf(msg.what), Toast.LENGTH_SHORT).show();
             return true;
         }
     });
@@ -63,9 +58,8 @@ public class RemoteCastielService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("RemoteCastielService", "启动LocalCastielService服务");
-        Toast.makeText(RemoteCastielService.this, "启动LocalCastielService服务", Toast.LENGTH_LONG).show();
+//         Toast.makeText(RemoteCastielService.this, "启动LocalCastielService服务", Toast.LENGTH_LONG).show();
         this.bindService(new Intent(this,LocalCastielService.class), myServiceConnection, Context.BIND_IMPORTANT);
-
         showNotification(RemoteCastielService.this,startId);
         return START_STICKY;
     }
@@ -97,7 +91,6 @@ public class RemoteCastielService extends Service {
                 .build();
         Log.e("RemoteCastielService","notifyId"+String.valueOf(GRAY_SERVICE_ID));
         startForeground(GRAY_SERVICE_ID, notification);
-
     }
 
 
@@ -112,7 +105,7 @@ public class RemoteCastielService extends Service {
         public void onServiceDisconnected(ComponentName arg0) {
             Log.e("RemoteCastielService", "本地服务Local被干掉");
             // 连接出现了异常断开了，LocalCastielService被杀死了
-            Toast.makeText(RemoteCastielService.this, "本地服务Local被干掉", Toast.LENGTH_LONG).show();
+//             Toast.makeText(RemoteCastielService.this, "本地服务Local被干掉", Toast.LENGTH_LONG).show();
             // 启动LocalCastielService
             RemoteCastielService.this.startService(new Intent(RemoteCastielService.this,LocalCastielService.class));
             RemoteCastielService.this.bindService(new Intent(RemoteCastielService.this,LocalCastielService.class), myServiceConnection, Context.BIND_IMPORTANT);
