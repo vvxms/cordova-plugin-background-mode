@@ -40,7 +40,7 @@ public class LocalCastielService extends Service {
                 i++;
                 if(i>=180){
                   Toast.makeText(LocalCastielService.this, "LocalCastielService", Toast.LENGTH_SHORT).show();
-                  if(MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
+                  if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
                         Intent intent = new Intent(LocalCastielService.this, LocalCastielService.class);
                         LocalCastielService.this.startService(intent);
                   }
