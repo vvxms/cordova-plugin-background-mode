@@ -38,6 +38,7 @@ import android.content.Context;
  */
 
 public class VVServer extends Service{
+    private VVServer m_instance;
     private String TAG  = "VVServer";
     private final int PID = android.os.Process.myPid();
     private AssistServiceConnection mConnection;
@@ -144,7 +145,7 @@ public class VVServer extends Service{
         //读数据
         
        if(prop==null){
-          initPropertiesFile(VVServer.this);
+          initPropertiesFile(m_instance);
        }
         
        try {
@@ -258,7 +259,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-
+        m_instance = this;
 
         
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
