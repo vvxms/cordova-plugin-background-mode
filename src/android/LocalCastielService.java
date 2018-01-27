@@ -41,7 +41,7 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            LocalCastielService.this.startService(new Intent(LocalCastielService.this, de.appplant.cordova.plugin.background.VVServer.class));
+            LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
             Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -83,6 +83,12 @@ public class LocalCastielService extends Service {
         showNotification(this,startId );
         
         
+
+        
+        return START_STICKY;
+    }
+    
+    public static void test(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -103,9 +109,8 @@ public class LocalCastielService extends Service {
                 }
             }
         }, 10000, 10000);
-        
-        return START_STICKY;
     }
+    
 
     public  class MyServiceConnection implements ServiceConnection {
         @Override
