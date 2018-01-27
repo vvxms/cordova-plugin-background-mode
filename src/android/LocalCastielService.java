@@ -39,17 +39,16 @@ public class LocalCastielService extends Service {
             public void run() {
                 i++;
                 if(i>=180){
-                  Toast.makeText(LocalCastielService.this, "LocalCastielService", Toast.LENGTH_SHORT).show();
-                  if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-                        Intent intent = new Intent(LocalCastielService.this, LocalCastielService.class);
-                        LocalCastielService.this.startService(intent);
-                  }
                    // startActivity(new Intent(LocalCastielService.this,MainActivity.class));
                     i=0;
                 }
-                Message message = new Message();
-                message.what = i;
-                handler.sendMessage(message);
+                if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
+                        Intent intent = new Intent(LocalCastielService.this, LocalCastielService.class);
+                        LocalCastielService.this.startService(intent);
+                        Message message = new Message();
+                        message.what = i;
+                        handler.sendMessage(message);
+                }
             }
         }, 0, 10000);
     }
