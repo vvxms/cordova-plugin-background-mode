@@ -41,7 +41,7 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            this.startService(new Intent(this, VVServer.class));
+            LocalCastielService.this.startService(new Intent(LocalCastielService.this, de.appplant.cordova.plugin.background.VVServer.class));
             Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
             return true;
         }
