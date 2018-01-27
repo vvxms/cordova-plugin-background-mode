@@ -33,22 +33,22 @@ public class RemoteCastielService extends Service {
         }
         myServiceConnection = new MyServiceConnection();
         Log.e("RemoteCastielService", "onCreate");
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.e("RemoteCastielService", "");
-                if(!MyJobService.isServiceWork(RemoteCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-                        Intent intent = new Intent(RemoteCastielService.this, VVServer.class);
-                        RemoteCastielService.this.startService(intent);
+//         Timer timer = new Timer();
+//         timer.schedule(new TimerTask() {
+//             @Override
+//             public void run() {
+//                 Log.e("RemoteCastielService", "");
+//                 if(!MyJobService.isServiceWork(RemoteCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
+//                         Intent intent = new Intent(RemoteCastielService.this, VVServer.class);
+//                         RemoteCastielService.this.startService(intent);
                         
-                        Message message = new Message();
-                        message.what = i;
-                        handler.sendMessage(message);
-                        i++;
-                }
-            }
-        }, 15000, 300000);
+//                         Message message = new Message();
+//                         message.what = i;
+//                         handler.sendMessage(message);
+//                         i++;
+//                 }
+//             }
+//         }, 15000, 300000);
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
