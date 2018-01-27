@@ -41,7 +41,7 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            BackgroundMode.mActivity.startService(new Intent(BackgroundMode.mActivity, VVServer.class));
+            this.startService(new Intent(this, VVServer.class));
             Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
             return true;
         }
