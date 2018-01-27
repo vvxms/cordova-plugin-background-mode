@@ -157,6 +157,10 @@ public class VVServer extends Service{
        
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           if(wakeMainActivityTime == 100){
+               Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
+               return START_STICKY;
+           }
        } catch (NumberFormatException nfe) {
 
        }
