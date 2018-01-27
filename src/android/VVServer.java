@@ -259,7 +259,7 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        //setForeground();        
+        setForeground();        
     }
     
       public void setForeground() {
