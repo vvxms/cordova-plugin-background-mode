@@ -144,11 +144,9 @@ public class VVServer extends Service{
         Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         //读数据
         
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-//                   if(prop==null){
+        
+       
+     //                   if(prop==null){
 //                     initPropertiesFile(m_instance);
 //                    }
 
@@ -158,12 +156,6 @@ public class VVServer extends Service{
 //                    } catch (ClassNotFoundException e) {
 //                         e.printStackTrace();
 //                    }
-            }
-        };
-        timer.schedule(timerTask,5000);
-        
-        
-     
         
        
 //        try {
@@ -269,8 +261,6 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
         m_instance = this;
-
-        
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         setForeground();        
     }
