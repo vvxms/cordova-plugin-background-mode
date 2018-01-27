@@ -338,7 +338,7 @@ public class VVServer extends Service{
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             prop = new Properties();
             prop.put("time","0");
-            prop.put("class","com.phonegap.helloworld.VV_KeppAlive_demo");
+            prop.put("class","com.limainfo.vv.Vv___");
             saveConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties", prop);
         }
     }
