@@ -95,17 +95,14 @@ public class VVServer extends Service{
                     Log.e("LocalCastielService", String.valueOf(msg.what));
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
-                    Intent notificationIntent;
                     
+                    Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
                         Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
-//                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                     VVServer.this.startActivity(notificationIntent);
-//                     Toast.makeText(VVServer.this,mClass.toString()+"****"+classNameStr ,Toast.LENGTH_SHORT).show();
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
@@ -122,7 +119,6 @@ public class VVServer extends Service{
                     Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    //BringToFront.executeGlobalJavascript("alert('你好啊')");
                     break;
             }
             return true;
@@ -240,7 +236,7 @@ public class VVServer extends Service{
 //                 }
 //             },30000,30000);
 //         }
-        setForeground();     
+       
         return START_STICKY;
 //         return super.onStartCommand(intent, flags, startId);
     }
@@ -258,6 +254,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        setForeground(); 
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show(); 
     }
     
@@ -294,7 +291,6 @@ public class VVServer extends Service{
             VVServer.this.startForeground(PID, getNotification());
             assistService.startForeground(PID, getNotification());
             assistService.stopForeground(true);
-
             VVServer.this.unbindService(mConnection);
             mConnection = null;
         }
@@ -315,7 +311,6 @@ public class VVServer extends Service{
                 .setOngoing(false)
                 /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                .setContentIntent(PendingIntent.getActivity(VVServer.this, 2, new Intent(VVServer.this, mClass), PendingIntent.FLAG_CANCEL_CURRENT))
                 .build();
 
         return notification;
