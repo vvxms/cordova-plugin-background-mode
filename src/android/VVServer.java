@@ -138,7 +138,7 @@ public class VVServer extends Service{
         Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         //读数据
         if(prop==null){     
-            initPropertiesFile(m_instance);
+            initPropertiesFile(VVServer.this);
         }
 
         try {
