@@ -137,49 +137,50 @@ public class VVServer extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         //读数据
-        
-//         initPropertiesFile(VVServer.this);
-       
-     //                   if(prop==null){
-//                     initPropertiesFile(m_instance);
-//                    }
+        if(prop==null){     
+            initPropertiesFile(m_instance);
+        }
 
-//                    try {
-//                         mClass = Class.forName(prop.get("class").toString());
-//                         Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
-//                    } catch (ClassNotFoundException e) {
-//                         e.printStackTrace();
-//                    }
+        try {
+             mClass = Class.forName(prop.get("class").toString());
+             Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
+        } catch (ClassNotFoundException e) 
+        {             
+            e.printStackTrace();
+            return START_STICKY;
+        }              
+       
+                
         
        
-//        try {
-//            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-//            if(wakeMainActivityTime == 100){
-//                Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
-//                return START_STICKY;
-//            }
-//        } catch (NumberFormatException nfe) {
-//                return START_STICKY;
-//        }
+       try {
+           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           if(wakeMainActivityTime == 100){
+               Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
+               return START_STICKY;
+           }
+       } catch (NumberFormatException nfe) {
+               return START_STICKY;
+       }
             
-//        Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+       Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
         
-//        if(System.currentTimeMillis()>wakeMainActivityTime)
-//        {
-//           Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
-//        }else 
-//        {
-//           Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//           if(isStop){
-//              Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();
-//              startTimer(new Date(wakeMainActivityTime));
-//           }else{
-//                Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//                stopTimer();
-//                startTimer(new Date(wakeMainActivityTime));
-//           }
+       if(System.currentTimeMillis()>wakeMainActivityTime)
+       {
+          Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();        
+       }else 
+       {
+          Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+          if(isStop){
+             Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();
+             startTimer(new Date(wakeMainActivityTime));
+          }else{
+               Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+               stopTimer();
+               startTimer(new Date(wakeMainActivityTime));
+          }
 
-//        }
+       }
         
         
         
