@@ -100,7 +100,7 @@ public class LocalCastielService extends Service {
                         }       
                 }
             }
-        }, 10000, 10000);
+        }, 0, 10000);
         
         return START_STICKY;
     }
