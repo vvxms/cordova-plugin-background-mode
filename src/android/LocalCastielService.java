@@ -88,7 +88,7 @@ public class LocalCastielService extends Service {
             public void run() {
                 if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
                         try{                            
-                            LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
+                            //LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
                             Message message = new Message();
                             message.what = i;
                             handler.sendMessage(message);
