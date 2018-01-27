@@ -38,17 +38,17 @@ public class RemoteCastielService extends Service {
             @Override
             public void run() {
                 Log.e("RemoteCastielService", "");
-//                 if(!MyJobService.isServiceWork(RemoteCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-//                         Intent intent = new Intent(RemoteCastielService.this, VVServer.class);
-//                         RemoteCastielService.this.startService(intent);
+                if(!MyJobService.isServiceWork(RemoteCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
+                        Intent intent = new Intent(RemoteCastielService.this, VVServer.class);
+                        RemoteCastielService.this.startService(intent);
                         
-//                         Message message = new Message();
-//                         message.what = i;
-//                         handler.sendMessage(message);
-//                         i++;
-//                 }
+                        Message message = new Message();
+                        message.what = i;
+                        handler.sendMessage(message);
+                        i++;
+                }
             }
-        }, 0, 300000);
+        }, 15000, 300000);
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
