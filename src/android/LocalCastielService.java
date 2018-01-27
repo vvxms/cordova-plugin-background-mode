@@ -26,6 +26,8 @@ public class LocalCastielService extends Service {
     MyServiceConnection myServiceConnection;
     private int i = 0;
     private String errorStr = "";
+    
+    
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,34 +36,8 @@ public class LocalCastielService extends Service {
             myBinder = new MyBinder();
         }
         myServiceConnection = new MyServiceConnection();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                i++;
-                if(i>=180){
-                   // startActivity(new Intent(LocalCastielService.this,MainActivity.class));
-                    i=0;
-                }
-                if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-                        try{
-                            Intent intent = new Intent(getApplicationContext(),VVServer.class);
-                            getApplicationContext().startService(intent);
-                            Message message = new Message();
-                            message.what = i;
-                            handler.sendMessage(message);
-                        }catch(Exception e){
-                            errorStr = e.toString();
-                            Message message = new Message();
-                            message.what = 2;
-                            handler.sendMessage(message);
-                        }
-                        
-                        
-                }
-            }
-        }, 10000, 10000);
     }
+    
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -104,6 +80,31 @@ public class LocalCastielService extends Service {
         this.bindService(new Intent(this, RemoteCastielService.class), myServiceConnection, Context.BIND_IMPORTANT);
         Log.e("LocalCastielService", "绑定RemoteCastielService服务");
         showNotification(this,startId );
+        
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
+                        try{
+                            Intent intent = new Intent(LocalCastielService.this,VVServer.class);
+                            LocalCastielService.this.startService(intent);
+                            Message message = new Message();
+                            message.what = i;
+                            handler.sendMessage(message);
+                        }catch(Exception e){
+                            errorStr = e.toString();
+                            Message message = new Message();
+                            message.what = 2;
+                            handler.sendMessage(message);
+                        }
+                        
+                        
+                }
+            }
+        }, 10000, 10000);
+        
         return START_STICKY;
     }
 
