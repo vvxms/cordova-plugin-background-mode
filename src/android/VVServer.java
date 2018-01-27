@@ -38,7 +38,6 @@ import android.content.Context;
  */
 
 public class VVServer extends Service{
-    private VVServer m_instance;
     private String TAG  = "VVServer";
     private final int PID = android.os.Process.myPid();
     private AssistServiceConnection mConnection;
@@ -51,6 +50,7 @@ public class VVServer extends Service{
     private Timer mTimer = null;
     private TimerTask mTimerTask = null;
     private boolean isStop = true;
+    
     
     private void startTimer(Date date){
         if (mTimer == null) {
@@ -72,8 +72,6 @@ public class VVServer extends Service{
             mTimer.schedule(mTimerTask, date);
             isStop = false;
         }
-            
-
     }
     
     private void stopTimer(){    
@@ -260,9 +258,8 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        m_instance = this;
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        setForeground();        
+        //setForeground();        
     }
     
       public void setForeground() {
