@@ -142,7 +142,7 @@ public class VVServer extends Service{
         Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         //读数据
         
-        initPropertiesFile(VVServer.this);
+//         initPropertiesFile(VVServer.this);
        
      //                   if(prop==null){
 //                     initPropertiesFile(m_instance);
@@ -240,7 +240,7 @@ public class VVServer extends Service{
 //                 }
 //             },30000,30000);
 //         }
-
+        setForeground();     
         return START_STICKY;
 //         return super.onStartCommand(intent, flags, startId);
     }
@@ -258,8 +258,7 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        setForeground();        
+        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show(); 
     }
     
       public void setForeground() {
