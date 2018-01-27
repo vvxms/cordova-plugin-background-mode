@@ -337,7 +337,7 @@ public class VVServer extends Service{
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             prop = new Properties();
-            prop.put("time","0");
+            prop.put("time","100");
             prop.put("class","com.limainfo.vv.Vv___");
             saveConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties", prop);
         }
