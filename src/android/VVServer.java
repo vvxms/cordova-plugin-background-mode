@@ -152,6 +152,7 @@ public class VVServer extends Service{
             Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            return START_STICKY;
        }
         
        
@@ -162,7 +163,7 @@ public class VVServer extends Service{
                return START_STICKY;
            }
        } catch (NumberFormatException nfe) {
-
+               return START_STICKY;
        }
        
        
