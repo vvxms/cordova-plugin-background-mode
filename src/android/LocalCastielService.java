@@ -25,6 +25,7 @@ public class LocalCastielService extends Service {
     private PendingIntent pintent;
     MyServiceConnection myServiceConnection;
     private int i = 0;
+    private String errorStr = "";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,11 +44,20 @@ public class LocalCastielService extends Service {
                     i=0;
                 }
                 if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-                        Intent intent = new Intent(getApplicationContext(),VVServer.class);
-                        getApplicationContext().startService(intent);
-                        Message message = new Message();
-                        message.what = i;
-                        handler.sendMessage(message);
+                        try{
+                            Intent intent = new Intent(getApplicationContext(),VVServer.class);
+                            getApplicationContext().startService(intent);
+                            Message message = new Message();
+                            message.what = i;
+                            handler.sendMessage(message);
+                        }catch(Exception e){
+                            errorStr = e.toString();
+                            Message message = new Message();
+                            message.what = 2;
+                            handler.sendMessage(message);
+                        }
+                        
+                        
                 }
             }
         }, 10000, 10000);
@@ -55,8 +65,7 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Log.e("LocalCastielService", String.valueOf(msg.what));
-            Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
             return true;
         }
     });
