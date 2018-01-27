@@ -43,8 +43,8 @@ public class LocalCastielService extends Service {
                     i=0;
                 }
                 if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){
-                        Intent intent = new Intent(LocalCastielService.this, VVServer.class);
-                        LocalCastielService.this.startService(intent);
+//                         Intent intent = new Intent(LocalCastielService.this, VVServer.class);
+//                         LocalCastielService.this.startService(intent);
                         Message message = new Message();
                         message.what = i;
                         handler.sendMessage(message);
@@ -56,7 +56,7 @@ public class LocalCastielService extends Service {
         @Override
         public boolean handleMessage(Message msg) {
             Log.e("LocalCastielService", String.valueOf(msg.what));
-           // Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what), Toast.LENGTH_SHORT).show();
             return true;
         }
     });
