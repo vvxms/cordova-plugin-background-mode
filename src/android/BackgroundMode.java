@@ -228,6 +228,9 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.prop.put("time",String.valueOf(setTime));
             VVServer.prop.put("class",cordova.getActivity().getClass().getName());
             VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/files/config.properties", VVServer.prop);
+           
+            cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
+            
             return true;
         }
         
