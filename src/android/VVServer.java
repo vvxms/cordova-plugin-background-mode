@@ -99,7 +99,7 @@ public class VVServer extends Service{
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
-                        if(isOpenDebugModel)
+//                         if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -146,10 +146,16 @@ public class VVServer extends Service{
 
         try {
             mClass = Class.forName(prop.get("class").toString());
-            if(isOpenDebugModel)
+            if(mClass != null){
+                Toast.makeText(VVServer.this,mClass.toString(),Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(VVServer.this,"获取包名失败",Toast.LENGTH_LONG).show();
+            }
+            if()
                 Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
         } catch (ClassNotFoundException e) 
-        {             
+        {    
+            Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return START_STICKY;
         }              
