@@ -198,7 +198,7 @@ public class BackgroundMode extends CordovaPlugin {
           
         if(action.equals("StartIPC")){
             StartJobServer();
-            
+            Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
                 cordova.getActivity().startService(intent);
