@@ -51,6 +51,7 @@ public class VVServer extends Service{
     private TimerTask mTimerTask = null;
     private boolean isStop = true;
     
+    private String testLog = "";
     
     private void startTimer(Date date){
         if (mTimer == null) {
@@ -114,10 +115,9 @@ public class VVServer extends Service{
                       e.printStackTrace();
                     }
                     break;
-                case 2:
-                    Log.e("LocalCastielService", String.valueOf(msg.what));
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"wakeMainActivityTime: "+wakeMainActivityTime,Toast.LENGTH_SHORT).show();
+                case 2:  
+//                     if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,testLog,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     break;
@@ -214,6 +214,30 @@ public class VVServer extends Service{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                
+                
+                  //读数据
+                if(prop==null){     
+                    initPropertiesFile(VVServer.this);
+                }
+
+                try {
+                    mClass = Class.forName(prop.get("class").toString());
+                    if(mClass != null){
+                        testLog = prop.get("class").toString();
+                    }else{
+                        testLog = "获取包名失败";
+                    }
+                } catch (ClassNotFoundException e) 
+                {    
+                    testLog = e.toString();
+                    e.printStackTrace();
+                }              
+
+                Message messageQ = new Message();
+                messageQ.what = 2;  
+                handler.sendMessage(messageQ);
+                
                 Message message = new Message();
                 message.what = 1;  
                 handler.sendMessage(message);
