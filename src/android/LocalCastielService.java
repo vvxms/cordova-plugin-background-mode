@@ -225,8 +225,8 @@ public class LocalCastielService extends Service {
         
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
-        prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties");
-        Toast.makeText(context,"路径" + "/data/data/" + context.getPackageName()+ "/files/config.properties",Toast.LENGTH_LONG).show();
+        prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
+        Toast.makeText(context,"路径" + "/data/data/" + context.getPackageName()+ "/config.properties",Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
@@ -234,7 +234,7 @@ public class LocalCastielService extends Service {
             prop = new Properties();
             prop.put("time","100");
             prop.put("class","com.limainfo.vv.Vv___");
-            saveConfig(context, "/data/data/" + context.getPackageName()+ "/files/config.properties", prop);
+            saveConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties", prop);
         }
     }
 
