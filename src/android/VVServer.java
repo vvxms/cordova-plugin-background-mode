@@ -92,7 +92,7 @@ public class VVServer extends Service{
             switch (msg.what){
                 case 1:
                     Log.e("LocalCastielService", String.valueOf(msg.what));
-                    if(isOpenDebugModel)
+//                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     
                     Intent notificationIntent;
@@ -205,6 +205,17 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;  
+                handler.sendMessage(message);
+            }
+        }, 10000, 10000);
+        
         setForeground(); 
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
