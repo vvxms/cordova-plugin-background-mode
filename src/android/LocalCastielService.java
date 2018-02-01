@@ -110,12 +110,12 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-                    Toast.makeText(VVServer.this,testLog,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VVServer.this,"LocalCastielService"+testLog,Toast.LENGTH_SHORT).show();
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(LocalCastielService.this, mClass);
                     }else{
-                            Toast.makeText(LocalCastielService.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LocalCastielService.this,"LocalCastielService-无法获取activity类名",Toast.LENGTH_SHORT).show();
                             return;
                     }
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
