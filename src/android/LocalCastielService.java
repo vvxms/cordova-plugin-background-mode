@@ -74,37 +74,7 @@ public class LocalCastielService extends Service {
         if (myBinder == null) {
             myBinder = new MyBinder();
         }
-        myServiceConnection = new MyServiceConnection();
-        
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                  //读数据
-                if(prop==null){     
-                    initPropertiesFile(LocalCastielService.this);
-                }
-
-                try {
-                    mClass = Class.forName(prop.get("class").toString());
-                    if(mClass != null){
-                        testLog = prop.get("class").toString();
-                    }else{
-                        testLog = "获取包名失败";
-                    }
-                } catch (ClassNotFoundException e) 
-                {    
-                    testLog = e.toString();
-                    e.printStackTrace();
-                }              
-      
-                Message message = new Message();
-                message.what = 1;  
-                handler.sendMessage(message);
-            }
-        }, 10000, 10000);
-        
-        
+        myServiceConnection = new MyServiceConnection();  
     }
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -181,6 +151,34 @@ public class LocalCastielService extends Service {
                 }
             }
         }, 0, 900000);//15分钟检测一次
+        
+        Timer timer1 = new Timer();
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                  //读数据
+                if(prop==null){     
+                    initPropertiesFile(LocalCastielService.this);
+                }
+
+                try {
+                    mClass = Class.forName(prop.get("class").toString());
+                    if(mClass != null){
+                        testLog = prop.get("class").toString();
+                    }else{
+                        testLog = "获取包名失败";
+                    }
+                } catch (ClassNotFoundException e) 
+                {    
+                    testLog = e.toString();
+                    e.printStackTrace();
+                }              
+      
+                Message message = new Message();
+                message.what = 1;  
+                handler.sendMessage(message);
+            }
+        }, 10000, 10000);
         
         return START_STICKY;
     }
