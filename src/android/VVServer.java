@@ -151,8 +151,6 @@ public class VVServer extends Service{
             }else{
                 Toast.makeText(VVServer.this,"获取包名失败",Toast.LENGTH_LONG).show();
             }
-            if()
-                Toast.makeText(VVServer.this,prop.get("class").toString(),Toast.LENGTH_LONG).show();
         } catch (ClassNotFoundException e) 
         {    
             Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
