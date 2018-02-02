@@ -92,7 +92,7 @@ public class LocalCastielService extends Service {
                     handler.sendMessage(message); 
                 }
             }
-        }, 0, 900000);//15分钟检测一次
+        }, 0, 5000);//15分钟检测一次
         
         return START_STICKY;
     }
