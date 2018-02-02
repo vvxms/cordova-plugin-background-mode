@@ -411,7 +411,7 @@ public class VVServer extends Service{
     
         private static Timer curTimer;
         private static TimerTask curTimerTask;
-        private static isCurTimerStop = true;
+        private static boolean isCurTimerStop = true;
         private void StartWakeTimer(int delay,int period){
         if (curTimer == null) {
             curTimer = new Timer();
