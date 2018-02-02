@@ -50,7 +50,7 @@ public class VVServer extends Service{
     private static Timer mTimer = null;
     private static TimerTask mTimerTask = null;
     private static boolean isStop = true;
-    private static String testLog = "";
+    private static String testLog = "-";
     
     private void startTimer(boolean isUseDate,Date date,int delay,int period){
         if (mTimer == null) {
@@ -60,6 +60,10 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
+                    
+                Message messageQ = new Message();
+                messageQ.what = 2;  
+                handler.sendMessage(messageQ);
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
