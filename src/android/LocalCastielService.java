@@ -165,13 +165,10 @@ public class LocalCastielService extends Service {
                     try {
                         mClass = Class.forName(VVServer.prop.get("class").toString());
                         if(mClass != null){
-                            Toast.makeText(LocalCastielService.this,mClass.toString(),Toast.LENGTH_LONG).show();
                         }else{
-                            Toast.makeText(LocalCastielService.this,"获取包名失败",Toast.LENGTH_LONG).show();
                         }
                     } catch (ClassNotFoundException e) 
                     {    
-                        Toast.makeText(LocalCastielService.this,e.toString(),Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                         return;
                     }              
@@ -187,12 +184,10 @@ public class LocalCastielService extends Service {
                     
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
-                        Toast.makeText(LocalCastielService.this,"LocalCastielService---时间到了",Toast.LENGTH_SHORT).show();
                         Intent notificationIntent;
                         if(mClass!=null){
                             notificationIntent = new Intent(LocalCastielService.this, mClass);
                         }else{
-                            Toast.makeText(LocalCastielService.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
