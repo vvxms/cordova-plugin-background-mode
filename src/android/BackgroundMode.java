@@ -220,6 +220,8 @@ public class BackgroundMode extends CordovaPlugin {
             //设定的时间
             long setTime = curTime + time;
            
+            Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
+            
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
             VVServer.prop.put("class",cordova.getActivity().getClass().getName());
