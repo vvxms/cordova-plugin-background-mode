@@ -227,7 +227,7 @@ public class VVServer extends Service{
         {    
             Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
-            return START_STICKY;
+            return;
         }              
        
        try {
@@ -235,10 +235,10 @@ public class VVServer extends Service{
            if(wakeMainActivityTime == 100){
                if(isOpenDebugModel)
                    Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
-               return START_STICKY;
+               return;
            }
        } catch (NumberFormatException nfe) {
-               return START_STICKY;
+               return;
        }
            
         if(isOpenDebugModel)
