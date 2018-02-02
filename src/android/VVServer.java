@@ -210,7 +210,64 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
         setForeground(); 
+        
+            //读数据
+        if(prop==null){     
+            initPropertiesFile(VVServer.this);
+        }
+
+        try {
+            mClass = Class.forName(prop.get("class").toString());
+            if(mClass != null){
+                Toast.makeText(VVServer.this,mClass.toString(),Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(VVServer.this,"获取包名失败",Toast.LENGTH_LONG).show();
+            }
+        } catch (ClassNotFoundException e) 
+        {    
+            Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            return START_STICKY;
+        }              
+       
+       try {
+           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           if(wakeMainActivityTime == 100){
+               if(isOpenDebugModel)
+                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
+               return START_STICKY;
+           }
+       } catch (NumberFormatException nfe) {
+               return START_STICKY;
+       }
+           
         if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+         
+        if(System.currentTimeMillis()>wakeMainActivityTime)
+        {
+            if(isOpenDebugModel)
+               Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+        }else 
+        {
+            if(isOpenDebugModel)
+                Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+            if(isStop){
+                if(isOpenDebugModel)
+                    Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();                          
+                startTimer(new Date(wakeMainActivityTime));
+            }else{
+                if(isOpenDebugModel)
+                      Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();    
+                stopTimer();    
+                startTimer(new Date(wakeMainActivityTime));
+            }
+
+      
+        }
+        
+        
+//         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
     }
     
