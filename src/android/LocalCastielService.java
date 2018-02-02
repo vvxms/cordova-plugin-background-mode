@@ -36,6 +36,13 @@ public class LocalCastielService extends Service {
             myBinder = new MyBinder();
         }
         myServiceConnection = new MyServiceConnection();
+        
+        if(isCurTimerStop){
+            StartWakeTimer(3000,1000);
+        }else{
+            StopCurTimer();
+            StartWakeTimer(3000,1000);
+        }
     }
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -132,4 +139,94 @@ public class LocalCastielService extends Service {
         this.unbindService(myServiceConnection);
         super.onDestroy();
     }
+    
+        
+    private static Timer curTimer;
+    private static TimerTask curTimerTask;
+    private static boolean isCurTimerStop = true; 
+    
+    private static long wakeMainActivityTime = -1;//全局变量
+    private Class<?> mClass;
+    
+    private void StartWakeTimer(int delay,int period){
+        if (curTimer == null) {
+            curTimer = new Timer();
+        }
+        if (curTimerTask == null) {
+            curTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    
+                          //读数据
+                    if(VVServer.prop==null){     
+                        VVServer.initPropertiesFile(LocalCastielService.this);
+                    }
+
+                    try {
+                        mClass = Class.forName(prop.get("class").toString());
+                        if(mClass != null){
+                            Toast.makeText(LocalCastielService.this,mClass.toString(),Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(LocalCastielService.this,"获取包名失败",Toast.LENGTH_LONG).show();
+                        }
+                    } catch (ClassNotFoundException e) 
+                    {    
+                        Toast.makeText(LocalCastielService.this,e.toString(),Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                        return;
+                    }              
+
+                   try {
+                       wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+                       if(wakeMainActivityTime == 100){
+                           return;
+                       }
+                   } catch (NumberFormatException nfe) {
+                           return;
+                   }
+                    
+                    if(VVServer.wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    {
+                        Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
+                        Intent notificationIntent;
+                        if(mClass!=null){
+                            notificationIntent = new Intent(LocalCastielService.this, mClass);
+                        }else{
+                            Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
+                        try 
+                        {
+                          pendingIntent.send();
+                        }
+                        catch (PendingIntent.CanceledException e) 
+                        {
+                          e.printStackTrace();
+                        }
+                    }
+                }
+            };
+        }
+
+        if(curTimer != null && curTimerTask != null)
+        {
+            curTimer.schedule(curTimerTask,delay,period);
+            isCurTimerStop = false;
+        }
+    }
+
+    private void StopCurTimer(){
+        if (curTimer != null) {
+            curTimer.cancel();
+            curTimer = null;
+        }
+        if (curTimerTask != null) {
+            curTimerTask.cancel();
+            curTimerTask = null;
+        }
+        isCurTimerStop = true;
+    }    
+    
 }
