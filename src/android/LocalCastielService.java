@@ -81,24 +81,24 @@ public class LocalCastielService extends Service {
         @Override
         public boolean handleMessage(Message msg) {
                     Toast.makeText(VVServer.this,"LocalCastielService"+testLog,Toast.LENGTH_SHORT).show();
-                    Intent notificationIntent;
-                    if(mClass!=null){
-                        notificationIntent = new Intent(LocalCastielService.this, mClass);
-                    }else{
-                            Toast.makeText(LocalCastielService.this,"LocalCastielService-无法获取activity类名",Toast.LENGTH_SHORT).show();
-                            return;
-                    }
-                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
-                    try 
-                    {
-                      pendingIntent.send();
-                    }
-                    catch (PendingIntent.CanceledException e) 
-                    {
-                      e.printStackTrace();
-                    }
-//             LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
+//                     Intent notificationIntent;
+//                     if(mClass!=null){
+//                         notificationIntent = new Intent(LocalCastielService.this, mClass);
+//                     }else{
+//                             Toast.makeText(LocalCastielService.this,"LocalCastielService-无法获取activity类名",Toast.LENGTH_SHORT).show();
+//                             return;
+//                     }
+//                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+//                     PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
+//                     try 
+//                     {
+//                       pendingIntent.send();
+//                     }
+//                     catch (PendingIntent.CanceledException e) 
+//                     {
+//                       e.printStackTrace();
+//                     }
+            LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
             
 //             Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
             return true;
@@ -152,33 +152,33 @@ public class LocalCastielService extends Service {
             }
         }, 0, 900000);//15分钟检测一次
         
-        Timer timer1 = new Timer();
-        timer1.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                  //读数据
-                if(prop==null){     
-                    initPropertiesFile(LocalCastielService.this);
-                }
+//         Timer timer1 = new Timer();
+//         timer1.schedule(new TimerTask() {
+//             @Override
+//             public void run() {
+//                   //读数据
+//                 if(prop==null){     
+//                     initPropertiesFile(LocalCastielService.this);
+//                 }
 
-                try {
-                    mClass = Class.forName(prop.get("class").toString());
-                    if(mClass != null){
-                        testLog = prop.get("class").toString();
-                    }else{
-                        testLog = "获取包名失败";
-                    }
-                } catch (ClassNotFoundException e) 
-                {    
-                    testLog = e.toString();
-                    e.printStackTrace();
-                }              
+//                 try {
+//                     mClass = Class.forName(prop.get("class").toString());
+//                     if(mClass != null){
+//                         testLog = prop.get("class").toString();
+//                     }else{
+//                         testLog = "获取包名失败";
+//                     }
+//                 } catch (ClassNotFoundException e) 
+//                 {    
+//                     testLog = e.toString();
+//                     e.printStackTrace();
+//                 }              
       
-                Message message = new Message();
-                message.what = 1;  
-                handler.sendMessage(message);
-            }
-        }, 10000, 10000);
+//                 Message message = new Message();
+//                 message.what = 1;  
+//                 handler.sendMessage(message);
+//             }
+//         }, 10000, 10000);
         
         return START_STICKY;
     }
