@@ -43,7 +43,7 @@ public class RemoteCastielService extends Service {
                         RemoteCastielService.this.startService(intent);
                 }
             }
-        }, 300000, 300000);
+        }, 60000, 60000);
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
