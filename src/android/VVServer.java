@@ -168,6 +168,8 @@ public class VVServer extends Service{
        } catch (NumberFormatException nfe) {
                return START_STICKY;
        }
+        
+         return START_STICKY;
            
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
@@ -241,6 +243,16 @@ public class VVServer extends Service{
                return;
        }
            
+        
+        if(isCurTimerStop){
+            StartWakeTimer(1000,1000);
+        }else{
+            StopCurTimer();    
+            StartWakeTimer(1000,1000);
+        }
+        return;
+        
+        
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
          
@@ -394,5 +406,51 @@ public class VVServer extends Service{
         }
         return properties;
     }
+    
+    
+    
+        private static Timer curTimer;
+        private static TimerTask curTimerTask;
+        private static isCurTimerStop = true;
+        private void StartWakeTimer(int delay,int period){
+        if (curTimer == null) {
+            curTimer = new Timer();
+        }
+        if (curTimerTask == null) {
+            curTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    
+                Message messageQ = new Message();
+                messageQ.what = 2;  
+                handler.sendMessage(messageQ);
+                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                }
+            };
+        }
+
+        if(curTimer != null && curTimerTask != null)
+        {
+            curTimer.schedule(curTimerTask,delay,period);
+            isCurTimerStop = false;
+        }
+    }
+
+    private void StopCurTimer(){
+        if (curTimer != null) {
+            curTimer.cancel();
+            curTimer = null;
+        }
+        if (curTimerTask != null) {
+            curTimerTask.cancel();
+            curTimerTask = null;
+        }
+        isCurTimerStop = true;
+    }    
     
 }
