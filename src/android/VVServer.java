@@ -126,7 +126,7 @@ public class VVServer extends Service{
                     break;
                 case 2:  
 //                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,testLog,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VVServer.this,"时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
@@ -167,9 +167,10 @@ public class VVServer extends Service{
          
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           Toast.makeText(VVServer.this,"读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
            if(wakeMainActivityTime == 100){
                if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
+                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
                return START_STICKY;
            }
        } catch (NumberFormatException nfe) {
@@ -177,10 +178,10 @@ public class VVServer extends Service{
        }
          
         if(isStop){
-            startTimer(false,new Date(wakeMainActivityTime),0,1000);
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }else{
             stopTimer();    
-            startTimer(false,new Date(wakeMainActivityTime),0,1000);
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
            
 //         if(isOpenDebugModel)
