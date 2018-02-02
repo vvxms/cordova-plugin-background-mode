@@ -47,13 +47,12 @@ public class VVServer extends Service{
     private boolean isOpenDebugModel = false;
     Class<?> mClass;
     
-    private Timer mTimer = null;
-    private TimerTask mTimerTask = null;
-    private boolean isStop = true;
+    private static Timer mTimer = null;
+    private static TimerTask mTimerTask = null;
+    private static boolean isStop = true;
+    private static String testLog = "";
     
-    private String testLog = "";
-    
-    private void startTimer(Date date){
+    private void startTimer(boolean isUseDate,Date date,int delay,int period){
         if (mTimer == null) {
             mTimer = new Timer();
         }
@@ -61,30 +60,37 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
+                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
                 }
             };
         }
 
         if(mTimer != null && mTimerTask != null)
         {
-            mTimer.schedule(mTimerTask, date);
+            if(isUseDate){
+                mTimer.schedule(mTimerTask, date);
+            }else{
+                mTimer.schedule(mTimerTask,delay,period);
+            }
             isStop = false;
         }
     }
-    
-    private void stopTimer(){    
-        if (mTimer != null) {    
-            mTimer.cancel();    
-            mTimer = null;    
-        }    
-        if (mTimerTask != null) {    
-            mTimerTask.cancel();    
-            mTimerTask = null;    
-        }       
-        isStop = true;  
+
+    private void stopTimer(){
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+        if (mTimerTask != null) {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+        isStop = true;
     }    
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -92,7 +98,6 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    Log.e("LocalCastielService", String.valueOf(msg.what));
 //                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     
@@ -118,8 +123,6 @@ public class VVServer extends Service{
                 case 2:  
 //                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,testLog,Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
                     break;
             }
             return true;
@@ -157,7 +160,7 @@ public class VVServer extends Service{
             e.printStackTrace();
             return START_STICKY;
         }              
-       
+         
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
            if(wakeMainActivityTime == 100){
@@ -168,31 +171,37 @@ public class VVServer extends Service{
        } catch (NumberFormatException nfe) {
                return START_STICKY;
        }
+         
+        if(isStop){
+            startTimer(false,new Date(wakeMainActivityTime),0,1000);
+        }else{
+            stopTimer();    
+            startTimer(false,new Date(wakeMainActivityTime),0,1000);
+        }
            
-        if(isOpenDebugModel)
+//         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
          
-        if(System.currentTimeMillis()>wakeMainActivityTime)
-        {
-            if(isOpenDebugModel)
-               Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-        }else 
-        {
-            if(isOpenDebugModel)
-                Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-            if(isStop){
-                if(isOpenDebugModel)
-                    Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();                          
-                startTimer(new Date(wakeMainActivityTime));
-            }else{
-                if(isOpenDebugModel)
-                      Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();    
-                stopTimer();    
-                startTimer(new Date(wakeMainActivityTime));
-            }
-
-      
-        }
+//         if(System.currentTimeMillis()>wakeMainActivityTime)
+//         {
+//             if(isOpenDebugModel)
+//                Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//         }else 
+//         {
+//             if(isOpenDebugModel)
+//                 Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+//             if(isStop){
+//                 if(isOpenDebugModel)
+//                     Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();                          
+//                 startTimer(new Date(wakeMainActivityTime));
+//             }else{
+//                 if(isOpenDebugModel)
+//                       Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();    
+//                 stopTimer();    
+//                 startTimer(new Date(wakeMainActivityTime));
+//             }
+//         }
+        
         return START_STICKY;
 //         return super.onStartCommand(intent, flags, startId);
     }
@@ -203,6 +212,10 @@ public class VVServer extends Service{
     public void onDestroy() {
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
+        //关闭时停止定时器
+        if(!isStop){
+            stopTimer();    
+        }
         super.onDestroy();
     }
 
