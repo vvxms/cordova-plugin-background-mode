@@ -210,39 +210,39 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();
         Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+//         Timer timer = new Timer();
+//         timer.schedule(new TimerTask() {
+//             @Override
+//             public void run() {
                 
                 
-                  //读数据
-                if(prop==null){     
-                    initPropertiesFile(VVServer.this);
-                }
+//                   //读数据
+//                 if(prop==null){     
+//                     initPropertiesFile(VVServer.this);
+//                 }
 
-                try {
-                    mClass = Class.forName(prop.get("class").toString());
-                    if(mClass != null){
-                        testLog = prop.get("class").toString();
-                    }else{
-                        testLog = "---获取包名失败";
-                    }
-                } catch (ClassNotFoundException e) 
-                {    
-                    testLog = e.toString();
-                    e.printStackTrace();
-                }              
+//                 try {
+//                     mClass = Class.forName(prop.get("class").toString());
+//                     if(mClass != null){
+//                         testLog = prop.get("class").toString();
+//                     }else{
+//                         testLog = "---获取包名失败";
+//                     }
+//                 } catch (ClassNotFoundException e) 
+//                 {    
+//                     testLog = e.toString();
+//                     e.printStackTrace();
+//                 }              
 
-                Message messageQ = new Message();
-                messageQ.what = 2;  
-                handler.sendMessage(messageQ);
+//                 Message messageQ = new Message();
+//                 messageQ.what = 2;  
+//                 handler.sendMessage(messageQ);
                 
-                Message message = new Message();
-                message.what = 1;  
-                handler.sendMessage(message);
-            }
-        }, 10000, 10000);
+//                 Message message = new Message();
+//                 message.what = 1;  
+//                 handler.sendMessage(message);
+//             }
+//         }, 10000, 10000);
         
         setForeground(); 
         if(isOpenDebugModel)
