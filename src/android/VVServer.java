@@ -250,6 +250,10 @@ public class VVServer extends Service{
             StopCurTimer();    
             StartWakeTimer(1000,1000);
         }
+        
+        //         if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        
         return;
         
         
@@ -278,9 +282,7 @@ public class VVServer extends Service{
       
 //         }
         
-        
-//         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+       
     }
     
       public void setForeground() {
