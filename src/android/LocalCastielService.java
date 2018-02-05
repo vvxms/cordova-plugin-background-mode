@@ -104,7 +104,7 @@ public class LocalCastielService extends Service {
             @Override
             public void run() {
                 try{
-                    Thread.sleep(4000);
+                    Thread.sleep(20000);
                     Message message = new Message(); 
                     message.what = 2;
                     handler.sendMessage(message); 
