@@ -103,14 +103,16 @@ public class LocalCastielService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    Thread.sleep(20000);
-                    Message message = new Message(); 
-                    message.what = 2;
-                    handler.sendMessage(message); 
-                    WakePage();
-                }catch (Exception e){
+                while (true){
+                    try{
+                        Thread.sleep(20000);
+                        Message message = new Message(); 
+                        message.what = 2;
+                        handler.sendMessage(message); 
+                        WakePage();
+                    }catch (Exception e){
 
+                    }
                 }
             }
         }).start();
