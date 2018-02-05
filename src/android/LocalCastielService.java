@@ -113,7 +113,7 @@ public class LocalCastielService extends Service {
 
                 }
             }
-        });
+        }).start();
         
         
         Timer timer = new Timer();
