@@ -108,6 +108,7 @@ public class LocalCastielService extends Service {
                     Message message = new Message(); 
                     message.what = 2;
                     handler.sendMessage(message); 
+                    WakePage();
                 }catch (Exception e){
 
                 }
@@ -185,7 +186,32 @@ public class LocalCastielService extends Service {
             curTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    
+                    WakePage();
+                }
+            };
+        }
+
+        if(curTimer != null && curTimerTask != null)
+        {
+            curTimer.schedule(curTimerTask,delay,period);
+            isCurTimerStop = false;
+        }
+    }
+
+    private void StopCurTimer(){
+        if (curTimer != null) {
+            curTimer.cancel();
+            curTimer = null;
+        }
+        if (curTimerTask != null) {
+            curTimerTask.cancel();
+            curTimerTask = null;
+        }
+        isCurTimerStop = true;
+    }    
+    
+    
+    private void WakePage(){
                     //读数据
                     if(VVServer.prop==null){     
                         VVServer.initPropertiesFile(LocalCastielService.this);
@@ -226,28 +252,7 @@ public class LocalCastielService extends Service {
                         {
                           e.printStackTrace();
                         }
-                    }
-                }
-            };
-        }
-
-        if(curTimer != null && curTimerTask != null)
-        {
-            curTimer.schedule(curTimerTask,delay,period);
-            isCurTimerStop = false;
-        }
+                    }        
     }
-
-    private void StopCurTimer(){
-        if (curTimer != null) {
-            curTimer.cancel();
-            curTimer = null;
-        }
-        if (curTimerTask != null) {
-            curTimerTask.cancel();
-            curTimerTask = null;
-        }
-        isCurTimerStop = true;
-    }    
     
 }
