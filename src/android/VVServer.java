@@ -33,6 +33,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import android.content.Context;
 
+import android.os.SystemClock;
+import android.app.AlarmManager;
+
 /**
  * Created by loi on 2018/1/18.
  */
@@ -213,7 +216,19 @@ public class VVServer extends Service{
     }
     
     
+    @Override
+    public void onTaskRemoved(Intent rootIntent){
+        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+        restartServiceIntent.setPackage(getPackageName());
 
+        PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, 
+                SystemClock.elapsedRealtime() + 1000,
+                restartServicePendingIntent);
+        super.onTaskRemoved(rootIntent);
+    }
+    
     @Override
     public void onDestroy() {
         if(isOpenDebugModel)
