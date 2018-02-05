@@ -262,9 +262,6 @@ public class LocalCastielService extends Service {
 
                    try {
                        wakeMainActivityTime = Long.parseLong(VVServer.prop.get("time").toString());
-                       if(wakeMainActivityTime == 100){
-                           return;
-                       }
                    } catch (NumberFormatException nfe) {
                            return;
                    }
