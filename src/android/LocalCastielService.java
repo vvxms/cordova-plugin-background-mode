@@ -30,7 +30,7 @@ public class LocalCastielService extends Service {
     MyServiceConnection myServiceConnection;
     private int i = 0;
     private String errorStr = "";
-    
+    private boolean isOpenDebugModel = false;
     
     @Override
     public void onCreate() {
@@ -63,10 +63,14 @@ public class LocalCastielService extends Service {
                     LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
                     break;            
                 case 2:   
-                    Toast.makeText(LocalCastielService.this, "LocalCastielService:线程内弹出", Toast.LENGTH_SHORT).show();
+                    if(isOpenDebugModel){
+                        Toast.makeText(LocalCastielService.this, "LocalCastielService:线程内弹出", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 3:
-                    Toast.makeText(LocalCastielService.this, "LocalCastielService:定时器内弹出", Toast.LENGTH_SHORT).show();
+                    if(isOpenDebugModel){
+                        Toast.makeText(LocalCastielService.this, "LocalCastielService:定时器内弹出", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
             
@@ -115,29 +119,20 @@ public class LocalCastielService extends Service {
             public void run() {
                 while (true){
                     try{
-                        Thread.sleep(20000);
-                        Message message = new Message(); 
-                        message.what = 2;
-                        handler.sendMessage(message); 
-                        WakeScreen();
+                        
+                        Thread.sleep(1000);
+                        
+//                         Message message = new Message(); 
+//                         message.what = 2;
+//                         handler.sendMessage(message); 
+                        
+                        WakePage();
+                        
 
                         Intent intent = new Intent("VV_Test");       
 //                         intent.putExtra("NmeaData",nmea);       
                         LocalCastielService.this.sendBroadcast(intent);
-                        
-//                         Intent notificationIntent;
-//                         notificationIntent = new Intent(LocalCastielService.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);    
-//                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-//                         PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
-//                         try 
-//                         {
-//                             pendingIntent.send();      
-//                         }
-//                         catch (PendingIntent.CanceledException e)   
-//                         {     
-//                             e.printStackTrace();
-//                         }
-                        
+                                                
                     }catch (Exception e){
 
                     }
@@ -282,6 +277,7 @@ public class LocalCastielService extends Service {
                     
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
+                        WakeScreen();
                         Intent notificationIntent;
                         if(mClass!=null){
                             notificationIntent = new Intent(LocalCastielService.this, mClass);
