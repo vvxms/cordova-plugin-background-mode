@@ -99,20 +99,20 @@ public class LocalCastielService extends Service {
         Log.e("LocalCastielService", "绑定RemoteCastielService服务");
         showNotification(this,startId );
          
-        //测试线程
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    Thread.sleep(4000);
-                    Message message = new Message(); 
-                    message.what = 2;
-                    handler.sendMessage(message); 
-                }catch (Exception e){
+//         //测试线程
+//         new Thread(new Runnable() {
+//             @Override
+//             public void run() {
+//                 try{
+//                     Thread.sleep(4000);
+//                     Message message = new Message(); 
+//                     message.what = 2;
+//                     handler.sendMessage(message); 
+//                 }catch (Exception e){
 
-                }
-            }
-        });
+//                 }
+//             }
+//         });
         
         
         Timer timer = new Timer();
