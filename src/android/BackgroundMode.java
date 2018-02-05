@@ -79,7 +79,7 @@ public class BackgroundMode extends CordovaPlugin {
 
     // Service that keeps the app awake
     private ForegroundService service;
-
+    
     // Used to (un)bind the service to with the activity
     private final ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -97,7 +97,7 @@ public class BackgroundMode extends CordovaPlugin {
     
     public static Activity mActivity;
     public static CordovaWebView mWebView;
-    private boolean isOpenDebugModel = false;
+    private static boolean isOpenDebugModel = false;
   
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -181,7 +181,9 @@ public class BackgroundMode extends CordovaPlugin {
         
         
         if (action.equals("BringToFront")) {
-            Toast.makeText(cordova.getActivity(),cordova.getActivity().getClass().getName(), Toast.LENGTH_LONG).show();
+            if(isOpenDebugModel){
+                Toast.makeText(cordova.getActivity(),cordova.getActivity().getClass().getName(), Toast.LENGTH_LONG).show();
+            }
             Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0);
@@ -198,12 +200,10 @@ public class BackgroundMode extends CordovaPlugin {
           
         if(action.equals("StartIPC")){
             StartJobServer();
-            
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
                 cordova.getActivity().startService(intent);
             }
-            
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
                 Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
                 cordova.getActivity().startService(intent1);
@@ -219,16 +219,14 @@ public class BackgroundMode extends CordovaPlugin {
             long curTime = VVServer.getCurrentTime2Stamp();
             //设定的时间
             long setTime = curTime + time;
-           
-            Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
-            
+            if(isOpenDebugModel){
+                Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
+            }
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
             VVServer.prop.put("class",cordova.getActivity().getClass().getName());
             VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/config.properties", VVServer.prop);
-           
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
-            
             return true;
         }
         
