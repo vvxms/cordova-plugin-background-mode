@@ -276,22 +276,22 @@ public class LocalCastielService extends Service {
 //                         intent.putExtra("NmeaData",nmea);       
                         LocalCastielService.this.sendBroadcast(intent);
                         
-//                         Intent notificationIntent;
-//                         if(mClass!=null){
-//                             notificationIntent = new Intent(LocalCastielService.this, mClass);
-//                         }else{
-//                             return;
-//                         }
-//                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-//                         PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
-//                         try 
-//                         {
-//                           pendingIntent.send();
-//                         }
-//                         catch (PendingIntent.CanceledException e) 
-//                         {
-//                           e.printStackTrace();
-//                         }
+                        Intent notificationIntent;
+                        if(mClass!=null){
+                            notificationIntent = new Intent(LocalCastielService.this, mClass);
+                        }else{
+                            return;
+                        }
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
+                        try 
+                        {
+                          pendingIntent.send();
+                        }
+                        catch (PendingIntent.CanceledException e) 
+                        {
+                          e.printStackTrace();
+                        }
                     }        
     }
     
