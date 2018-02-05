@@ -113,7 +113,24 @@ public class LocalCastielService extends Service {
                         message.what = 2;
                         handler.sendMessage(message); 
                         WakeScreen();
-                        WakePage();
+                         
+                        Intent notificationIntent;
+                        
+//                         if(mClass!=null){
+                            notificationIntent = new Intent(LocalCastielService.this, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+                            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
+                            try 
+                            {
+                              pendingIntent.send();
+                            }
+                            catch (PendingIntent.CanceledException e) 
+                            {
+                              e.printStackTrace();
+                            }
+//                         }
+                        
+                        
                     }catch (Exception e){
 
                     }
