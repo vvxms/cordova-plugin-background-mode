@@ -30,8 +30,21 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
         }
 
         if(intent.getAction().equals(action_WakePage)){    
-            Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
-            context.startActivity(intents);
+                        Intent notificationIntent;
+                        notificationIntent = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+                        try 
+                        {
+                          pendingIntent.send();
+                        }
+                        catch (PendingIntent.CanceledException e) 
+                        {
+                          e.printStackTrace();
+                        }
+            
+//             Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+//             context.startActivity(intents);
         }
         
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
