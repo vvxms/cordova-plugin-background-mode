@@ -177,6 +177,7 @@ public class VVServer extends Service{
                return START_STICKY;
        }
          
+        //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }else{
