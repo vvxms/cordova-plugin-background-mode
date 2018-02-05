@@ -105,14 +105,14 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-//                     if(isOpenDebugModel)
+                    if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
-//                         if(isOpenDebugModel)
+                        if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -128,7 +128,7 @@ public class VVServer extends Service{
                     }
                     break;
                 case 2:  
-//                     if(isOpenDebugModel)
+                    if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -156,21 +156,18 @@ public class VVServer extends Service{
 
         try {
             mClass = Class.forName(prop.get("class").toString());
-            if(mClass != null){
-                Toast.makeText(VVServer.this,mClass.toString(),Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(VVServer.this,"-获取包名失败",Toast.LENGTH_LONG).show();
-            }
         } catch (ClassNotFoundException e) 
         {    
-            Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
+            if(isOpenDebugModel)
+                Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return START_STICKY;
         }              
          
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-           Toast.makeText(VVServer.this,"读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
+           if(isOpenDebugModel)
+               Toast.makeText(VVServer.this,"读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
            if(wakeMainActivityTime == 100){
                if(isOpenDebugModel)
                    Toast.makeText(VVServer.this,"未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
@@ -188,7 +185,7 @@ public class VVServer extends Service{
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
            
-//         if(isOpenDebugModel)
+        if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
          
 //         if(System.currentTimeMillis()>wakeMainActivityTime)
@@ -212,7 +209,6 @@ public class VVServer extends Service{
 //         }
         
         return START_STICKY;
-//         return super.onStartCommand(intent, flags, startId);
     }
     
     
@@ -242,42 +238,7 @@ public class VVServer extends Service{
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-//         Timer timer = new Timer();
-//         timer.schedule(new TimerTask() {
-//             @Override
-//             public void run() {
-                
-                
-//                   //读数据
-//                 if(prop==null){     
-//                     initPropertiesFile(VVServer.this);
-//                 }
-
-//                 try {
-//                     mClass = Class.forName(prop.get("class").toString());
-//                     if(mClass != null){
-//                         testLog = prop.get("class").toString();
-//                     }else{
-//                         testLog = "---获取包名失败";
-//                     }
-//                 } catch (ClassNotFoundException e) 
-//                 {    
-//                     testLog = e.toString();
-//                     e.printStackTrace();
-//                 }              
-
-//                 Message messageQ = new Message();
-//                 messageQ.what = 2;  
-//                 handler.sendMessage(messageQ);
-                
-//                 Message message = new Message();
-//                 message.what = 1;  
-//                 handler.sendMessage(message);
-//             }
-//         }, 10000, 10000);
-        
+        super.onCreate();     
         setForeground(); 
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
@@ -354,11 +315,12 @@ public class VVServer extends Service{
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
-        Toast.makeText(context,"路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(context,"路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
-            Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
-       
+            if(isOpenDebugModel)
+                Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
             prop = new Properties();
             prop.put("time","100");
             prop.put("class","com.limainfo.vv.Vv___");
