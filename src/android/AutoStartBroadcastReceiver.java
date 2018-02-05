@@ -31,7 +31,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(action_WakePage)){    
                         Intent notificationIntent;
-                        notificationIntent = new Intent(context, com.limainfo.vv.VV___);
+                        notificationIntent = new Intent(context, com.limainfo.vv.VV___.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
                         try 
