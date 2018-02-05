@@ -16,6 +16,7 @@ import java.util.List;
 //开机自启动广播接受
 public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     static final String action_boot ="android.intent.action.BOOT_COMPLETED";
+    static final String action_WakePage ="android.intent.action.WakePage";
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(action_boot)){
@@ -28,6 +29,11 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
              context.startService(intent1);
         }
 
+        if(intent.getAction().equals(action_WakePage)){    
+            Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+            context.startActivity(intents);
+        }
+        
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
             Log.e("timeBroad", "时间变化了");
             if (!isServiceWork(context,"in.lucasdup.bringtofront.VVServer")) {
