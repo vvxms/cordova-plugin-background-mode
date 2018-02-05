@@ -33,6 +33,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import android.content.Context;
 
+import android.os.SystemClock;
+import android.app.AlarmManager;
+
 /**
  * Created by loi on 2018/1/18.
  */
@@ -44,16 +47,15 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static long wakeMainActivityTime = -1;//全局变量
-    private boolean isOpenDebugModel = true;
+    private boolean isOpenDebugModel = false;
     Class<?> mClass;
     
-    private Timer mTimer = null;
-    private TimerTask mTimerTask = null;
-    private boolean isStop = true;
+    private static Timer mTimer = null;
+    private static TimerTask mTimerTask = null;
+    private static boolean isStop = true;
+    private static String testLog = "-";
     
-    private String testLog = "";
-    
-    private void startTimer(Date date){
+    private void startTimer(boolean isUseDate,Date date,int delay,int period){
         if (mTimer == null) {
             mTimer = new Timer();
         }
@@ -61,30 +63,41 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
+                    
+                Message messageQ = new Message();
+                messageQ.what = 2;  
+                handler.sendMessage(messageQ);
+                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
                 }
             };
         }
 
         if(mTimer != null && mTimerTask != null)
         {
-            mTimer.schedule(mTimerTask, date);
+            if(isUseDate){
+                mTimer.schedule(mTimerTask, date);
+            }else{
+                mTimer.schedule(mTimerTask,delay,period);
+            }
             isStop = false;
         }
     }
-    
-    private void stopTimer(){    
-        if (mTimer != null) {    
-            mTimer.cancel();    
-            mTimer = null;    
-        }    
-        if (mTimerTask != null) {    
-            mTimerTask.cancel();    
-            mTimerTask = null;    
-        }       
-        isStop = true;  
+
+    private void stopTimer(){
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+        if (mTimerTask != null) {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+        isStop = true;
     }    
     
     private Handler handler = new Handler(new Handler.Callback() {
@@ -92,15 +105,14 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    Log.e("LocalCastielService", String.valueOf(msg.what));
-//                     if(isOpenDebugModel)
+                    if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
                     
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
-//                         if(isOpenDebugModel)
+                        if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -116,10 +128,8 @@ public class VVServer extends Service{
                     }
                     break;
                 case 2:  
-//                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,testLog,Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
@@ -146,33 +156,37 @@ public class VVServer extends Service{
 
         try {
             mClass = Class.forName(prop.get("class").toString());
-            if(mClass != null){
-                Toast.makeText(VVServer.this,mClass.toString(),Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(VVServer.this,"获取包名失败",Toast.LENGTH_LONG).show();
-            }
         } catch (ClassNotFoundException e) 
         {    
-            Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
+            if(isOpenDebugModel)
+                Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return START_STICKY;
         }              
-       
+         
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           if(isOpenDebugModel)
+               Toast.makeText(VVServer.this,"读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
            if(wakeMainActivityTime == 100){
                if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
+                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
                return START_STICKY;
            }
        } catch (NumberFormatException nfe) {
                return START_STICKY;
        }
-        
-         return START_STICKY;
+         
+        //直接启动一个
+        if(isStop){
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+        }else{
+            stopTimer();    
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+        }
            
-//         if(isOpenDebugModel)
-//             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
          
 //         if(System.currentTimeMillis()>wakeMainActivityTime)
 //         {
@@ -192,97 +206,42 @@ public class VVServer extends Service{
 //                 stopTimer();    
 //                 startTimer(new Date(wakeMainActivityTime));
 //             }
-
-      
 //         }
-//         return START_STICKY;
-//         return super.onStartCommand(intent, flags, startId);
+        
+        return START_STICKY;
     }
     
     
+    @Override
+    public void onTaskRemoved(Intent rootIntent){
+        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+        restartServiceIntent.setPackage(getPackageName());
 
+        PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, 
+                SystemClock.elapsedRealtime() + 1000,
+                restartServicePendingIntent);
+        super.onTaskRemoved(rootIntent);
+    }
+    
     @Override
     public void onDestroy() {
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
+        //关闭时停止定时器
+        if(!isStop){
+            stopTimer();    
+        }
         super.onDestroy();
     }
 
     @Override
     public void onCreate() {
-        super.onCreate();
+        super.onCreate();     
         setForeground(); 
-        
-            //读数据
-        if(prop==null){     
-            initPropertiesFile(VVServer.this);
-        }
-
-        try {
-            mClass = Class.forName(prop.get("class").toString());
-            if(mClass != null){
-                Toast.makeText(VVServer.this,mClass.toString(),Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(VVServer.this,"获取包名失败",Toast.LENGTH_LONG).show();
-            }
-        } catch (ClassNotFoundException e) 
-        {    
-            Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-            return;
-        }              
-       
-       try {
-           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-           if(wakeMainActivityTime == 100){
-               if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("class").toString(),Toast.LENGTH_LONG).show();
-               return;
-           }
-       } catch (NumberFormatException nfe) {
-               return;
-       }
-           
-        
-        if(isCurTimerStop){
-            StartWakeTimer(1000,1000);
-        }else{
-            StopCurTimer();    
-            StartWakeTimer(1000,1000);
-        }
-        
-        //         if(isOpenDebugModel)
+        if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        
-        return;
-        
-        
-//         if(isOpenDebugModel)
-//             Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-         
-//         if(System.currentTimeMillis()>wakeMainActivityTime)
-//         {
-//             if(isOpenDebugModel)
-//                Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//         }else 
-//         {
-//             if(isOpenDebugModel)
-//                 Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//             if(isStop){
-//                 if(isOpenDebugModel)
-//                     Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();                          
-//                 startTimer(new Date(wakeMainActivityTime));
-//             }else{
-//                 if(isOpenDebugModel)
-//                       Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();    
-//                 stopTimer();    
-//                 startTimer(new Date(wakeMainActivityTime));
-//             }
-
-      
-//         }
-        
-       
     }
     
       public void setForeground() {
@@ -356,11 +315,12 @@ public class VVServer extends Service{
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
-        Toast.makeText(context,"路径" + "/data/data/" + context.getPackageName()+ "/config.properties",Toast.LENGTH_LONG).show();
+        if(isOpenDebugModel)
+            Toast.makeText(context,"路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
-            Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
-       
+            if(isOpenDebugModel)
+                Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
             prop = new Properties();
             prop.put("time","100");
             prop.put("class","com.limainfo.vv.Vv___");
@@ -408,51 +368,5 @@ public class VVServer extends Service{
         }
         return properties;
     }
-    
-    
-    
-        private static Timer curTimer;
-        private static TimerTask curTimerTask;
-        private static boolean isCurTimerStop = true;
-        private void StartWakeTimer(int delay,int period){
-        if (curTimer == null) {
-            curTimer = new Timer();
-        }
-        if (curTimerTask == null) {
-            curTimerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    
-                Message messageQ = new Message();
-                messageQ.what = 2;  
-                handler.sendMessage(messageQ);
-                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
-                    {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                }
-            };
-        }
-
-        if(curTimer != null && curTimerTask != null)
-        {
-            curTimer.schedule(curTimerTask,delay,period);
-            isCurTimerStop = false;
-        }
-    }
-
-    private void StopCurTimer(){
-        if (curTimer != null) {
-            curTimer.cancel();
-            curTimer = null;
-        }
-        if (curTimerTask != null) {
-            curTimerTask.cancel();
-            curTimerTask = null;
-        }
-        isCurTimerStop = true;
-    }    
     
 }
