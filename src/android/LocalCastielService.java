@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import android.os.PowerManager;
+
+import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 public class LocalCastielService extends Service {
 
@@ -169,6 +172,12 @@ public class LocalCastielService extends Service {
     @Override
     public void onDestroy() {
         this.unbindService(myServiceConnection);
+        
+        if (wakeLock != null) {
+            wakeLock.release();
+            wakeLock = null;
+        }
+        
         super.onDestroy();
     }
     
@@ -211,6 +220,16 @@ public class LocalCastielService extends Service {
         }
         isCurTimerStop = true;
     }    
+    
+    private PowerManager.WakeLock wakeLock;
+    private void WakeScreen(){
+        PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
+
+        wakeLock = pm.newWakeLock(
+                PARTIAL_WAKE_LOCK, "Locationtion");
+
+        wakeLock.acquire();
+    }
     
     
     private void WakePage(){
