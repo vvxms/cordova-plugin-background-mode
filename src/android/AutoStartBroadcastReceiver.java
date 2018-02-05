@@ -22,8 +22,8 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context,"开机自启动",Toast.LENGTH_SHORT).show();
              Intent i = new Intent(context, VVServer.class);
              context.startService(i);
-             Intent intent = new Intent(context, LocalCastielService.class);
-             context.startService(intent);
+             Intent intent0 = new Intent(context, LocalCastielService.class);
+             context.startService(intent0);
              Intent intent1 = new Intent(context, RemoteCastielService.class);
              context.startService(intent1);
         }
