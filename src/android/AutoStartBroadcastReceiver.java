@@ -31,7 +31,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(action_WakePage)){    
                         Intent notificationIntent;
-                        notificationIntent = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
+                        notificationIntent = new Intent(context, com.limainfo.vv.VV___);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
                         try 
