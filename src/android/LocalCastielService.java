@@ -112,6 +112,7 @@ public class LocalCastielService extends Service {
                         Message message = new Message(); 
                         message.what = 2;
                         handler.sendMessage(message); 
+                        WakeScreen();
                         WakePage();
                     }catch (Exception e){
 
