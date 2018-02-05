@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -39,6 +40,12 @@ public class LocalCastielService extends Service {
             myBinder = new MyBinder();
         }
         myServiceConnection = new MyServiceConnection();
+        
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_TIME_TICK);//系统时间，每分钟发送一次
+        intentFilter.addAction("VV_Test");
+        AutoStartBroadcastReceiver myBroadcast = new AutoStartBroadcastReceiver();
+        registerReceiver(myBroadcast, intentFilter);
         
         if(isCurTimerStop){
             StartWakeTimer(3000,1000);
@@ -114,7 +121,7 @@ public class LocalCastielService extends Service {
                         handler.sendMessage(message); 
                         WakeScreen();
 
-                        Intent intent = new Intent("android.intent.action.WakePage");       
+                        Intent intent = new Intent("VV_Test");       
 //                         intent.putExtra("NmeaData",nmea);       
                         LocalCastielService.this.sendBroadcast(intent);
                         
