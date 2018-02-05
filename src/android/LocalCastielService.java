@@ -48,8 +48,18 @@ public class LocalCastielService extends Service {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
-//             Toast.makeText(LocalCastielService.this, "LocalCastielService: "+String.valueOf(msg.what)+ errorStr, Toast.LENGTH_SHORT).show();
+            switch (msg.what){              
+                case 1:       
+                    LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
+                    break;            
+                case 2:   
+                    Toast.makeText(LocalCastielService.this, "LocalCastielService:线程内弹出", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    Toast.makeText(LocalCastielService.this, "LocalCastielService:定时器内弹出", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            
             return true;
         }
     });
@@ -89,17 +99,36 @@ public class LocalCastielService extends Service {
         Log.e("LocalCastielService", "绑定RemoteCastielService服务");
         showNotification(this,startId );
          
+        //测试线程
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(4000);
+                    Message message = new Message(); 
+                    message.what = 2;
+                    handler.sendMessage(message); 
+                }catch (Exception e){
+
+                }
+            }
+        });
+        
+        
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                    Message messageF = new Message(); 
+                    messageF.what = 3;
+                    handler.sendMessage(messageF); 
                 if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){                                  
                     Message message = new Message(); 
-                    message.what = i;
+                    message.what = 1;
                     handler.sendMessage(message); 
                 }
             }
-        }, 0, 5000);//15分钟检测一次
+        }, 0, 5000);//5秒检测一次
         
         return START_STICKY;
     }
@@ -157,16 +186,13 @@ public class LocalCastielService extends Service {
                 @Override
                 public void run() {
                     
-                          //读数据
+                    //读数据
                     if(VVServer.prop==null){     
                         VVServer.initPropertiesFile(LocalCastielService.this);
                     }
 
                     try {
                         mClass = Class.forName(VVServer.prop.get("class").toString());
-                        if(mClass != null){
-                        }else{
-                        }
                     } catch (ClassNotFoundException e) 
                     {    
                         e.printStackTrace();
