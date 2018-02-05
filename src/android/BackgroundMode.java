@@ -161,7 +161,6 @@ public class BackgroundMode extends CordovaPlugin {
         
         if(action.equalsIgnoreCase("StartJobServer")){
             StartJobServer();
-            cordova.getActivity().finish();
             callback.success();
             return true;
         }
