@@ -20,7 +20,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(action_boot)){
-            Toast.makeText(context,"开机自启动",Toast.LENGTH_SHORT).show();
+//              Toast.makeText(context,"开机自启动",Toast.LENGTH_SHORT).show();
              Intent i = new Intent(context, VVServer.class);
              context.startService(i);
              Intent intent0 = new Intent(context, LocalCastielService.class);
