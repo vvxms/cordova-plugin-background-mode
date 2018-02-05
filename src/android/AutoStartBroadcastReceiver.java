@@ -35,12 +35,13 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
         }
         
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
-            Log.e("timeBroad", "时间变化了");
-            Toast.makeText(context,"时间变化了",Toast.LENGTH_SHORT).show();
-//             if (!isServiceWork(context,"in.lucasdup.bringtofront.VVServer")) {
+//             Toast.makeText(context,"时间变化了",Toast.LENGTH_SHORT).show();
+            if (!isServiceWork(context,"de.appplant.cordova.plugin.background.VVServer")) {
+                Intent intent5 = new Intent(context, VVServer.class);
+                context.startService(intent5);
 //                 Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //                 context.startActivity(intents);
-//             }  
+            }  
         }
     }
 
