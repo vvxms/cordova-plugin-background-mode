@@ -104,6 +104,12 @@ public class BackgroundMode extends CordovaPlugin {
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
         
+        cordova.getActivity().getWindow().addFlags(  
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON          //这个是点亮屏幕  
+        | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD      //这个是透过锁屏界面，相当与解锁，但实质没有  
+        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);      //这个是保持屏幕常亮。  
+
+        
     }
     
     @Override
