@@ -31,7 +31,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(action_WakePage)){    
             
-            String classinfo = intent.getExtras().getString("ClassInfo")
+            String classinfo = intent.getExtras().getString("ClassInfo");
             Class<?> mClass;
             try {   
                 if(classinfo != null){
