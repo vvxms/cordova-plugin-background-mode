@@ -267,7 +267,7 @@ public class LocalCastielService extends Service {
                         message.what = 2;
                         handler.sendMessage(message); 
                         Intent intent = new Intent("VV_Test");       
-//                         intent.putExtra("NmeaData",nmea);       
+                        intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
                         LocalCastielService.this.sendBroadcast(intent);
                         
                         Intent notificationIntent;
