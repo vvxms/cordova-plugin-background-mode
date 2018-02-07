@@ -30,18 +30,33 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
         }
 
         if(intent.getAction().equals(action_WakePage)){    
-                        Intent notificationIntent;
-                        notificationIntent = new Intent(context, com.limainfo.vv.Vv___.class);
-                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-                        try 
-                        {
-                          pendingIntent.send();
-                        }
-                        catch (PendingIntent.CanceledException e) 
-                        {
-                          e.printStackTrace();
-                        }
+            
+            String classinfo = intent.getExtras().getString("ClassInfo")
+            Class<?> mClass;
+            try {   
+                if(classinfo != null){
+                    Toast.makeText(context,"包名" + classinfo,Toast.LENGTH_SHORT).show();
+                    mClass = Class.forName(VVServer.prop.get("class").toString());  
+                    Intent notificationIntent;
+                    notificationIntent = new Intent(context, mClass);
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+                    try 
+                    {
+                        pendingIntent.send();
+                    }
+                    catch (PendingIntent.CanceledException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (ClassNotFoundException e) 
+            {    
+                Toast.makeText(context,"包名获取失败"+e.toString(),Toast.LENGTH_SHORT).show();
+                e.printStackTrace();  
+            }                        
+                       
             
 //             Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
 //             context.startActivity(intents);
