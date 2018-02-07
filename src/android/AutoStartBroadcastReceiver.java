@@ -55,11 +55,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
             {    
                 Toast.makeText(context,"包名获取失败"+e.toString(),Toast.LENGTH_SHORT).show();
                 e.printStackTrace();  
-            }                        
-                       
-            
-//             Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
-//             context.startActivity(intents);
+            }                         
         }
         
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
