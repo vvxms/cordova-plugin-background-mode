@@ -35,7 +35,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
             Class<?> mClass;
             try {   
                 if(classinfo != null){
-                    Toast.makeText(context,"包名" + classinfo,Toast.LENGTH_SHORT).show();
+//                     Toast.makeText(context,"包名" + classinfo,Toast.LENGTH_SHORT).show();
                     mClass = Class.forName(VVServer.prop.get("class").toString());  
                     Intent notificationIntent;
                     notificationIntent = new Intent(context, mClass);
@@ -53,7 +53,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
             } catch (ClassNotFoundException e) 
             {    
-                Toast.makeText(context,"包名获取失败"+e.toString(),Toast.LENGTH_SHORT).show();
+//                 Toast.makeText(context,"包名获取失败"+e.toString(),Toast.LENGTH_SHORT).show();
                 e.printStackTrace();  
             }                         
         }
