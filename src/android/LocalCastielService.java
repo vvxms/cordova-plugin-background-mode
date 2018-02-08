@@ -260,7 +260,7 @@ public class LocalCastielService extends Service {
                    } catch (NumberFormatException nfe) {
                    }
                     
-                    if(wakeMainActivityTime!=null && wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    if(wakeMainActivityTime!=-1 && wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         WakeScreen();
                         
@@ -286,7 +286,7 @@ public class LocalCastielService extends Service {
                             }
                         }else{
                             if(isOpenDebugModel)
-                                Toast.makeText(VVServer.this,"Local无法获取activity类名",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LocalCastielService.this,"Local无法获取activity类名",Toast.LENGTH_SHORT).show();
                         }
 
                     }        
