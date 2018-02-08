@@ -40,6 +40,8 @@ import android.os.PowerManager;
  * Created by loi on 2018/1/18.
  */
 
+import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
+
 public class VVServer extends Service{
     private String TAG  = "VVServer";
     private final int PID = android.os.Process.myPid();
@@ -370,6 +372,7 @@ public class VVServer extends Service{
         return properties;
     }
     
+    private PowerManager.WakeLock wakeLock;
     private void WakeScreen(){
         PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
         wakeLock = pm.newWakeLock(
