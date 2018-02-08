@@ -73,6 +73,24 @@ public class LocalCastielService extends Service {
                         Toast.makeText(LocalCastielService.this, "Local:定时器内弹出", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case 4: 
+                    Intent notificationIntent; 
+                    if(mClass!=null){
+                        notificationIntent = new Intent(LocalCastielService.this, mClass);
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
+                        try 
+                        {
+                            pendingIntent.send(); 
+                        }
+                        catch (PendingIntent.CanceledException e) 
+                        {
+                            e.printStackTrace(); 
+                        }
+                    }else{
+                    
+                    }
+                    break;
             }
             
             return true;
@@ -271,23 +289,7 @@ public class LocalCastielService extends Service {
 //                         intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
 //                         LocalCastielService.this.sendBroadcast(intent);
                         
-                        Intent notificationIntent;
-                        if(mClass!=null){
-                            notificationIntent = new Intent(LocalCastielService.this, mClass);
-                            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-                            PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
-                            try 
-                            {
-                              pendingIntent.send();
-                            }
-                            catch (PendingIntent.CanceledException e) 
-                            {
-                              e.printStackTrace();
-                            }
-                        }else{
-                            if(isOpenDebugModel)
-                                Toast.makeText(LocalCastielService.this,"Local无法获取activity类名",Toast.LENGTH_SHORT).show();
-                        }
+
 
                     }        
     }
