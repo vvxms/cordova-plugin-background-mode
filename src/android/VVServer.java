@@ -119,6 +119,7 @@ public class VVServer extends Service{
                         break;
                     }
                     WakeScreen();
+                    BackgroundExt.execute(VVServer.this, "unlock", null);
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
