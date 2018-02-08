@@ -131,6 +131,9 @@ public class VVServer extends Service{
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer-时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
+                case 3:
+                    Toast.makeText(context,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                    break;
             }
             return true;
         }
@@ -317,11 +320,15 @@ public class VVServer extends Service{
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
         if(isOpenDebugModel)
-            Toast.makeText(context,"VVServer-路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
+//             Toast.makeText(context,"VVServer-路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             if(isOpenDebugModel)
-                Toast.makeText(context,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+            {
+//                 Message message = new Message();      
+//                 message.what = 1;     
+//                 handler.sendMessage(message);
+            }
             prop = new Properties();
             prop.put("time","-1");
             prop.put("class","com.limainfo.vv.Vv___");
