@@ -375,10 +375,26 @@ public class VVServer extends Service{
     
     private PowerManager.WakeLock wakeLock;
     private void WakeScreen(){
-        PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
-        wakeLock = pm.newWakeLock(
-                PARTIAL_WAKE_LOCK, "Locationtion");
-        wakeLock.acquire();
+        PowerManager pm = (PowerManager) getService(POWER_SERVICE);
+        releaseWakeLock();
+        if (Build.VERSION.SDK_INT < 20) {
+            if(pm.isScreenOn()){
+                return;
+            }
+        }
+        
+        int level = PowerManager.SCREEN_DIM_WAKE_LOCK |
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP;
+        wakeLock = pm.newWakeLock(level, "Locationtion");
+        wakeLock.setReferenceCounted(false);
+        wakeLock.acquire(1000);
+    }
+       
+    private void releaseWakeLock() {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+            wakeLock = null;
+        }
     }
     
 }
