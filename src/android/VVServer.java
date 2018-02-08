@@ -66,9 +66,9 @@ public class VVServer extends Service{
                 @Override
                 public void run() {
                     
-                Message messageQ = new Message();
-                messageQ.what = 2;  
-                handler.sendMessage(messageQ);
+//                 Message messageQ = new Message();
+//                 messageQ.what = 2;  
+//                 handler.sendMessage(messageQ);
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
@@ -119,7 +119,7 @@ public class VVServer extends Service{
                         break;
                     }
                     WakeScreen();
-                    BackgroundExt.execute(VVServer.this, "unlock", null);
+//                     BackgroundExt.execute(VVServer.this, "unlock", null);
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
