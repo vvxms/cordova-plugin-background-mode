@@ -88,11 +88,11 @@ public class LocalCastielService extends Service {
         Log.e("LocalCastielService", "显示一个普通的通知");
         Notification notification = new NotificationCompat.Builder(context)
                 /**通知首次出现在通知栏，带上升动画效果的**/
-                .setTicker("保活服务1")
+                .setTicker("VV小助手为您服务")
                 /**设置通知的标题**/
-                .setContentTitle("保活服务")
+                .setContentTitle("VV小助手")
                 /**设置通知的内容**/
-                .setContentText("点击跳转到MainActivity")
+                .setContentText("vv is running")
                 /**通知产生的时间，会在通知信息里显示**/
                 .setWhen(System.currentTimeMillis())
                 /**设置该通知优先级**/
@@ -263,12 +263,13 @@ public class LocalCastielService extends Service {
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         WakeScreen();
-                        Message message = new Message(); 
-                        message.what = 2;
-                        handler.sendMessage(message); 
-                        Intent intent = new Intent("VV_Test");       
-                        intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
-                        LocalCastielService.this.sendBroadcast(intent);
+                        
+//                         Message message = new Message(); 
+//                         message.what = 2;
+//                         handler.sendMessage(message); 
+//                         Intent intent = new Intent("VV_Test");       
+//                         intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
+//                         LocalCastielService.this.sendBroadcast(intent);
                         
                         Intent notificationIntent;
                         if(mClass!=null){
