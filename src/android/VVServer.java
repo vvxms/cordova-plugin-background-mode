@@ -132,7 +132,7 @@ public class VVServer extends Service{
                         Toast.makeText(VVServer.this,"VVServer-时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    Toast.makeText(context,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                    Toast.makeText(VVServer,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
                     break;
             }
             return true;
