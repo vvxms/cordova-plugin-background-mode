@@ -48,7 +48,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCRE
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
-
+import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;//add by lgj
 class BackgroundExt {
 
     // Weak reference to the cordova interface passed by the plugin
