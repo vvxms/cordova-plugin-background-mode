@@ -49,7 +49,7 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static long wakeMainActivityTime = -1;//全局变量
-    private static boolean isOpenDebugModel = true;
+    private static boolean isOpenDebugModel = false;
     Class<?> mClass;
     
     private static Timer mTimer = null;
@@ -132,7 +132,8 @@ public class VVServer extends Service{
                         Toast.makeText(VVServer.this,"VVServer-时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
                     break;
             }
             return true;
