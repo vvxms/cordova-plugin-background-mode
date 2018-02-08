@@ -95,7 +95,7 @@ public class BackgroundMode extends CordovaPlugin {
     
     public static Activity mActivity;
     public static CordovaWebView mWebView;
-    private static boolean isOpenDebugModel = false;
+    private static boolean isOpenDebugModel = true;
   
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -205,7 +205,9 @@ public class BackgroundMode extends CordovaPlugin {
                 Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
                 cordova.getActivity().startService(intent1);
             }
-           
+            if(isOpenDebugModel){
+                Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
        
@@ -216,14 +218,14 @@ public class BackgroundMode extends CordovaPlugin {
             long curTime = VVServer.getCurrentTime2Stamp();
             //设定的时间
             long setTime = curTime + time;
-            if(isOpenDebugModel){
-                Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
-            }
             VVServer.initPropertiesFile(cordova.getActivity());
             VVServer.prop.put("time",String.valueOf(setTime));
             VVServer.prop.put("class",cordova.getActivity().getClass().getName());
             VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/config.properties", VVServer.prop);
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
+            if(isOpenDebugModel){
+                Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         
