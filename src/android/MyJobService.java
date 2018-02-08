@@ -68,15 +68,7 @@ public class MyJobService extends JobService {
             JobParameters param = (JobParameters) msg.obj;
             jobFinished(param, true);
 
-            /*
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            */
-            Log.e("MyJobService", "JobServer---启动服务");
-            
-//             Toast.makeText(MyJobService.this,"MyJobService》》》》》》啥都没干", Toast.LENGTH_SHORT).show();
-            
+            Log.e("MyJobService", "JobServer---启动服务");  
             //启动一个服务
             if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.VVServer")){
                Intent i = new Intent(getApplicationContext(), VVServer.class);
