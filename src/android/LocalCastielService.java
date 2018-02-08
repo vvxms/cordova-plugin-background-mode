@@ -199,12 +199,7 @@ public class LocalCastielService extends Service {
     @Override
     public void onDestroy() {
         this.unbindService(myServiceConnection);
-        
-        if (wakeLock != null) {
-            wakeLock.release();
-            wakeLock = null;
-        }
-        
+        releaseWakeLock();
         super.onDestroy();
     }
     
@@ -252,12 +247,27 @@ public class LocalCastielService extends Service {
     private void WakeScreen(){
         PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
 
+        releaseWakeLock();
+        if (Build.VERSION.SDK_INT < 20) {
+            if(pm.isScreenOn()){
+                return;
+            }
+        }
+        
+        int level = PowerManager.SCREEN_DIM_WAKE_LOCK |
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP;
         wakeLock = pm.newWakeLock(
-                PARTIAL_WAKE_LOCK, "Locationtion");
-
-        wakeLock.acquire();
+                level, "Locationtion");
+        wakeLock.setReferenceCounted(false);
+        wakeLock.acquire(1000);
     }
     
+    private void releaseWakeLock() {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+            wakeLock = null;
+        }
+    }
     
     private void WakePage(){
                     //读数据
