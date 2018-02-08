@@ -30,7 +30,7 @@ public class LocalCastielService extends Service {
     MyServiceConnection myServiceConnection;
     private int i = 0;
     private String errorStr = "";
-    private boolean isOpenDebugModel = false;
+    private boolean isOpenDebugModel = true;
     
     @Override
     public void onCreate() {
@@ -63,14 +63,14 @@ public class LocalCastielService extends Service {
                     LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
                     break;            
                 case 2:   
-//                     if(isOpenDebugModel)
+                    if(isOpenDebugModel)
                     {
-                        Toast.makeText(LocalCastielService.this, "LocalCastielService:线程内弹出", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LocalCastielService.this, "Local:线程内弹出", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case 3:
                     if(isOpenDebugModel){
-                        Toast.makeText(LocalCastielService.this, "LocalCastielService:定时器内弹出", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LocalCastielService.this, "Local:定时器内弹出", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -260,7 +260,7 @@ public class LocalCastielService extends Service {
                    } catch (NumberFormatException nfe) {
                    }
                     
-                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    if(wakeMainActivityTime!=null && wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         WakeScreen();
                         
@@ -285,6 +285,8 @@ public class LocalCastielService extends Service {
                               e.printStackTrace();
                             }
                         }else{
+                            if(isOpenDebugModel)
+                                Toast.makeText(VVServer.this,"Local无法获取activity类名",Toast.LENGTH_SHORT).show();
                         }
 
                     }        
