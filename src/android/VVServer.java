@@ -65,10 +65,6 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    
-//                 Message messageQ = new Message();
-//                 messageQ.what = 2;  
-//                 handler.sendMessage(messageQ);
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
@@ -113,27 +109,27 @@ public class VVServer extends Service{
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
+                        WakeScreen();
+//                     BackgroundExt.execute(VVServer.this, "unlock", null);
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
+                        try 
+                        {
+                          pendingIntent.send();
+                        }
+                        catch (PendingIntent.CanceledException e) 
+                        {
+                          e.printStackTrace();
+                        }
                     }else{
                         if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    WakeScreen();
-//                     BackgroundExt.execute(VVServer.this, "unlock", null);
-                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
-                    try 
-                    {
-                      pendingIntent.send();
-                    }
-                    catch (PendingIntent.CanceledException e) 
-                    {
-                      e.printStackTrace();
-                    }
                     break;
                 case 2:  
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VVServer.this,"VVServer-时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
@@ -172,7 +168,7 @@ public class VVServer extends Service{
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
            if(isOpenDebugModel)
                Toast.makeText(VVServer.this,"VVServer读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
-           if(wakeMainActivityTime == 100){
+           if(wakeMainActivityTime == -1){
                if(isOpenDebugModel)
                    Toast.makeText(VVServer.this,"VVServer未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
                return START_STICKY;
@@ -327,7 +323,7 @@ public class VVServer extends Service{
             if(isOpenDebugModel)
                 Toast.makeText(context,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
             prop = new Properties();
-            prop.put("time","100");
+            prop.put("time","-1");
             prop.put("class","com.limainfo.vv.Vv___");
             saveConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties", prop);
         }
