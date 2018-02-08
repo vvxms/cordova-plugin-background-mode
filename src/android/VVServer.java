@@ -233,6 +233,7 @@ public class VVServer extends Service{
     public void onDestroy() {
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onDestroy",Toast.LENGTH_LONG).show();
+        releaseWakeLock();
         //关闭时停止定时器
         if(!isStop){
             stopTimer();    
