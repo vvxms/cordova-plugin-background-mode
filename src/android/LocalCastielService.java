@@ -30,7 +30,7 @@ public class LocalCastielService extends Service {
     MyServiceConnection myServiceConnection;
     private int i = 0;
     private String errorStr = "";
-    private boolean isOpenDebugModel = true;
+    private boolean isOpenDebugModel = false;
     
     @Override
     public void onCreate() {
@@ -176,7 +176,6 @@ public class LocalCastielService extends Service {
         public void onServiceDisconnected(ComponentName arg0) {
             Log.e("LocalCastielService", "远程服务Remote被干掉");
             // 连接出现了异常断开了，RemoteService被杀掉了
-//             Toast.makeText(LocalCastielService.this, "远程服务Remote被干掉", Toast.LENGTH_LONG).show();
             // 启动RemoteCastielService
             LocalCastielService.this.startService(new Intent(LocalCastielService.this, RemoteCastielService.class));
             LocalCastielService.this.bindService(new Intent(LocalCastielService.this, RemoteCastielService.class),
