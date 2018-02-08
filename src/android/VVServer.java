@@ -375,7 +375,7 @@ public class VVServer extends Service{
     
     private PowerManager.WakeLock wakeLock;
     private void WakeScreen(){
-        PowerManager pm = (PowerManager) getService(POWER_SERVICE);
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         releaseWakeLock();
         if (Build.VERSION.SDK_INT < 20) {
             if(pm.isScreenOn()){
