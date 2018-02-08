@@ -70,8 +70,8 @@ public class MyJobService extends JobService {
 
             Log.e("MyJobService", "JobServer---启动服务");  
             //启动一个服务
-            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.VVServer")){
-               Intent i = new Intent(getApplicationContext(), VVServer.class);
+            if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.VVServer")){
+               Intent i = new Intent(MyJobService.this, VVServer.class);
                startService(i);
                Log.e("MyJobService", "开始启动服务");
 //                Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
@@ -81,23 +81,21 @@ public class MyJobService extends JobService {
             }
             
             //启动后台一个服务
-            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
-                BackgroundMode.isDisabled = false;
-                startBackgroundService();
-//                 Toast.makeText(MyJobService.this, "启动服务backgroundService", Toast.LENGTH_LONG).show();
-            }else {
-//                 Toast.makeText(MyJobService.this, "服务backgroundService已启动", Toast.LENGTH_LONG).show();
-            }
+//             if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
+//                 BackgroundMode.isDisabled = false;
+//                 startBackgroundService();
+//             }else {
+//             }
    
-            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.LocalCastielService")){
+            if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Log.e("MainActivity", "启动LocalCastielService");
-                startService(new Intent(getApplicationContext(), LocalCastielService.class));
+                startService(new Intent(MyJobService.this, LocalCastielService.class));
             }else {
                 Log.e("MainActivity", "LocalCastielService已启动");
             }
-            if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
+            if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.RemoteCastielService")){
                 Log.e("MainActivity", "启动RemoteCastielService");
-                startService(new Intent(getApplicationContext(), RemoteCastielService.class));
+                startService(new Intent(MyJobService.this, RemoteCastielService.class));
             }else {
                 Log.e("MainActivity", "RemoteCastielService已启动");
             }
