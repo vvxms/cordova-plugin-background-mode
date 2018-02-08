@@ -35,7 +35,7 @@ import android.content.Context;
 
 import android.os.SystemClock;
 import android.app.AlarmManager;
-
+import android.os.PowerManager;
 /**
  * Created by loi on 2018/1/18.
  */
@@ -116,6 +116,7 @@ public class VVServer extends Service{
                             Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
+                    WakeScreen();
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                     PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                     try 
@@ -367,6 +368,13 @@ public class VVServer extends Service{
             return null;
         }
         return properties;
+    }
+    
+    private void WakeScreen(){
+        PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
+        wakeLock = pm.newWakeLock(
+                PARTIAL_WAKE_LOCK, "Locationtion");
+        wakeLock.acquire();
     }
     
 }
