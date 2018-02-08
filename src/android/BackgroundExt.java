@@ -290,12 +290,14 @@ class BackgroundExt {
         app.runOnUiThread(new Runnable() {
             public void run() {              
                 window.addFlags(
-//                         FLAG_ALLOW_LOCK_WHILE_SCREEN_ON |
+//                         FLAG_ALLOW_LOCK_WHILE_SCREEN_ON 
 //                         FLAG_SHOW_WHEN_LOCKED |
 //                         FLAG_TURN_SCREEN_ON |
 //                         FLAG_DISMISS_KEYGUARD
                     
-                           FLAG_SHOW_WHEN_LOCKED
+                        
+                          FLAG_ALLOW_LOCK_WHILE_SCREEN_ON 
+                          |FLAG_SHOW_WHEN_LOCKED
                           |FLAG_TURN_SCREEN_ON
                           |FLAG_DISMISS_KEYGUARD
                           |FLAG_KEEP_SCREEN_ON
