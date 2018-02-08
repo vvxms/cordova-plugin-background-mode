@@ -256,7 +256,6 @@ public class VVServer extends Service{
             if(isOpenDebugModel)
                 Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
             e.printStackTrace();
-            return START_STICKY;
         }              
          
        try {
@@ -266,10 +265,8 @@ public class VVServer extends Service{
            if(wakeMainActivityTime == -1){
                if(isOpenDebugModel)
                    Toast.makeText(VVServer.this,"VVServer-onCreate未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
-               return START_STICKY;
            }
        } catch (NumberFormatException nfe) {
-               return START_STICKY;
        }
          
         //直接启动一个
