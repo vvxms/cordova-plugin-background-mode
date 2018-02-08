@@ -95,7 +95,7 @@ public class BackgroundMode extends CordovaPlugin {
     
     public static Activity mActivity;
     public static CordovaWebView mWebView;
-    private static boolean isOpenDebugModel = true;
+    private static boolean isOpenDebugModel = false;
   
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
