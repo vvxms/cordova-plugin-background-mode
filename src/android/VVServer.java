@@ -108,14 +108,14 @@ public class VVServer extends Service{
             switch (msg.what){
                 case 1:
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"时间到了",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
                     
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                     }else{
                         if(isOpenDebugModel)
-                            Toast.makeText(VVServer.this,"无法获取activity类名",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     WakeScreen();
@@ -133,7 +133,7 @@ public class VVServer extends Service{
                     break;
                 case 2:  
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VVServer.this,"VVServer时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
@@ -171,10 +171,10 @@ public class VVServer extends Service{
        try {
            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
            if(isOpenDebugModel)
-               Toast.makeText(VVServer.this,"读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
+               Toast.makeText(VVServer.this,"VVServer读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
            if(wakeMainActivityTime == 100){
                if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
+                   Toast.makeText(VVServer.this,"VVServer未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
                return START_STICKY;
            }
        } catch (NumberFormatException nfe) {
@@ -190,7 +190,7 @@ public class VVServer extends Service{
         }
            
         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(VVServer.this,"VVServer时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
          
 //         if(System.currentTimeMillis()>wakeMainActivityTime)
 //         {
@@ -218,14 +218,14 @@ public class VVServer extends Service{
     
     @Override
     public void onTaskRemoved(Intent rootIntent){
-        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
-        restartServiceIntent.setPackage(getPackageName());
+//         Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+//         restartServiceIntent.setPackage(getPackageName());
 
-        PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-        AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        alarmService.set(AlarmManager.ELAPSED_REALTIME, 
-                SystemClock.elapsedRealtime() + 1000,
-                restartServicePendingIntent);
+//         PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+//         AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+//         alarmService.set(AlarmManager.ELAPSED_REALTIME, 
+//                 SystemClock.elapsedRealtime() + 1000,
+//                 restartServicePendingIntent);
         super.onTaskRemoved(rootIntent);
     }
     
@@ -321,11 +321,11 @@ public class VVServer extends Service{
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
         if(isOpenDebugModel)
-            Toast.makeText(context,"路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"VVServer-路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             if(isOpenDebugModel)
-                Toast.makeText(context,"配置文件新建了",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
             prop = new Properties();
             prop.put("time","100");
             prop.put("class","com.limainfo.vv.Vv___");
