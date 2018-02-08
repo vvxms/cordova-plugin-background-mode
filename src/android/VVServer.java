@@ -242,7 +242,48 @@ public class VVServer extends Service{
 
     @Override
     public void onCreate() {
-        super.onCreate();     
+        super.onCreate();  
+        
+                //读数据
+        if(prop==null){     
+            initPropertiesFile(VVServer.this);
+        }
+
+        try {
+            mClass = Class.forName(prop.get("class").toString());
+        } catch (ClassNotFoundException e) 
+        {    
+            if(isOpenDebugModel)
+                Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            return START_STICKY;
+        }              
+         
+       try {
+           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+           if(isOpenDebugModel)
+               Toast.makeText(VVServer.this,"VVServer-onCreate读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
+           if(wakeMainActivityTime == -1){
+               if(isOpenDebugModel)
+                   Toast.makeText(VVServer.this,"VVServer-onCreate未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
+               return START_STICKY;
+           }
+       } catch (NumberFormatException nfe) {
+               return START_STICKY;
+       }
+         
+        //直接启动一个
+        if(isStop){
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+        }else{
+            stopTimer();    
+            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+        }
+           
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onCreate时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
+         
+        
         setForeground(); 
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
