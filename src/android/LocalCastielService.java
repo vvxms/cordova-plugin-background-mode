@@ -209,7 +209,7 @@ public class LocalCastielService extends Service {
     private static boolean isCurTimerStop = true; 
     
     private static long wakeMainActivityTime = -1;//全局变量
-    private Class<?> mClass;
+    private Class<?> mClass = null;
     
     private void StartWakeTimer(int delay,int period){
         if (curTimer == null) {
@@ -276,14 +276,18 @@ public class LocalCastielService extends Service {
                     }
 
                     try {
-                        mClass = Class.forName(VVServer.prop.get("class").toString());
+                        if(VVServer.prop!=null){
+                            mClass = Class.forName(VVServer.prop.get("class").toString());
+                        }
                     } catch (ClassNotFoundException e) 
                     {    
                         e.printStackTrace();
                     }              
 
                    try {
-                       wakeMainActivityTime = Long.parseLong(VVServer.prop.get("time").toString());
+                       if(VVServer.prop!=null){
+                            wakeMainActivityTime = Long.parseLong(VVServer.prop.get("time").toString());
+                        }
                    } catch (NumberFormatException nfe) {
                    }
                     
@@ -297,9 +301,6 @@ public class LocalCastielService extends Service {
 //                         Intent intent = new Intent("VV_Test");       
 //                         intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
 //                         LocalCastielService.this.sendBroadcast(intent);
-                        
-
-
                     }        
     }
     
