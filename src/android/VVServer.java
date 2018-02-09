@@ -367,9 +367,9 @@ public class VVServer extends Service{
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             if(isOpenDebugModel)
             {
-                Message message = new Message();      
-                message.what = 4;     
-                handler.sendMessage(message);
+//                 Message message = new Message();      
+//                 message.what = 4;     
+//                 handler.sendMessage(message);
             }
             prop = new Properties();
             prop.put("time","-1");
@@ -402,9 +402,9 @@ public class VVServer extends Service{
             properties.store(s, "");
         } catch (Exception e) {
             if(isOpenDebugModel){
-                    Message message = new Message();      
-                    message.what = 6;     
-                    handler.sendMessage(message);
+//                     Message message = new Message();      
+//                     message.what = 6;     
+//                     handler.sendMessage(message);
             }
             errorlog1 = e.toString();
             e.printStackTrace();
@@ -415,7 +415,6 @@ public class VVServer extends Service{
 
     private String errorlog = "";
     private String errorlog1 = "";
-    private String errorlog2 = "";
     public static Properties loadConfig(Context context, String file) {
         Properties properties = new Properties();
         try {
@@ -423,9 +422,9 @@ public class VVServer extends Service{
             properties.load(s);
         } catch (Exception e) {
             if(isOpenDebugModel){
-                    Message message = new Message();      
-                    message.what = 5;     
-                    handler.sendMessage(message);
+//                     Message message = new Message();      
+//                     message.what = 5;     
+//                     handler.sendMessage(message);
             }
             errorlog = e.toString();
             e.printStackTrace();
