@@ -49,7 +49,7 @@ import android.content.SharedPreferences;
 import android.view.WindowManager;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
-
+import com.tencent.bugly.crashreport.CrashReport;
 import static android.content.Context.BIND_AUTO_CREATE;
 
 public class BackgroundMode extends CordovaPlugin {
@@ -102,6 +102,7 @@ public class BackgroundMode extends CordovaPlugin {
         super.initialize(cordova, webView);
         this.mActivity = cordova.getActivity();
         this.mWebView = webView;
+        CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
     }
@@ -234,10 +235,26 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
+        if(action.equals("TestBugly")){
+            Toast.makeText(cordova.getActivity(),"测试bugly",Toast.LENGTH_LONG).show();
+            String message = "测试bugly";
+            this.test(message, callbackContext);
+            return true;
+        }
+        
         BackgroundExt.execute(this, action, callback);
         return true;
     }
-
+    
+   private void test(String message, CallbackContext callbackContext) {
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                throw new RuntimeException("This is a crash");
+            }
+        });
+        callbackContext.success(message);
+    }
     
     public void StartJobServer(){
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
