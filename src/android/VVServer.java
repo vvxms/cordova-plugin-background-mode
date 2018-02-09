@@ -49,7 +49,7 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static long wakeMainActivityTime = -1;//全局变量
-    private static boolean isOpenDebugModel = false;
+    private static boolean isOpenDebugModel = true;
     private Class<?> mClass = null;
     
     private static Timer mTimer = null;
@@ -153,6 +153,18 @@ public class VVServer extends Service{
                 case 3:
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                    break;
+                case 4:
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                    break;
+                case 5:                  
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"loadProp-"+errorlog,Toast.LENGTH_LONG).show();
+                    break;
+                case 6:
+                    if(isOpenDebugModel)
+                        Toast.makeText(VVServer.this,"saveProp"+errorlog1,Toast.LENGTH_LONG).show();
                     break;
             }
             return true;
@@ -351,15 +363,13 @@ public class VVServer extends Service{
     public static Properties prop;
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
-        if(isOpenDebugModel)
-//             Toast.makeText(context,"VVServer-路径" + context.getPackageName(),Toast.LENGTH_LONG).show();
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
             if(isOpenDebugModel)
             {
-//                 Message message = new Message();      
-//                 message.what = 1;     
-//                 handler.sendMessage(message);
+                Message message = new Message();      
+                message.what = 4;     
+                handler.sendMessage(message);
             }
             prop = new Properties();
             prop.put("time","-1");
@@ -391,18 +401,33 @@ public class VVServer extends Service{
             FileOutputStream s = new FileOutputStream(fil);
             properties.store(s, "");
         } catch (Exception e) {
+            if(isOpenDebugModel){
+                    Message message = new Message();      
+                    message.what = 6;     
+                    handler.sendMessage(message);
+            }
+            errorlog1 = e.toString();
             e.printStackTrace();
             return false;
         }
         return true;
     }
 
+    private String errorlog = "";
+    private String errorlog1 = "";
+    private String errorlog2 = "";
     public static Properties loadConfig(Context context, String file) {
         Properties properties = new Properties();
         try {
             FileInputStream s = new FileInputStream(file);
             properties.load(s);
         } catch (Exception e) {
+            if(isOpenDebugModel){
+                    Message message = new Message();      
+                    message.what = 5;     
+                    handler.sendMessage(message);
+            }
+            errorlog = e.toString();
             e.printStackTrace();
             return null;
         }
