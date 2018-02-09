@@ -50,7 +50,7 @@ public class VVServer extends Service{
     private int curLeftTime;
     public static long wakeMainActivityTime = -1;//全局变量
     private static boolean isOpenDebugModel = false;
-    Class<?> mClass;
+    private Class<?> mClass = null;
     
     private static Timer mTimer = null;
     private static TimerTask mTimerTask = null;
@@ -65,6 +65,26 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
+                    
+                    //读数据
+                    if(prop==null){     
+                        initPropertiesFile(VVServer.this);
+                    }
+
+                    try {
+                        if(prop!=null){
+                            mClass = Class.forName(prop.get("class").toString());
+                        }
+                    } catch (ClassNotFoundException e) 
+                    {    
+                        e.printStackTrace();
+                    }              
+
+                   try {
+                       if(prop!=null){
+                           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+                       }
+                   } catch (NumberFormatException nfe) {}  
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
@@ -110,7 +130,6 @@ public class VVServer extends Service{
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
                         WakeScreen();
-//                     BackgroundExt.execute(VVServer.this, "unlock", null);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                         PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
                         try 
@@ -153,33 +172,33 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
         
-        //读数据
-        if(prop==null){     
-            initPropertiesFile(VVServer.this);
-        }
+//         //读数据
+//         if(prop==null){     
+//             initPropertiesFile(VVServer.this);
+//         }
 
-        try {
-            mClass = Class.forName(prop.get("class").toString());
-        } catch (ClassNotFoundException e) 
-        {    
-            if(isOpenDebugModel)
-                Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-            return START_STICKY;
-        }              
+//         try {
+//             mClass = Class.forName(prop.get("class").toString());
+//         } catch (ClassNotFoundException e) 
+//         {    
+//             if(isOpenDebugModel)
+//                 Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
+//             e.printStackTrace();
+//             return START_STICKY;
+//         }              
          
-       try {
-           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-           if(isOpenDebugModel)
-               Toast.makeText(VVServer.this,"VVServer读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
-           if(wakeMainActivityTime == -1){
-               if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"VVServer未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
-               return START_STICKY;
-           }
-       } catch (NumberFormatException nfe) {
-               return START_STICKY;
-       }
+//        try {
+//            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+//            if(isOpenDebugModel)
+//                Toast.makeText(VVServer.this,"VVServer读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
+//            if(wakeMainActivityTime == -1){
+//                if(isOpenDebugModel)
+//                    Toast.makeText(VVServer.this,"VVServer未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
+//                return START_STICKY;
+//            }
+//        } catch (NumberFormatException nfe) {
+//                return START_STICKY;
+//        }
          
         //直接启动一个
         if(isStop){
@@ -243,33 +262,7 @@ public class VVServer extends Service{
 
     @Override
     public void onCreate() {
-        super.onCreate();  
-        
-                //读数据
-        if(prop==null){     
-            initPropertiesFile(VVServer.this);
-        }
-
-        try {
-            mClass = Class.forName(prop.get("class").toString());
-        } catch (ClassNotFoundException e) 
-        {    
-            if(isOpenDebugModel)
-                Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }              
-         
-       try {
-           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-           if(isOpenDebugModel)
-               Toast.makeText(VVServer.this,"VVServer-onCreate读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
-           if(wakeMainActivityTime == -1){
-               if(isOpenDebugModel)
-                   Toast.makeText(VVServer.this,"VVServer-onCreate未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
-           }
-       } catch (NumberFormatException nfe) {
-       }
-         
+        super.onCreate();   
         //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
@@ -287,7 +280,7 @@ public class VVServer extends Service{
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
     }
     
-      public void setForeground() {
+    public void setForeground() {
         // sdk < 18 , 直接调用startForeground即可,不会在通知栏创建通知
         if (Build.VERSION.SDK_INT < 18) {
             VVServer.this.startForeground(PID, getNotification());
