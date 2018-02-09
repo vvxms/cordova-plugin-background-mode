@@ -58,6 +58,7 @@
 
     <!-- android -->
     <platform name="android">
+	<lib-file src="src/android/libs/bugly_crash_release.jar" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="BackgroundMode" >
                 <param name="android-package"
@@ -117,11 +118,21 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
-            <uses-permission android:name="android.permission.WAKE_LOCK" />
-                
-            <!--开机启动权限-->
-            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            	<uses-permission android:name="android.permission.WAKE_LOCK" />
+            	<!--开机启动权限-->
+            	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+		
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+     		<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+      		<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+      		<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+      		<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
         </config-file>
+	    
+	<config-file target="AndroidManifest.xml" parent="/manifest/application">
+      		<meta-data android:name="BUGLY_APPID" android:value="28af1eb03e" />
+     		<meta-data android:name="BUGLY_ENABLE_DEBUG" android:value="true" />
+      	</config-file>
 
         <source-file
             src="src/android/BackgroundMode.java"
