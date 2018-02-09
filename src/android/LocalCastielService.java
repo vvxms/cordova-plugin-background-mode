@@ -294,13 +294,16 @@ public class LocalCastielService extends Service {
                     if(wakeMainActivityTime!=-1 && wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         WakeScreen();
-                        
-//                         Message message = new Message(); 
-//                         message.what = 2;
-//                         handler.sendMessage(message); 
-//                         Intent intent = new Intent("VV_Test");       
-//                         intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
-//                         LocalCastielService.this.sendBroadcast(intent);
+                        //如果VVService没有启动 则由本服务拉起activity
+                        if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){                                  
+                            Message message = new Message(); 
+                            message.what = 4;
+                            handler.sendMessage(message); 
+//                             Intent intent = new Intent("VV_Test");       
+//                             intent.putExtra("ClassInfo",VVServer.prop.get("class").toString());       
+//                             LocalCastielService.this.sendBroadcast(intent);
+                        }
+
                     }        
     }
     
