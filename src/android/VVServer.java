@@ -406,7 +406,7 @@ public class VVServer extends Service{
 //                     message.what = 6;     
 //                     handler.sendMessage(message);
             }
-            errorlog1 = e.toString();
+//             errorlog1 = e.toString();
             e.printStackTrace();
             return false;
         }
@@ -426,7 +426,7 @@ public class VVServer extends Service{
 //                     message.what = 5;     
 //                     handler.sendMessage(message);
             }
-            errorlog = e.toString();
+//             errorlog = e.toString();
             e.printStackTrace();
             return null;
         }
