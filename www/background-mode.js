@@ -94,6 +94,10 @@ exports.StartIPC = function() {
     cordova.exec(null, null, 'BackgroundMode', 'StartIPC', []);
 };
 
+exports.TestBugly = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'TestBugly', []);
+};
+
 /*************
  * INTERFACE *
  *************/
