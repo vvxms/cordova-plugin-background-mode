@@ -238,7 +238,7 @@ public class BackgroundMode extends CordovaPlugin {
         if(action.equals("TestBugly")){
             Toast.makeText(cordova.getActivity(),"测试bugly",Toast.LENGTH_LONG).show();
             String message = "测试bugly";
-            this.test(message, callbackContext);
+            this.test(message, callback);
             return true;
         }
         
