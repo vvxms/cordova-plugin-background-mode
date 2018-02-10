@@ -220,20 +220,27 @@ public class BackgroundMode extends CordovaPlugin {
             long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
-            VVServer.initPropertiesFile(cordova.getActivity());
-            if(VVServer.prop!=null){
-                if(isOpenDebugModel){
+            if(VVServer.prop == null){
+                VVServer.initPropertiesFile(cordova.getActivity());
+            }
+            if(VVServer.prop!=null)
+            {
+                if(isOpenDebugModel)
+                {
                     Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----1初始化文件成功", Toast.LENGTH_SHORT).show();
                 }
                 VVServer.prop.put("time",String.valueOf(setTime));
                 VVServer.prop.put("class",cordova.getActivity().getClass().getName());
                 VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/config.properties", VVServer.prop);
-                if(isOpenDebugModel){
+                if(isOpenDebugModel)
+                {
                     Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----2写入文件成功", Toast.LENGTH_SHORT).show();
                     Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                if(isOpenDebugModel){ 
+            }else
+            {
+                if(isOpenDebugModel)
+                { 
                     Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_SHORT).show();
                 }
             }
