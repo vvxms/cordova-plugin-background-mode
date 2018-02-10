@@ -212,7 +212,11 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
        
-        if (action.equals("BringToFrontBySetTime")) {  
+        if (action.equals("BringToFrontBySetTime")) {
+            Toast.makeText(cordova.getActivity(),"测试bugly",Toast.LENGTH_LONG).show();
+            String message = "测试bugly";
+            this.test(message, callback);
+            
             if(isOpenDebugModel){
                 Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----11111", Toast.LENGTH_LONG).show();
             }
