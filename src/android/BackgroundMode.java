@@ -102,7 +102,7 @@ public class BackgroundMode extends CordovaPlugin {
         super.initialize(cordova, webView);
         this.mActivity = cordova.getActivity();
         this.mWebView = webView;
-        CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
+//         CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
     }
@@ -213,9 +213,6 @@ public class BackgroundMode extends CordovaPlugin {
         }
        
         if (action.equals("BringToFrontBySetTime")) {            
-            if(isOpenDebugModel){
-                Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----11111", Toast.LENGTH_LONG).show();
-            }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
             //当前时间的总秒数（相对于2010年的）
@@ -223,30 +220,24 @@ public class BackgroundMode extends CordovaPlugin {
             //设定的时间
             long setTime = curTime + time;
             VVServer.initPropertiesFile(cordova.getActivity());
-            if(isOpenDebugModel){
-                Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----22222", Toast.LENGTH_LONG).show();
-            }
-            VVServer.prop.put("time",String.valueOf(setTime));
-            if(isOpenDebugModel){
-                Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----33333", Toast.LENGTH_LONG).show();
-            }
             if(VVServer.prop!=null){
+                if(isOpenDebugModel){
+                    Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----1初始化文件成功", Toast.LENGTH_SHORT).show();
+                }
+                VVServer.prop.put("time",String.valueOf(setTime));
                 VVServer.prop.put("class",cordova.getActivity().getClass().getName());
                 VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/config.properties", VVServer.prop);
                 if(isOpenDebugModel){
-                    Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----44444", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----2写入文件成功", Toast.LENGTH_SHORT).show();
                 }
             }else{
                 if(isOpenDebugModel){ 
-                    Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_SHORT).show();
                 }
             }
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
-            if(isOpenDebugModel){ 
-                Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----55555", Toast.LENGTH_LONG).show();
-            }
             if(isOpenDebugModel){
-                Toast.makeText(cordova.getActivity(),"设定的秒数*1000"+String.valueOf(time)+"存储的时间"+String.valueOf(setTime), Toast.LENGTH_LONG).show();
+                Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  "+String.valueOf(time)+"\n存储的时间 " +String.valueOf(setTime), Toast.LENGTH_SHORT).show();
             }
             return true;
         }
