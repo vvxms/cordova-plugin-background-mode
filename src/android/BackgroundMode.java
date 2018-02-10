@@ -229,8 +229,7 @@ public class BackgroundMode extends CordovaPlugin {
                 VVServer.saveConfig(cordova.getActivity(), "/data/data/" + cordova.getActivity().getPackageName()+ "/config.properties", VVServer.prop);
                 if(isOpenDebugModel){
                     Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----2写入文件成功", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  "+String.valueOf(time)+"\n存储的时间 " +new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
-                    
+                    Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
                 }
             }else{
                 if(isOpenDebugModel){ 
