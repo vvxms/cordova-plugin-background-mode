@@ -65,7 +65,6 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    
                     //读数据
                     if(prop==null){     
                         initPropertiesFile(VVServer.this);
