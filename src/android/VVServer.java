@@ -39,7 +39,7 @@ import android.os.PowerManager;
 /**
  * Created by loi on 2018/1/18.
  */
-
+import com.tencent.bugly.crashreport.CrashReport;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 public class VVServer extends Service{
@@ -143,7 +143,6 @@ public class VVServer extends Service{
                     }else{
                         if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
-                        break;
                     }
                     break;
                 case 2:  
@@ -152,7 +151,7 @@ public class VVServer extends Service{
                     break;
                 case 3:
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_SHORT).show();
                     break;
                 case 4:
                     if(isOpenDebugModel)
@@ -219,10 +218,7 @@ public class VVServer extends Service{
             stopTimer();    
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
-           
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-         
+             
 //         if(System.currentTimeMillis()>wakeMainActivityTime)
 //         {
 //             if(isOpenDebugModel)
@@ -274,7 +270,10 @@ public class VVServer extends Service{
 
     @Override
     public void onCreate() {
-        super.onCreate();   
+        super.onCreate();  
+        if(isOpenDebugModel)
+            Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+        CrashReport.initCrashReport(VVServer.this.getApplicationContext());
         //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
@@ -282,14 +281,8 @@ public class VVServer extends Service{
             stopTimer();    
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
-           
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onCreate时间值对比 "+ "当前的："+new Date(System.currentTimeMillis()).toString()+" 储存的："+new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-         
-        
         setForeground(); 
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
+
     }
     
     public void setForeground() {
@@ -332,9 +325,9 @@ public class VVServer extends Service{
 
     private Notification getNotification() {
         Notification notification = new NotificationCompat.Builder(VVServer.this)
-                .setContentTitle("VV")
+                .setContentTitle("Vv")
                 /**设置通知的内容**/
-                .setContentText("点击跳转")
+                .setContentText("Vv小助手为您服务")
                 /**通知产生的时间，会在通知信息里显示**/
                 .setWhen(System.currentTimeMillis())
                 /**设置该通知优先级**/
@@ -349,18 +342,8 @@ public class VVServer extends Service{
 
         return notification;
     }
-    
-   
-    public static long getCurrentTime2Stamp() {
-        return  System.currentTimeMillis();
-    }
-
-    public static Date getStamp2Date(long time) {
-        return new Date(time);
-    }
-    
-    
-    public static Properties prop;
+        
+    public static Properties prop = null;
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
         if (prop == null) {
