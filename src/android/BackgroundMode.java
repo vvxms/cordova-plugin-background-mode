@@ -215,8 +215,8 @@ public class BackgroundMode extends CordovaPlugin {
         if (action.equals("BringToFrontBySetTime")) {            
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
-            //当前时间的总秒数（相对于2010年的）
-            long curTime = VVServer.getCurrentTime2Stamp();
+            //当前时间的总秒数
+            long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
             VVServer.initPropertiesFile(cordova.getActivity());
