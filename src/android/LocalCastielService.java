@@ -100,10 +100,10 @@ public class LocalCastielService extends Service {
                         Toast.makeText(LocalCastielService.this, "Local:时间到了，由Local服务拉起程序", Toast.LENGTH_SHORT).show();
                     }
                     Intent notificationIntent;     
-                    notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
+                    notificationIntent = new Intent(LocalCastielService.this, com.limainfo.vv.Vv___.class);     
                     WakeScreen();    
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
-                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);              
+                    PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);              
                     try           
                     {        
                         pendingIntent.send();     
