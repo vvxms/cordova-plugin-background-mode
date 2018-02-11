@@ -111,7 +111,19 @@ public class BackgroundMode extends CordovaPlugin {
     @Override
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
-        cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务
+        cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务            
+        StartJobServer();
+        if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
+            Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
+            cordova.getActivity().startService(intent);
+        }
+        if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
+            Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
+            cordova.getActivity().startService(intent1);
+        }     
+        if(isOpenDebugModel){
+           Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
+        }     
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
         
