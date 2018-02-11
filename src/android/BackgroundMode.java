@@ -103,7 +103,7 @@ public class BackgroundMode extends CordovaPlugin {
         super.initialize(cordova, webView);
         this.mActivity = cordova.getActivity();
         this.mWebView = webView;
-//         CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
+        CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
     }
