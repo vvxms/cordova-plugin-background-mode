@@ -49,10 +49,10 @@ public class LocalCastielService extends Service {
 //         registerReceiver(myBroadcast, intentFilter);
         
         if(isCurTimerStop){
-            StartWakeTimer(3000,1000);
+            StartWakeTimer(1000,1000);
         }else{
             StopCurTimer();
-            StartWakeTimer(3000,1000);
+            StartWakeTimer(1000,1000);
         }
     }
     
@@ -78,6 +78,7 @@ public class LocalCastielService extends Service {
                     }
                     break;
                 case 4: 
+                    /*
                     Intent notificationIntent; 
                     if(mClass!=null){
                         notificationIntent = new Intent(LocalCastielService.this, mClass);
@@ -93,6 +94,23 @@ public class LocalCastielService extends Service {
                         }
                     }else{
                     
+                    }
+                    */
+                    if(isOpenDebugModel){
+                        Toast.makeText(LocalCastielService.this, "Local:时间到了，由Local服务拉起程序", Toast.LENGTH_SHORT).show();
+                    }
+                    Intent notificationIntent;     
+                    notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
+                    WakeScreen();    
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
+                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);              
+                    try           
+                    {        
+                        pendingIntent.send();     
+                    }
+                    catch (PendingIntent.CanceledException e)    
+                    {       
+                        e.printStackTrace();  
                     }
                     break;
             }
@@ -211,7 +229,6 @@ public class LocalCastielService extends Service {
     private static TimerTask curTimerTask;
     private static boolean isCurTimerStop = true; 
     
-    private static long wakeMainActivityTime = -1;//全局变量
     private Class<?> mClass = null;
     
     private void StartWakeTimer(int delay,int period){
@@ -273,6 +290,7 @@ public class LocalCastielService extends Service {
     }
     
     private void WakePage(){
+                    /*
                     //读数据
                     if(VVServer.prop==null){     
                         VVServer.initPropertiesFile(LocalCastielService.this);
@@ -293,12 +311,12 @@ public class LocalCastielService extends Service {
                         }
                    } catch (NumberFormatException nfe) {
                    }
-                    
-                    if(wakeMainActivityTime!=-1 && wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                   */
+                    if(VVServer.wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
-                        WakeScreen();
                         //如果VVService没有启动 则由本服务拉起activity
                         if(!MyJobService.isServiceWork(LocalCastielService.this,"de.appplant.cordova.plugin.background.VVServer")){                                  
+                            WakeScreen();
                             Message message = new Message(); 
                             message.what = 4;
                             handler.sendMessage(message); 
