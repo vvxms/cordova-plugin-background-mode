@@ -240,7 +240,7 @@ public class BackgroundMode extends CordovaPlugin {
             long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
-            /*
+            
             if(VVServer.prop == null){
                 VVServer.initPropertiesFile(cordova.getActivity());
             }
@@ -265,7 +265,7 @@ public class BackgroundMode extends CordovaPlugin {
                     Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_SHORT).show();
                 }
             }
-            
+            /*
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
             */
             VVServer.wakeMainActivityTime  = setTime;
