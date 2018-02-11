@@ -263,14 +263,14 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         
-//         if(prop==null){
-//             initPropertiesFile(VVServer.this);
-//         }
-//         try {
-//             if(prop!=null){
-//                 wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-//             }
-//         } catch (NumberFormatException nfe) {}
+        if(prop==null){
+            initPropertiesFile(VVServer.this);
+        }
+        try {
+            if(prop!=null){
+                wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+            }
+        } catch (NumberFormatException nfe) {}
         
         //直接启动一个
         if(isStop){
