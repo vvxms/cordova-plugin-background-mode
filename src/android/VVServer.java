@@ -146,7 +146,7 @@ public class VVServer extends Service{
                             Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
                     }
                     */
-                    /*
+                    
                     Intent notificationIntent;     
                     notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
                     WakeScreen();    
@@ -160,7 +160,7 @@ public class VVServer extends Service{
                     {       
                         e.printStackTrace();  
                     }
-                    */
+                    
                     break;
                 case 2:  
                     if(isOpenDebugModel)
