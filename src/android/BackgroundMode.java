@@ -220,6 +220,7 @@ public class BackgroundMode extends CordovaPlugin {
             long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
+            /*
             if(VVServer.prop == null){
                 VVServer.initPropertiesFile(cordova.getActivity());
             }
@@ -245,6 +246,13 @@ public class BackgroundMode extends CordovaPlugin {
                 }
             }
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
+            */
+            VVServer.wakeMainActivityTime  = setTime;
+            if(isOpenDebugModel)
+            {
+                Toast.makeText(cordova.getActivity(),"BringToFrontBySetTime----2写入文件成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         
