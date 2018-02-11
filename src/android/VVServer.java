@@ -65,6 +65,7 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
+                    /*
                     //读数据
                     if(prop==null){     
                         initPropertiesFile(VVServer.this);
@@ -84,6 +85,7 @@ public class VVServer extends Service{
                            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
                        }
                    } catch (NumberFormatException nfe) {}  
+                    */                   
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
@@ -124,7 +126,7 @@ public class VVServer extends Service{
                 case 1:
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
-                    
+                    /*
                     Intent notificationIntent;
                     if(mClass!=null){
                         notificationIntent = new Intent(VVServer.this, mClass);
@@ -143,6 +145,20 @@ public class VVServer extends Service{
                         if(isOpenDebugModel)
                             Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
                     }
+                    */
+                    Intent notificationIntent;     
+                    notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
+                    WakeScreen();    
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
+                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);              
+                    try           
+                    {        
+                        pendingIntent.send();     
+                    }
+                    catch (PendingIntent.CanceledException e)    
+                    {       
+                        e.printStackTrace();  
+                    }
                     break;
                 case 2:  
                     if(isOpenDebugModel)
@@ -154,15 +170,15 @@ public class VVServer extends Service{
                     break;
                 case 4:
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_LONG).show();
+                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_SHORT).show();
                     break;
                 case 5:                  
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"loadProp-"+errorlog,Toast.LENGTH_LONG).show();
+                        Toast.makeText(VVServer.this,"loadProp",Toast.LENGTH_SHORT).show();
                     break;
                 case 6:
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"saveProp"+errorlog1,Toast.LENGTH_LONG).show();
+                        Toast.makeText(VVServer.this,"saveProp",Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
@@ -181,35 +197,7 @@ public class VVServer extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_LONG).show();
-        
-//         //读数据
-//         if(prop==null){     
-//             initPropertiesFile(VVServer.this);
-//         }
-
-//         try {
-//             mClass = Class.forName(prop.get("class").toString());
-//         } catch (ClassNotFoundException e) 
-//         {    
-//             if(isOpenDebugModel)
-//                 Toast.makeText(VVServer.this,e.toString(),Toast.LENGTH_LONG).show();
-//             e.printStackTrace();
-//             return START_STICKY;
-//         }              
-         
-//        try {
-//            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-//            if(isOpenDebugModel)
-//                Toast.makeText(VVServer.this,"VVServer读到的配置时间："+String.valueOf(wakeMainActivityTime),Toast.LENGTH_LONG).show();
-//            if(wakeMainActivityTime == -1){
-//                if(isOpenDebugModel)
-//                    Toast.makeText(VVServer.this,"VVServer未配置时间："+prop.get("time").toString(),Toast.LENGTH_LONG).show();
-//                return START_STICKY;
-//            }
-//        } catch (NumberFormatException nfe) {
-//                return START_STICKY;
-//        }
-         
+              
         //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
@@ -272,7 +260,7 @@ public class VVServer extends Service{
         super.onCreate();  
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        CrashReport.initCrashReport(VVServer.this.getApplicationContext());
+//         CrashReport.initCrashReport(VVServer.this.getApplicationContext());
         //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
