@@ -40,12 +40,13 @@ public class LocalCastielService extends Service {
             myBinder = new MyBinder();
         }
         myServiceConnection = new MyServiceConnection();
-        
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_TIME_TICK);//系统时间，每分钟发送一次
-        intentFilter.addAction("VV_Test");
-        AutoStartBroadcastReceiver myBroadcast = new AutoStartBroadcastReceiver();
-        registerReceiver(myBroadcast, intentFilter);
+ 
+        //注册广播
+//         IntentFilter intentFilter = new IntentFilter();
+//         intentFilter.addAction(Intent.ACTION_TIME_TICK);//系统时间，每分钟发送一次
+//         intentFilter.addAction("VV_Test");
+//         AutoStartBroadcastReceiver myBroadcast = new AutoStartBroadcastReceiver();
+//         registerReceiver(myBroadcast, intentFilter);
         
         if(isCurTimerStop){
             StartWakeTimer(3000,1000);
@@ -59,7 +60,10 @@ public class LocalCastielService extends Service {
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what){              
-                case 1:       
+                case 1:    
+                    if(isOpenDebugModel){
+                        Toast.makeText(LocalCastielService.this, "Local:VVService被关闭重新启动中。。。", Toast.LENGTH_SHORT).show();
+                    }
                     LocalCastielService.this.startService(new Intent(LocalCastielService.this, VVServer.class));
                     break;            
                 case 2:   
@@ -70,7 +74,7 @@ public class LocalCastielService extends Service {
                     break;
                 case 3:
                     if(isOpenDebugModel){
-                        Toast.makeText(LocalCastielService.this, "Local:定时器内弹出", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LocalCastielService.this, "Local:定时器检测VVService是否被关闭", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case 4: 
@@ -138,7 +142,6 @@ public class LocalCastielService extends Service {
             public void run() {
                 while (true){
                     try{
-                        
                         Thread.sleep(1000);
                         WakePage();             
                     }catch (Exception e){
