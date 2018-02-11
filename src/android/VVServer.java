@@ -48,7 +48,7 @@ public class VVServer extends Service{
     private AssistServiceConnection mConnection;
     private Timer timer;
     private int curLeftTime;
-    public static long wakeMainActivityTime = -1;//全局变量
+    public static long wakeMainActivityTime = 1000;//全局变量
     private static boolean isOpenDebugModel = true;
     private Class<?> mClass = null;
     
@@ -260,7 +260,16 @@ public class VVServer extends Service{
         super.onCreate();  
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-//         CrashReport.initCrashReport(VVServer.this.getApplicationContext());
+        
+        if(prop==null){
+            initPropertiesFile(VVServer.this);
+        }
+        try {
+            if(prop!=null){
+                wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+            }
+        } catch (NumberFormatException nfe) {}
+        
         //直接启动一个
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
@@ -342,7 +351,7 @@ public class VVServer extends Service{
 //                 handler.sendMessage(message);
             }
             prop = new Properties();
-            prop.put("time","-1");
+            prop.put("time","1000");
             prop.put("class","com.limainfo.vv.Vv___");
             saveConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties", prop);
         }
