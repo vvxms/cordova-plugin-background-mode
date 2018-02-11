@@ -112,18 +112,18 @@ public class BackgroundMode extends CordovaPlugin {
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
         cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务            
-        StartJobServer();
-        if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
-            Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
-            cordova.getActivity().startService(intent);
-        }
-        if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
-            Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
-            cordova.getActivity().startService(intent1);
-        }     
-        if(isOpenDebugModel){
-           Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
-        }     
+//         StartJobServer();
+//         if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
+//             Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
+//             cordova.getActivity().startService(intent);
+//         }
+//         if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.RemoteCastielService")){
+//             Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
+//             cordova.getActivity().startService(intent1);
+//         }     
+//         if(isOpenDebugModel){
+//            Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
+//         }     
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
         
@@ -226,14 +226,21 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
        
-        if (action.equals("BringToFrontBySetTime")) {            
+        if (action.equals("BringToFrontBySetTime")) {
+            if(args.getString(0).equals("")){
+                if(isOpenDebugModel)
+                {
+                    Toast.makeText(cordova.getActivity(),"时间点设置为空！", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
             //当前时间的总秒数
             long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
-            
+            /*
             if(VVServer.prop == null){
                 VVServer.initPropertiesFile(cordova.getActivity());
             }
@@ -258,10 +265,14 @@ public class BackgroundMode extends CordovaPlugin {
                     Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_SHORT).show();
                 }
             }
-            /*
+            
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));
             */
             VVServer.wakeMainActivityTime  = setTime;
+            if(isOpenDebugModel)           
+            { 
+                Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         
