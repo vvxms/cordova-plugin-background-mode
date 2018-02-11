@@ -111,6 +111,7 @@ public class BackgroundMode extends CordovaPlugin {
     @Override
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
+        cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务
         if(isOpenDebugModel)
             Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
         
