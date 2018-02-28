@@ -234,14 +234,6 @@ public class VVServer extends Service{
     
     @Override
     public void onTaskRemoved(Intent rootIntent){
-//         Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
-//         restartServiceIntent.setPackage(getPackageName());
-
-//         PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-//         AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//         alarmService.set(AlarmManager.ELAPSED_REALTIME, 
-//                 SystemClock.elapsedRealtime() + 1000,
-//                 restartServicePendingIntent);
         super.onTaskRemoved(rootIntent);
     }
     
@@ -263,14 +255,14 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         
-        if(prop==null){
-            initPropertiesFile(VVServer.this);
-        }
-        try {
-            if(prop!=null){
-                wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-            }
-        } catch (NumberFormatException nfe) {}
+//         if(prop==null){
+//             initPropertiesFile(VVServer.this);
+//         }
+//         try {
+//             if(prop!=null){
+//                 wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
+//             }
+//         } catch (NumberFormatException nfe) {}
         
         //直接启动一个
         if(isStop){
