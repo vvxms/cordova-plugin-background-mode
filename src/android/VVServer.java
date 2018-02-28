@@ -57,6 +57,7 @@ public class VVServer extends Service{
     private static boolean isStop = true;
     private static String testLog = "-";
     
+    private static int tempTime = 0;
     private void startTimer(boolean isUseDate,Date date,int delay,int period){
         if (mTimer == null) {
             mTimer = new Timer();
@@ -85,7 +86,16 @@ public class VVServer extends Service{
                            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
                        }
                    } catch (NumberFormatException nfe) {}  
-                    */                   
+                    */     
+                    
+                    
+                    tempTime++;
+                    if(tempTime%5 == 0){
+                          Message message = new Message();
+                          message.what = 5;
+                          handler.sendMessage(message);
+                    }
+              
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         Message message = new Message();
@@ -176,7 +186,7 @@ public class VVServer extends Service{
                     break;
                 case 5:                  
                     if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"loadProp",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VVServer.this,"VVServer-wakeMainActivityTime"+String.valueOf(wakeMainActivityTime/1000),Toast.LENGTH_SHORT).show();
                     break;
                 case 6:
                     if(isOpenDebugModel)
