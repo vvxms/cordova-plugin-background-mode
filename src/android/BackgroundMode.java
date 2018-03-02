@@ -265,6 +265,10 @@ public class BackgroundMode extends CordovaPlugin {
 //                     Toast.makeText(cordova.getActivity(),"初始化文件失败", Toast.LENGTH_SHORT).show();
 //                 }
 //             }
+            
+            SharedPreferences sharedPreferences = context.getSharedPreferences("TimeFile", MODE_PRIVATE);
+            sharedPreferences.edit().putString("Time",String.valueOf(setTime)).commit();
+            
             VVServer.wakeMainActivityTime  = setTime;
             if(isOpenDebugModel)           
             { 
