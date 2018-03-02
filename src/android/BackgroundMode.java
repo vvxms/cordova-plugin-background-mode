@@ -268,8 +268,9 @@ public class BackgroundMode extends CordovaPlugin {
 //             }
             
             SharedPreferences sharedPreferences = cordova.getActivity().getSharedPreferences("TimeFile", MODE_PRIVATE);
-            sharedPreferences.edit().putString("Time",String.valueOf(setTime)).commit();
-            
+            if(sharedPreferences!=null){
+                sharedPreferences.edit().putString("Time",String.valueOf(setTime)).commit();
+            }   
             VVServer.wakeMainActivityTime  = setTime;
             if(isOpenDebugModel)           
             { 
