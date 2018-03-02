@@ -52,6 +52,7 @@ import android.view.WindowManager;
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 import com.tencent.bugly.crashreport.CrashReport;
 import static android.content.Context.BIND_AUTO_CREATE;
+import static android.content.Context.MODE_PRIVATE;
 
 public class BackgroundMode extends CordovaPlugin {
 
