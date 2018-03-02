@@ -41,6 +41,7 @@ import android.os.PowerManager;
  */
 import com.tencent.bugly.crashreport.CrashReport;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
+import static android.content.Context.MODE_PRIVATE;
 
 public class VVServer extends Service{
     private String TAG  = "VVServer";
