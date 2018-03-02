@@ -265,6 +265,21 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
         
+        
+        SharedPreferences sharedPreferencesRead = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
+        if(sharedPreferencesRead!=null){
+            String strTime = sharedPreferencesRead.getString("Time","");
+            if(!strTime.equals("")){
+                wakeMainActivityTime = Long.parseLong(strTime);
+            }
+        }else{
+            if(isOpenDebugModel)
+            {
+                Toast.makeText(VVServer.this,"VVServer：读取文件失败，文件不存在",Toast.LENGTH_LONG).show();
+            }
+        }
+        
+        
 //         if(prop==null){
 //             initPropertiesFile(VVServer.this);
 //         }
@@ -348,12 +363,6 @@ public class VVServer extends Service{
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
         if (prop == null) {
             // 配置文件不存在的时候创建配置文件 初始化配置信息
-            if(isOpenDebugModel)
-            {
-//                 Message message = new Message();      
-//                 message.what = 4;     
-//                 handler.sendMessage(message);
-            }
             prop = new Properties();
             prop.put("time","1000");
             prop.put("class","com.limainfo.vv.Vv___");
