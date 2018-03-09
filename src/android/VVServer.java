@@ -50,7 +50,7 @@ public class VVServer extends Service{
     private Timer timer;
     private int curLeftTime;
     public static long wakeMainActivityTime = 1000;//全局变量
-    private static boolean isOpenDebugModel = true;
+    private static boolean isOpenDebugModel = false;
     private Class<?> mClass = null;
     
     private static Timer mTimer = null;
