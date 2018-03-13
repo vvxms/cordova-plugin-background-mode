@@ -30,7 +30,7 @@ public class LocalCastielService extends Service {
     MyServiceConnection myServiceConnection;
     private int i = 0;
     private String errorStr = "";
-    private boolean isOpenDebugModel = true;
+    private boolean isOpenDebugModel = false;
     
     @Override
     public void onCreate() {
