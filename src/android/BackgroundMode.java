@@ -113,7 +113,7 @@ public class BackgroundMode extends CordovaPlugin {
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
         cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务            
-        //StartJobServer();
+        StartJobServer();
         if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
             Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
             cordova.getActivity().startService(intent);
