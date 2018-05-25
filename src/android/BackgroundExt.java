@@ -48,7 +48,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCRE
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
-
+import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;//add by lgj
 class BackgroundExt {
 
     // Weak reference to the cordova interface passed by the plugin
@@ -288,17 +288,25 @@ class BackgroundExt {
         final Window window = app.getWindow();
 
         app.runOnUiThread(new Runnable() {
-            public void run() {
+            public void run() {              
                 window.addFlags(
-                        FLAG_ALLOW_LOCK_WHILE_SCREEN_ON |
-                        FLAG_SHOW_WHEN_LOCKED |
-                        FLAG_TURN_SCREEN_ON |
-                        FLAG_DISMISS_KEYGUARD
+//                         FLAG_ALLOW_LOCK_WHILE_SCREEN_ON 
+//                         FLAG_SHOW_WHEN_LOCKED |
+//                         FLAG_TURN_SCREEN_ON |
+//                         FLAG_DISMISS_KEYGUARD
+                    
+                          FLAG_ALLOW_LOCK_WHILE_SCREEN_ON 
+                          |FLAG_SHOW_WHEN_LOCKED
+                          |FLAG_TURN_SCREEN_ON
+                          |FLAG_DISMISS_KEYGUARD
+                        
                 );
             }
         });
     }
 
+//       |FLAG_KEEP_SCREEN_ON
+    
     /**
      * The activity referenced by cordova.
      *

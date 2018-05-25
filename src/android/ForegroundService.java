@@ -32,11 +32,21 @@ import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-//import android.os.PowerManager;
+import android.os.PowerManager;
+
+
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Message;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
-//import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
+import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 /**
  * Puts the service in a foreground state, where the system considers it to be
@@ -45,6 +55,11 @@ import org.json.JSONObject;
  */
 public class ForegroundService extends Service {
 
+    
+    private String TAG  = "ForegroundService";
+    private final int PID = android.os.Process.myPid();
+    private AssistServiceConnection mConnection;
+    
     // Fixed ID for the 'foreground' notification
     public static final int NOTIFICATION_ID = -574543954;
 
@@ -63,7 +78,7 @@ public class ForegroundService extends Service {
     private final IBinder mBinder = new ForegroundBinder();
 
     // Partial wake lock to prevent the app from going to sleep when locked
-    //private PowerManager.WakeLock wakeLock;
+    private PowerManager.WakeLock wakeLock;
 
     /**
      * Allow clients to call on to the service.
@@ -113,16 +128,17 @@ public class ForegroundService extends Service {
         boolean isSilent    = settings.optBoolean("silent", false);
 
         if (!isSilent) {
-            startForeground(NOTIFICATION_ID, makeNotification());
+            setForeground();
+            //startForeground(NOTIFICATION_ID, makeNotification());
         }
 
-        /*PowerManager pm = (PowerManager)
+        PowerManager pm = (PowerManager)
                 getSystemService(POWER_SERVICE);
 
         wakeLock = pm.newWakeLock(
                 PARTIAL_WAKE_LOCK, "BackgroundMode");
 
-        wakeLock.acquire();*/
+        wakeLock.acquire();
     }
 
     /**
@@ -132,10 +148,10 @@ public class ForegroundService extends Service {
         stopForeground(true);
         getNotificationManager().cancel(NOTIFICATION_ID);
 
-        /*if (wakeLock != null) {
+        if (wakeLock != null) {
             wakeLock.release();
             wakeLock = null;
-        }*/
+        }
     }
 
     /**
@@ -276,6 +292,75 @@ public class ForegroundService extends Service {
      */
     private NotificationManager getNotificationManager() {
         return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+    
+    
+        public void setForeground() {
+        // sdk < 18 , 直接调用startForeground即可,不会在通知栏创建通知
+        if (Build.VERSION.SDK_INT < 18) {
+            this.startForeground(PID, getNotification());
+            return;
+        }
+
+        if (null == mConnection) {
+            mConnection = new AssistServiceConnection();
+        }
+
+        this.bindService(new Intent(this, AssistServiceTwo.class), mConnection,
+                Service.BIND_AUTO_CREATE);
+    }
+
+    private class AssistServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "ForegroundService: onServiceDisconnected");
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            Log.d(TAG, "ForegroundService: onServiceConnected");
+
+            // sdk >=18
+            // 的，会在通知栏显示service正在运行，这里不要让用户感知，所以这里的实现方式是利用2个同进程的service，利用相同的notificationID，
+            // 2个service分别startForeground，然后只在1个service里stopForeground，这样即可去掉通知栏的显示
+            Service assistService = ((AssistServiceTwo.LocalBinder) binder)
+                    .getService();
+            ForegroundService.this.startForeground(PID, getNotification());
+            assistService.startForeground(PID, getNotification());
+            assistService.stopForeground(true);
+
+            ForegroundService.this.unbindService(mConnection);
+            mConnection = null;
+        }
+    }
+
+    private Notification getNotification() {
+        // 定义一个notification
+//        Notification notification = new Notification();
+//        Intent notificationIntent = new Intent(this, MainActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//        notification.setLatestEventInfo(this, "My title", "My content",
+//                pendingIntent);
+
+
+        Notification notification = new NotificationCompat.Builder(ForegroundService.this)
+                .setContentTitle("保活服务")
+                /**设置通知的内容**/
+                .setContentText("点击跳转到MainActivity")
+                /**通知产生的时间，会在通知信息里显示**/
+                .setWhen(System.currentTimeMillis())
+                /**设置该通知优先级**/
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                /**设置这个标志当用户单击面板就可以让通知将自动取消**/
+                .setAutoCancel(true)
+                /**设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)**/
+                .setOngoing(false)
+                /**向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：**/
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .build();
+//  .setContentIntent(PendingIntent.getActivity(ForegroundService.this, 2, new Intent(ForegroundService.this, com.phonegap.helloworld.VV_KeppAlive_demo.class), PendingIntent.FLAG_CANCEL_CURRENT))
+               
+        return notification;
     }
 
 }
