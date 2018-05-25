@@ -23,6 +23,81 @@ var exec    = require('cordova/exec'),
     channel = require('cordova/channel');
 
 
+exports.GotoAutoStartManagerPage = function() {
+    var fn = function() {
+        //alert('GotoAutoStartManagerPage-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(null, null, 'BackgroundMode', 'GotoAutoStartManagerPage', []);
+};
+
+exports.StartJobServer = function() {
+    var fn = function() {
+        //alert('StartJobServer-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(null, null, 'BackgroundMode', 'StartJobServer', []);
+};
+
+exports.StartOnPixelActivityWhenScreenOff = function() {
+    var fn = function() {
+        alert('StartOnPixelActivityWhenScreenOff-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(null, null, 'BackgroundMode', 'StartOnPixelActivityWhenScreenOff', []);
+};
+
+exports.StartVVSerivce = function() {
+    var fn = function() {
+        alert('StartVVSerivce-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(null, null, 'BackgroundMode', 'StartVVSerivce', []);
+};
+
+exports.BringToFront = function() {
+    var fn = function() {
+        alert('BringToFront-success');
+            //exports._isEnabled = true;
+            //exports.fireEvent('enable');
+        };
+
+    cordova.exec(null, null, 'BackgroundMode', 'BringToFront', []);
+};
+
+exports.BringToFrontBySetTime = function(time) {
+    var fn = function() {
+        alert('BringToFrontBySetTime-success');
+ 
+        };
+    
+    var fn1 = function() {
+        alert('BringToFrontBySetTime-failed');
+ 
+        };
+    cordova.exec(null, null, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
+};
+
+exports.moveTaskToBack = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'moveTaskToBack', []);
+};
+
+exports.StartIPC = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'StartIPC', []);
+};
+
+exports.TestBugly = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'TestBugly', []);
+};
+
 /*************
  * INTERFACE *
  *************/
