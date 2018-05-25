@@ -49,7 +49,7 @@ public class VVServer extends Service{
     private AssistServiceConnection mConnection;
     private Timer timer;
     private int curLeftTime;
-    public static long wakeMainActivityTime = 1000;//全局变量
+    public static long wakeMainActivityTime = 0;//全局变量
     private static boolean isOpenDebugModel = false;
     private Class<?> mClass = null;
     
@@ -97,8 +97,9 @@ public class VVServer extends Service{
                           handler.sendMessage(message);
                     }
               
-                    if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
+                    if ((wakeMainActivityTime != 0) && (wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 < 0))
                     {
+                        wakeMainActivityTime = 0;
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
