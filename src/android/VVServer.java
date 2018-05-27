@@ -115,7 +115,7 @@ public class VVServer extends Service{
                           handler.sendMessage(message);
                     }
 
-                    if(tempTime%10 == 0){
+                    if (tempTime % 30 == 0){
                          WriteLog("timer on");
                     }
               
