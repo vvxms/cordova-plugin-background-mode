@@ -192,6 +192,11 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
+        if(action.equalsIgnoreCase("GetLog")){
+            String response = "myinformation"; 
+            callback.success(response);
+            return true;
+        } 
         
         if (action.equals("BringToFront")) {
             if(isOpenDebugModel){
