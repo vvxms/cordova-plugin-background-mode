@@ -59,7 +59,25 @@ public class VVServer extends Service{
     private static String testLog = "-";
     
     private static int tempTime = 0;
-    private void startTimer(boolean isUseDate,Date date,int delay,int period){
+
+    private static void WriteLog(String strLog)
+    {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            String log = sharedPreferences.getString("Log","");
+            log += "  ";
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss 
+            Date date = new Date(System.currentTimeMillis()); 
+            log += simpleDateFormat.format(date);
+            log += strLog;
+
+            sharedPreferences.edit().putString("Log", log).commit();
+        }
+    }
+
+    private void startTimer(boolean isUseDate,Date date,int delay,int period)
+    {
         if (mTimer == null) {
             mTimer = new Timer();
         }
@@ -87,7 +105,7 @@ public class VVServer extends Service{
                            wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
                        }
                    } catch (NumberFormatException nfe) {}  
-                    */     
+                    */                     
                     
                     
                     tempTime++;
@@ -96,9 +114,15 @@ public class VVServer extends Service{
                           message.what = 5;
                           handler.sendMessage(message);
                     }
+
+                    if(tempTime%10 == 0){
+                         //WriteLog("timer on");
+                    }
               
                     if ((wakeMainActivityTime != 0) && (wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 < 0))
                     {
+                        //WriteLog("clock wake up!");
+
                         wakeMainActivityTime = 0;
                         Message message = new Message();
                         message.what = 1;
@@ -119,6 +143,7 @@ public class VVServer extends Service{
         }
     }
 
+    
     private void stopTimer(){
         if (mTimer != null) {
             mTimer.cancel();
