@@ -116,12 +116,12 @@ public class VVServer extends Service{
                     }
 
                     if (tempTime % 30 == 0){
-                        // WriteLog("timer on");
+                         WriteLog("timer on");
                     }
               
                     if ((wakeMainActivityTime != 0) && (wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 < 0))
                     {
-                       // WriteLog("clock wake up!");
+                        WriteLog("clock wake up!");
 
                         wakeMainActivityTime = 0;
                         Message message = new Message();
