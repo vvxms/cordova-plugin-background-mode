@@ -78,6 +78,7 @@ public class VVServer extends Service{
 
     private void startTimer(boolean isUseDate,Date date,int delay,int period)
     {
+        WriteLog("startTimer");
         if (mTimer == null) {
             mTimer = new Timer();
         }
@@ -145,6 +146,7 @@ public class VVServer extends Service{
 
     
     private void stopTimer(){
+         WriteLog("stopTimer");
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
