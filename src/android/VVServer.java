@@ -126,7 +126,7 @@ public class VVServer extends Service{
                         wakeMainActivityTime = 0;
                         Message message = new Message();
                         message.what = 1;
-                        handler.sendMessage(message);
+                        //handler.sendMessage(message);
                     }
                 }
             };
