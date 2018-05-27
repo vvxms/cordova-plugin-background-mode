@@ -192,9 +192,12 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
-        if(action.equalsIgnoreCase("GetLog")){
-            String response = "myinformation"; 
-            callback.success(response);
+        if(action.equalsIgnoreCase("GetLog")){              
+            SharedPreferences sharedPreferences = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
+            if (sharedPreferences != null) {
+                String log = sharedPreferences.getString("Log","");   
+                callback.success(log);
+            }             
             return true;
         } 
         
