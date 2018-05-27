@@ -60,7 +60,7 @@ public class VVServer extends Service{
     
     private static int tempTime = 0;
 
-    private static void WriteLog(String strLog)
+    private void WriteLog(String strLog)
     {
         SharedPreferences sharedPreferences = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if (sharedPreferences != null) {
