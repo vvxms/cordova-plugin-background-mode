@@ -19,6 +19,7 @@
 package de.appplant.cordova.plugin.background;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -228,6 +229,8 @@ public class BackgroundMode extends CordovaPlugin {
         }
        
         if (action.equals("BringToFrontBySetTime")) {
+            alarm(cordova.getActivity());
+            return true;
             if(args.getString(0).equals("")){
                 if(isOpenDebugModel)
                 {
@@ -278,6 +281,19 @@ public class BackgroundMode extends CordovaPlugin {
             }
         });
         callbackContext.success(message);
+    }
+    
+      
+    public void alarm(Context context){
+        AlarmManager am = (AlarmManager) getSystemService(context.ALARM_SERVICE);
+        Intent intent = new Intent(context, VVServer.class);
+        intent.setAction(VVServer.ACTION_ALARM);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if(Build.VERSION.SDK_INT < 19){
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
+        }else{
+            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
+        }
     }
     
     public void StartJobServer(){
