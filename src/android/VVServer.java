@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
@@ -291,18 +292,6 @@ public class VVServer extends Service{
                 .build();
 
         return notification;
-    }
-        
-    private void startAlertMeanageTask(Context context){
-        AlarmManager am = (AlarmManager) getSystemService(context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmService.class);
-        intent.setAction(AlarmService.ACTION_ALARM);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if(Build.VERSION.SDK_INT < 19){
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
-        }else{
-            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
-        }
     }
     
     public static Properties prop = null;
