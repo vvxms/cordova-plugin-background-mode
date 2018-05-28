@@ -231,6 +231,7 @@ public class BackgroundMode extends CordovaPlugin {
         if (action.equals("BringToFrontBySetTime")) {
             alarm(cordova.getActivity());
             return true;
+            /*
             if(args.getString(0).equals("")){
                 if(isOpenDebugModel)
                 {
@@ -255,6 +256,7 @@ public class BackgroundMode extends CordovaPlugin {
                 Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
             }
             return true;
+            */
         }
         
         if(action.equals("moveTaskToBack")){
