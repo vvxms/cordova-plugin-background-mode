@@ -285,7 +285,7 @@ public class BackgroundMode extends CordovaPlugin {
     
       
     public void alarm(Context context){
-        AlarmManager am = (AlarmManager) getSystemService(context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         Intent intent = new Intent(context, VVServer.class);
         intent.setAction(VVServer.ACTION_ALARM);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
