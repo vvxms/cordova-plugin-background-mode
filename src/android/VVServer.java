@@ -67,29 +67,6 @@ public class VVServer extends Service{
             mTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    /*
-                    //读数据
-                    if(prop==null){     
-                        initPropertiesFile(VVServer.this);
-                    }
-
-                    try {
-                        if(prop!=null){
-                            mClass = Class.forName(prop.get("class").toString());
-                        }
-                    } catch (ClassNotFoundException e) 
-                    {    
-                        e.printStackTrace();
-                    }              
-
-                   try {
-                       if(prop!=null){
-                           wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-                       }
-                   } catch (NumberFormatException nfe) {}  
-                    */     
-                    
-                    
                     tempTime++;
                     if(tempTime%5 == 0){
                           Message message = new Message();
@@ -137,27 +114,7 @@ public class VVServer extends Service{
                 case 1:
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
-                    /*
-                    Intent notificationIntent;
-                    if(mClass!=null){
-                        notificationIntent = new Intent(VVServer.this, mClass);
-                        WakeScreen();
-                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);
-                        try 
-                        {
-                          pendingIntent.send();
-                        }
-                        catch (PendingIntent.CanceledException e) 
-                        {
-                          e.printStackTrace();
-                        }
-                    }else{
-                        if(isOpenDebugModel)
-                            Toast.makeText(VVServer.this,"VVServer无法获取activity类名",Toast.LENGTH_SHORT).show();
-                    }
-                    */
-                    
+      
                     Intent notificationIntent;     
                     notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
                     WakeScreen();    
@@ -206,38 +163,22 @@ public class VVServer extends Service{
         return null;
     }
 
+    public static String ACTION_ALARM = "action_alarm";
+    private Handler mHanler = new Handler(Looper.getMainLooper());
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();
-              
-//         //直接启动一个
-//         if(isStop){
-//             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
-//         }else{
-//             stopTimer();    
-//             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
-//         }
-             
-//         if(System.currentTimeMillis()>wakeMainActivityTime)
-//         {
-//             if(isOpenDebugModel)
-//                Toast.makeText(VVServer.this,"时间点已错过: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//         }else 
-//         {
-//             if(isOpenDebugModel)
-//                 Toast.makeText(VVServer.this,"时间点未到达: "+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();
-//             if(isStop){
-//                 if(isOpenDebugModel)
-//                     Toast.makeText(VVServer.this,"定时器未开启",Toast.LENGTH_LONG).show();                          
-//                 startTimer(new Date(wakeMainActivityTime));
-//             }else{
-//                 if(isOpenDebugModel)
-//                       Toast.makeText(VVServer.this,"未关闭，关闭后重新开启"+ new Date(wakeMainActivityTime).toString(),Toast.LENGTH_LONG).show();    
-//                 stopTimer();    
-//                 startTimer(new Date(wakeMainActivityTime));
-//             }
-//         }
+            Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();  
+        
+        mHanler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(VVServer.this, "闹钟来啦", Toast.LENGTH_SHORT).show();
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        });
         
         return START_STICKY;
     }
@@ -280,23 +221,16 @@ public class VVServer extends Service{
             }
         }
         
-        
-//         if(prop==null){
-//             initPropertiesFile(VVServer.this);
-//         }
-//         try {
-//             if(prop!=null){
-//                 wakeMainActivityTime = Long.parseLong(prop.get("time").toString());
-//             }
-//         } catch (NumberFormatException nfe) {}
-        
+
         //直接启动一个
+        /*
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }else{
             stopTimer();    
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
+        */
         setForeground(); 
 
     }
@@ -359,6 +293,18 @@ public class VVServer extends Service{
         return notification;
     }
         
+    private void startAlertMeanageTask(Context context){
+        AlarmManager am = (AlarmManager) getSystemService(context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmService.class);
+        intent.setAction(AlarmService.ACTION_ALARM);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if(Build.VERSION.SDK_INT < 19){
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+        }else{
+            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+        }
+    }
+    
     public static Properties prop = null;
     public static void initPropertiesFile(Context context) {
         prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
