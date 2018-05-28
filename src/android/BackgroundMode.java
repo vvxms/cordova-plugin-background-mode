@@ -256,8 +256,8 @@ public class BackgroundMode extends CordovaPlugin {
                 wakeLock = null;
             }
              
-            PowerManager pm = (PowerManager) cordova.getActivity().getSystemService(POWER_SERVICE); 
-            bool bNeedWakeup = true;
+            PowerManager pm = (PowerManager) cordova.getActivity().getSystemService(cordova.getActivity().POWER_SERVICE); 
+            Boolean bNeedWakeup = true;
             if (Build.VERSION.SDK_INT < 20) {
                 if(pm.isScreenOn()){ 
                     bNeedWakeup = false;
