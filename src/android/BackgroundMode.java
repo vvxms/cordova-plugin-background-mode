@@ -245,6 +245,30 @@ public class BackgroundMode extends CordovaPlugin {
                 }
                 return true;
             }
+            
+            static PowerManager.WakeLock wakeLock = null;
+            
+            if (wakeLock != null && wakeLock.isHeld()) {
+                wakeLock.release();
+                wakeLock = null;
+            }
+             
+            PowerManager pm = (PowerManager) cordova.getActivity().getSystemService(POWER_SERVICE); 
+            bool bNeedWakeup = true;
+            if (Build.VERSION.SDK_INT < 20) {
+                if(pm.isScreenOn()){ 
+                    bNeedWakeup = false;
+                }
+            }
+
+            if (bNeedWakeup) {
+                int level = PowerManager.SCREEN_DIM_WAKE_LOCK |
+                            PowerManager.ACQUIRE_CAUSES_WAKEUP;
+                wakeLock = pm.newWakeLock(level, "Locationtion");
+                wakeLock.setReferenceCounted(false);
+                wakeLock.acquire(1000); 
+            }
+          
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
             AlarmManager am = (AlarmManager) cordova.getActivity().getSystemService(cordova.getActivity().ALARM_SERVICE);
