@@ -59,6 +59,22 @@ public class VVServer extends Service{
     private static boolean isStop = true;
     private static String testLog = "-";
     
+        
+    private static void  WriteLog(Context context,String strLog)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TimeFile", MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            String log = sharedPreferences.getString("Log","");
+            log += "  ";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss 
+            Date date = new Date(System.currentTimeMillis()); 
+            log += simpleDateFormat.format(date);
+            log += strLog;
+
+            sharedPreferences.edit().putString("Log", log).commit();
+        }
+    }
+    
     private static int tempTime = 0;
     private void startTimer(boolean isUseDate,Date date,int delay,int period){
         if (mTimer == null) {
@@ -174,7 +190,7 @@ public class VVServer extends Service{
         mHanler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(VVServer.this, "闹钟来啦", Toast.LENGTH_SHORT).show();
+                WriteLog(VVServer.this,"启动闹钟");
                 Message message = new Message();
                 message.what = 1;
                 handler.sendMessage(message);
