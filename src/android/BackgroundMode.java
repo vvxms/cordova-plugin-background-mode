@@ -212,6 +212,16 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
           
+          
+        if(action.equalsIgnoreCase("GetLog")){              
+            SharedPreferences sharedPreferences = cordova.getActivity().getSharedPreferences("TimeFile", MODE_PRIVATE);
+            if (sharedPreferences != null) {
+                String log = sharedPreferences.getString("Log","");   
+                callback.success(log);
+            }        
+            return true;
+        } 
+        
         if(action.equals("StartIPC")){
             StartJobServer();
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){
