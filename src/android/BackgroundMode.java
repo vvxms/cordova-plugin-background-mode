@@ -246,7 +246,7 @@ public class BackgroundMode extends CordovaPlugin {
             }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
-            AlarmManager am = (AlarmManager) cordova.getActivity().getSystemService(context.ALARM_SERVICE);
+            AlarmManager am = (AlarmManager) cordova.getActivity().getSystemService(cordova.getActivity().ALARM_SERVICE);
             
             Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
