@@ -229,9 +229,8 @@ public class BackgroundMode extends CordovaPlugin {
         }
        
         if (action.equals("BringToFrontBySetTime")) {
-            alarm(cordova.getActivity());
-            return true;
-            /*
+    
+            
             if(args.getString(0).equals("")){
                 if(isOpenDebugModel)
                 {
@@ -240,7 +239,10 @@ public class BackgroundMode extends CordovaPlugin {
                 return true;
             }
             //获取到的秒数
-            long time = Integer.parseInt(args.getString(0))*1000;      
+            long time = Integer.parseInt(args.getString(0))*1000;     
+            alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
+            return true;
+            /*
             //当前时间的总秒数
             long curTime = System.currentTimeMillis();
             //设定的时间
@@ -286,15 +288,15 @@ public class BackgroundMode extends CordovaPlugin {
     }
     
       
-    public void alarm(Context context){
+    public void alarm(Context context,int time){
         AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         Intent intent = new Intent(context, VVServer.class);
         intent.setAction(VVServer.ACTION_ALARM);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if(Build.VERSION.SDK_INT < 19){
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time*1000, pendingIntent);
         }else{
-            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
+            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time*1000, pendingIntent);
         }
     }
     
