@@ -129,6 +129,7 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
+                    WriteLog(VVServer.this,"尝试拉起--开始");
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
       
@@ -145,7 +146,7 @@ public class VVServer extends Service{
                     {       
                         e.printStackTrace();  
                     }
-                    
+                    WriteLog(VVServer.this,"尝试拉起--结束");
                     break;
                 case 2:  
                     if(isOpenDebugModel)
