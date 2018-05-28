@@ -68,6 +68,8 @@ public class BackgroundMode extends CordovaPlugin {
 
     // Flag indicates if the app is in background or foreground
     public static boolean inBackground = false;
+            
+    private static PowerManager.WakeLock wakeLock = null;
 
     // Flag indicates if the plugin is enabled or disabled
     public static boolean isDisabled = true;
@@ -245,8 +247,6 @@ public class BackgroundMode extends CordovaPlugin {
                 }
                 return true;
             }
-            
-            static PowerManager.WakeLock wakeLock = null;
             
             if (wakeLock != null && wakeLock.isHeld()) {
                 wakeLock.release();
