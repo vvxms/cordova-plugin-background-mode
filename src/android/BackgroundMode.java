@@ -55,6 +55,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 import static android.content.Context.BIND_AUTO_CREATE;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.os.PowerManager;  
+import static android.os.PowerManager.PARTIAL_WAKE_LOCK; 
+
 public class BackgroundMode extends CordovaPlugin {
 
     // Event types for callbacks
