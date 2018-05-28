@@ -48,6 +48,7 @@ import android.app.job.JobScheduler;
 import android.util.Log;
 import android.content.SharedPreferences;
 import android.view.WindowManager;
+import android.app.AlarmManager;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 import com.tencent.bugly.crashreport.CrashReport;
