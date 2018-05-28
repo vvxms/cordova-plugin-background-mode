@@ -246,19 +246,16 @@ public class BackgroundMode extends CordovaPlugin {
             }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
-            //当前时间的总秒数
-            long curTime = System.currentTimeMillis();
-            //设定的时间
-            long setTime = curTime + time;
-                     
-            SharedPreferences sharedPreferences = cordova.getActivity().getSharedPreferences("TimeFile", MODE_PRIVATE);
-            if(sharedPreferences!=null){
-                sharedPreferences.edit().putString("Time",String.valueOf(setTime)).commit();
-            }   
-            VVServer.wakeMainActivityTime  = setTime;
-            if(isOpenDebugModel)           
-            { 
-                Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
+            AlarmManager am = (AlarmManager) cordova.getActivity().getSystemService(context.ALARM_SERVICE);
+            
+            Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0); 
+            
+            if(Build.VERSION.SDK_INT < 19){
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
+            }else{
+                am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
             }
             return true;
         }
