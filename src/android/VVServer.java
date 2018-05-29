@@ -190,9 +190,10 @@ public class VVServer extends Service{
         
         if(intent!=null)
         {
-            if(intent.getAction().equals(ACTION_ALARM))
-            {
-                mHanler.post(new Runnable() {
+            if(intent.getAction()!=null){
+                if(intent.getAction().equals(ACTION_ALARM))
+                {
+                    mHanler.post(new Runnable() {
                     @Override
                     public void run() {
                         WriteLog(VVServer.this,"启动闹钟\n");
@@ -200,9 +201,10 @@ public class VVServer extends Service{
                         message.what = 1;
                         handler.sendMessage(message);
                     }
-                });
-           
+                    });
+                }
             }
+
         }
         
 
