@@ -188,8 +188,9 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();  
         
-        if(VVServer.this.getIntent()!=null){
-            if(VVServer.this.getIntent().getAction().equals(ACTION_ALARM))
+        //if(VVServer.this.getIntent()!=null)
+        {
+            //if(VVServer.this.getIntent().getAction().equals(ACTION_ALARM))
             {
                 mHanler.post(new Runnable() {
                     @Override
