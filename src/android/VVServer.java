@@ -192,20 +192,21 @@ public class VVServer extends Service{
         {
             //if(VVServer.this.getIntent().getAction().equals(ACTION_ALARM))
             {
-                mHanler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        WriteLog(VVServer.this,"启动闹钟");
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                });
+
            
             }
         }
         
-
+        mHanler.post(new Runnable() {
+            @Override
+            public void run() {
+                WriteLog(VVServer.this,"启动闹钟");
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        });
+        
         
         return START_STICKY;
     }
