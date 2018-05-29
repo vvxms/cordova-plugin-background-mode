@@ -5,6 +5,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
+import android.app.PendingIntent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -64,12 +65,12 @@ public class MyJobService extends JobService {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-                    WriteLog(MyJobService.this,"MyJobService尝试拉起--开始\n");
+                    VVServer.WriteLog(MyJobService.this,"MyJobService尝试拉起--开始\n");
                     Intent notificationIntent;     
                     notificationIntent = new Intent(MyJobService.this, com.limainfo.vv.Vv___.class);     
                     //WakeScreen();
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
-                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);              
+                    PendingIntent pendingIntent = PendingIntent.getActivity(MyJobService.this, 0, notificationIntent, 0);              
                     try           
                     {        
                         pendingIntent.send();     
@@ -78,7 +79,7 @@ public class MyJobService extends JobService {
                     {       
                         e.printStackTrace();  
                     }
-                    WriteLog(MyJobService.this,"MyJobService尝试拉起--结束\n");
+                    VVServer.WriteLog(MyJobService.this,"MyJobService尝试拉起--结束\n");
 
             /*
             //启动一个服务
