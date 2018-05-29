@@ -60,7 +60,7 @@ public class VVServer extends Service{
     private static String testLog = "-";
     
         
-    private static void  WriteLog(Context context,String strLog)
+    public static void  WriteLog(Context context,String strLog)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if (sharedPreferences != null) {
@@ -129,7 +129,7 @@ public class VVServer extends Service{
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    WriteLog(VVServer.this,"尝试拉起--开始");
+                    WriteLog(VVServer.this,"尝试拉起--开始\n");
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
       
@@ -146,7 +146,7 @@ public class VVServer extends Service{
                     {       
                         e.printStackTrace();  
                     }
-                    WriteLog(VVServer.this,"尝试拉起--结束");
+                    WriteLog(VVServer.this,"尝试拉起--结束\n");
                     break;
                 case 2:  
                     if(isOpenDebugModel)
@@ -195,7 +195,7 @@ public class VVServer extends Service{
                 mHanler.post(new Runnable() {
                     @Override
                     public void run() {
-                        WriteLog(VVServer.this,"启动闹钟");
+                        WriteLog(VVServer.this,"启动闹钟\n");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
