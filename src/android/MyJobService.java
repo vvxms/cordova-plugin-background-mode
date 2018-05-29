@@ -64,28 +64,31 @@ public class MyJobService extends JobService {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-//             Toast.makeText(MyJobService.this, "MyJobService", Toast.LENGTH_LONG).show();
-            JobParameters param = (JobParameters) msg.obj;
-            jobFinished(param, true);
+                    WriteLog(MyJobService.this,"MyJobService尝试拉起--开始\n");
+                    Intent notificationIntent;     
+                    notificationIntent = new Intent(MyJobService.this, com.limainfo.vv.Vv___.class);     
+                    //WakeScreen();
+                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
+                    PendingIntent pendingIntent = PendingIntent.getActivity(VVServer.this, 0, notificationIntent, 0);              
+                    try           
+                    {        
+                        pendingIntent.send();     
+                    }
+                    catch (PendingIntent.CanceledException e)    
+                    {       
+                        e.printStackTrace();  
+                    }
+                    WriteLog(MyJobService.this,"MyJobService尝试拉起--结束\n");
 
-            Log.e("MyJobService", "JobServer---启动服务");  
+            /*
             //启动一个服务
             if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.VVServer")){
                Intent i = new Intent(MyJobService.this, VVServer.class);
                startService(i);
                Log.e("MyJobService", "开始启动服务");
-//                Toast.makeText(MyJobService.this, "启动服务VVServer", Toast.LENGTH_LONG).show();
             }else {
-//                 Toast.makeText(MyJobService.this, "VVServer-服务已启动", Toast.LENGTH_LONG).show();
                 Log.e("MyJobService", "服务已启动");
             }
-            
-            //启动后台一个服务
-//             if(!isServiceWork(getApplicationContext(),"de.appplant.cordova.plugin.background.ForegroundService")&&BackgroundMode.inBackground){
-//                 BackgroundMode.isDisabled = false;
-//                 startBackgroundService();
-//             }else {
-//             }
    
             if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Log.e("MainActivity", "启动LocalCastielService");
@@ -99,7 +102,9 @@ public class MyJobService extends JobService {
             }else {
                 Log.e("MainActivity", "RemoteCastielService已启动");
             }
-            
+            */       
+            JobParameters param = (JobParameters) msg.obj;
+            jobFinished(param, true);
             return true;
         }
     });
