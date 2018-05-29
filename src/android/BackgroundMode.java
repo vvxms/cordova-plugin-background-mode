@@ -114,7 +114,7 @@ public class BackgroundMode extends CordovaPlugin {
     protected void pluginInitialize() {
         BackgroundExt.addWindowFlags(cordova.getActivity());
         cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务            
-        StartJobServer();
+        //StartJobServer();
         if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
             Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
             cordova.getActivity().startService(intent);
@@ -174,7 +174,7 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equalsIgnoreCase("StartJobServer")){
-            StartJobServer();
+            StartJobServer(600);//测试10分钟的jobserver任务
             callback.success();
             return true;
         }
@@ -223,7 +223,7 @@ public class BackgroundMode extends CordovaPlugin {
         } 
         
         if(action.equals("StartIPC")){
-            StartJobServer();
+            //StartJobServer();
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
                 cordova.getActivity().startService(intent);
@@ -251,7 +251,8 @@ public class BackgroundMode extends CordovaPlugin {
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000; 
             VVServer.WriteLog(cordova.getActivity(), "设定闹钟，设定的秒数:" + args.getString(0)+"\n");
-            alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
+            StartJobServer(Integer.parseInt( args.getString(0) ) );
+            //alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
             return true;
             /*
             //当前时间的总秒数
@@ -311,7 +312,28 @@ public class BackgroundMode extends CordovaPlugin {
         }
     }
     
-    public void StartJobServer(){
+    public void StartJobServer(int time){
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              JobScheduler jobScheduler = (JobScheduler) cordova.getActivity().getSystemService("jobscheduler");
+              JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName(cordova.getActivity().getPackageName(), MyJobService.class.getName()))
+                      .setMinimumLatency(time*1000)
+                      .setOverrideDeadline((time+5)*1000)
+                      .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+                      .setPersisted(true)
+                      .build();
+      
+         int returnCode = jobScheduler.schedule(jobInfo);
+         if(returnCode < 0){
+             // do something when schedule goes wrong
+             VVServer.WriteLog(cordova.getActivity(), "jobserver任务启动失败，错误码:" + returnCode +"\n");
+         }else{
+            VVServer.WriteLog(cordova.getActivity(), "jobserver任务启动成功\n");
+         }
+      }
+    }
+    
+        
+    public void StartJobServerBackUp(){
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
               JobScheduler jobScheduler = (JobScheduler) cordova.getActivity().getSystemService("jobscheduler");
               JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName(cordova.getActivity().getPackageName(), MyJobService.class.getName()))
