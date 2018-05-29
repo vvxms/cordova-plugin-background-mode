@@ -250,7 +250,7 @@ public class BackgroundMode extends CordovaPlugin {
             }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000; 
-            VVServer.WriteLog(cordova.getActivity(), "设定闹钟，设定的秒数:" + args.getString(0));
+            VVServer.WriteLog(cordova.getActivity(), "设定闹钟，设定的秒数:" + args.getString(0)+"\n");
             alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
             return true;
             /*
