@@ -105,7 +105,7 @@ public class MyJobService extends JobService {
             }
             */       
             JobParameters param = (JobParameters) msg.obj;
-            jobFinished(param, true);
+            jobFinished(param, false);
             VVServer.WriteLog(MyJobService.this," jobFinished\n");
             return true;
         }
