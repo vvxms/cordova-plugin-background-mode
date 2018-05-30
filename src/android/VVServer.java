@@ -238,6 +238,8 @@ public class VVServer extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();
+         
+        startForeground(100321, new Notification());
               
 //         //直接启动一个
 //         if(isStop){
