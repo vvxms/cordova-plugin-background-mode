@@ -174,7 +174,7 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equalsIgnoreCase("StartJobServer")){
-            StartJobServer(600);//测试10分钟的jobserver任务
+            //StartJobServer();
             callback.success();
             return true;
         }
@@ -250,7 +250,7 @@ public class BackgroundMode extends CordovaPlugin {
             }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000; 
-            VVServer.WriteLog(cordova.getActivity(), "设定闹钟，设定的秒数:" + args.getString(0)+"\n");
+            VVServer.WriteLog(cordova.getActivity(), " 设定闹钟，设定的秒数:" + args.getString(0)+"\n");
             StartJobServer(Integer.parseInt( args.getString(0) ) );
             //alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
             return true;
@@ -327,9 +327,9 @@ public class BackgroundMode extends CordovaPlugin {
          int returnCode = jobScheduler.schedule(jobInfo);
          if(returnCode < 0){
              // do something when schedule goes wrong
-             VVServer.WriteLog(cordova.getActivity(), "jobserver任务启动失败，错误码:" + returnCode +"\n");
+             VVServer.WriteLog(cordova.getActivity(), " jobserver任务启动失败，错误码:" + returnCode +"\n");
          }else{
-            VVServer.WriteLog(cordova.getActivity(), "jobserver任务启动成功\n");
+            VVServer.WriteLog(cordova.getActivity(), " jobserver任务启动成功\n");
          }
       }
     }
