@@ -252,7 +252,7 @@ public class BackgroundMode extends CordovaPlugin {
             long time = Integer.parseInt(args.getString(0))*1000; 
             VVServer.WriteLog(cordova.getActivity(), " 设定闹钟，设定的秒数:" + args.getString(0)+"\n");
             StartJobServer(Integer.parseInt( args.getString(0) ) );
-            //alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
+            alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
             return true;
             /*
             //当前时间的总秒数
@@ -317,8 +317,8 @@ public class BackgroundMode extends CordovaPlugin {
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
               JobScheduler jobScheduler = (JobScheduler) cordova.getActivity().getSystemService("jobscheduler");
               JobInfo jobInfo = new JobInfo.Builder(curJobInfoId, new ComponentName(cordova.getActivity().getPackageName(), MyJobService.class.getName()))
-                      .setMinimumLatency(time*1000)
-                      .setOverrideDeadline((time+5)*1000)
+                      .setMinimumLatency((time-5)*1000)
+                      .setOverrideDeadline(time*1000)
                       .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
                       .setPersisted(true)
                       .build();
