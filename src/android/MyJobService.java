@@ -17,6 +17,7 @@ import java.util.List;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
@@ -68,7 +69,7 @@ public class MyJobService extends JobService {
                     VVServer.WriteLog(MyJobService.this," MyJobService尝试拉起--开始\n");
                     Intent notificationIntent;     
                     notificationIntent = new Intent(MyJobService.this, com.limainfo.vv.Vv___.class);     
-                    //WakeScreen();
+                    WakeScreen();
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
                     PendingIntent pendingIntent = PendingIntent.getActivity(MyJobService.this, 0, notificationIntent, 0);              
                     try           
@@ -151,5 +152,36 @@ public class MyJobService extends JobService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("MyJobService", "onStartCommand");
         return START_STICKY;
+    }
+    
+        
+    @Override
+    public void onDestroy() {
+        releaseWakeLock();
+        super.onDestroy();
+    }
+    
+    private PowerManager.WakeLock wakeLock;
+    private void WakeScreen(){
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        releaseWakeLock();
+        if (Build.VERSION.SDK_INT < 20) {
+            if(pm.isScreenOn()){
+                return;
+            }
+        }
+        
+        int level = PowerManager.SCREEN_DIM_WAKE_LOCK |
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP;
+        wakeLock = pm.newWakeLock(level, "Locationtion");
+        wakeLock.setReferenceCounted(false);
+        wakeLock.acquire(1000);
+    }
+       
+    private void releaseWakeLock() {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+            wakeLock = null;
+        }
     }
 }
