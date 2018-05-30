@@ -65,7 +65,7 @@ public class MyJobService extends JobService {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-                    VVServer.WriteLog(MyJobService.this,"MyJobService尝试拉起--开始\n");
+                    VVServer.WriteLog(MyJobService.this," MyJobService尝试拉起--开始\n");
                     Intent notificationIntent;     
                     notificationIntent = new Intent(MyJobService.this, com.limainfo.vv.Vv___.class);     
                     //WakeScreen();
@@ -79,7 +79,7 @@ public class MyJobService extends JobService {
                     {       
                         e.printStackTrace();  
                     }
-                    VVServer.WriteLog(MyJobService.this,"MyJobService尝试拉起--结束\n");
+                    VVServer.WriteLog(MyJobService.this," MyJobService尝试拉起--结束\n");
 
             /*
             //启动一个服务
@@ -106,6 +106,7 @@ public class MyJobService extends JobService {
             */       
             JobParameters param = (JobParameters) msg.obj;
             jobFinished(param, true);
+            VVServer.WriteLog(MyJobService.this," jobFinished\n");
             return true;
         }
     });
