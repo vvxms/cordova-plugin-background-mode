@@ -312,16 +312,18 @@ public class BackgroundMode extends CordovaPlugin {
         }
     }
     
+    public static int curJobInfoId = 1;
     public void StartJobServer(int time){
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
               JobScheduler jobScheduler = (JobScheduler) cordova.getActivity().getSystemService("jobscheduler");
-              JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName(cordova.getActivity().getPackageName(), MyJobService.class.getName()))
+              JobInfo jobInfo = new JobInfo.Builder(curJobInfoId, new ComponentName(cordova.getActivity().getPackageName(), MyJobService.class.getName()))
                       .setMinimumLatency(time*1000)
                       .setOverrideDeadline((time+5)*1000)
                       .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
                       .setPersisted(true)
                       .build();
       
+         curJobInfoId++;
          int returnCode = jobScheduler.schedule(jobInfo);
          if(returnCode < 0){
              // do something when schedule goes wrong
