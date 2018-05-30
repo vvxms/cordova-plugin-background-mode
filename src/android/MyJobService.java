@@ -68,7 +68,7 @@ public class MyJobService extends JobService {
         public boolean handleMessage(Message msg) {
                     VVServer.WriteLog(MyJobService.this," MyJobService尝试拉起--开始\n");
                     WakeScreen();
-          /*   
+            
                     Intent notificationIntent;     
                     notificationIntent = new Intent(MyJobService.this, com.limainfo.vv.Vv___.class);     
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);      
@@ -83,7 +83,7 @@ public class MyJobService extends JobService {
                     }
                     VVServer.WriteLog(MyJobService.this," MyJobService尝试拉起--结束\n");
 
-           
+            /* 
             //启动一个服务
             if(!isServiceWork(MyJobService.this,"de.appplant.cordova.plugin.background.VVServer")){
                Intent i = new Intent(MyJobService.this, VVServer.class);
