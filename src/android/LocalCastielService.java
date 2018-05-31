@@ -78,24 +78,6 @@ public class LocalCastielService extends Service {
                     }
                     break;
                 case 4: 
-                    /*
-                    Intent notificationIntent; 
-                    if(mClass!=null){
-                        notificationIntent = new Intent(LocalCastielService.this, mClass);
-                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(LocalCastielService.this, 0, notificationIntent, 0);
-                        try 
-                        {
-                            pendingIntent.send(); 
-                        }
-                        catch (PendingIntent.CanceledException e) 
-                        {
-                            e.printStackTrace(); 
-                        }
-                    }else{
-                    
-                    }
-                    */
                     if(isOpenDebugModel){
                         Toast.makeText(LocalCastielService.this, "Local:时间到了，由Local服务拉起程序", Toast.LENGTH_SHORT).show();
                     }
@@ -290,28 +272,6 @@ public class LocalCastielService extends Service {
     }
     
     private void WakePage(){
-                    /*
-                    //读数据
-                    if(VVServer.prop==null){     
-                        VVServer.initPropertiesFile(LocalCastielService.this);
-                    }
-
-                    try {
-                        if(VVServer.prop!=null){
-                            mClass = Class.forName(VVServer.prop.get("class").toString());
-                        }
-                    } catch (ClassNotFoundException e) 
-                    {    
-                        e.printStackTrace();
-                    }              
-
-                   try {
-                       if(VVServer.prop!=null){
-                            wakeMainActivityTime = Long.parseLong(VVServer.prop.get("time").toString());
-                        }
-                   } catch (NumberFormatException nfe) {
-                   }
-                   */
                     if(VVServer.wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
                         //如果VVService没有启动 则由本服务拉起activity
