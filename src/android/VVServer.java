@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -261,8 +263,8 @@ public class VVServer extends Service{
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
         */
-        setForeground(); 
-
+        //setForeground(); 
+        setNotificationChannel("Vv小秘书");
     }
     
     public void setForeground() {
@@ -322,6 +324,56 @@ public class VVServer extends Service{
 
         return notification;
     }
+    
+        
+    private Notification notification;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
+    Intent intent;
+    private void setNotificationChannel(String channel){
+        String name = channel;//"通知渠道名称";//渠道名字
+        String id = "my_package_channel_1"; // 渠道ID
+        String description = "Vv小秘书为您服务，请勿关闭该通知"; // 渠道解释说明
+        PendingIntent pendingIntent;//非紧急意图，可设置可不设置
+
+        if (notificationManager == null) {
+            notificationManager =  (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        //判断是否是8.0上设备
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel mChannel = null;
+            if (mChannel == null) {
+                mChannel = new NotificationChannel(id, name, importance);
+                mChannel.setDescription(description);
+                mChannel.enableLights(true); //是否在桌面icon右上角展示小红点
+                notificationManager.createNotificationChannel(mChannel);
+            }
+            notificationBuilder = new NotificationCompat.Builder(this);
+
+            intent = new Intent(this, com.limainfo.vv.Vv___.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            notificationBuilder.
+                     setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("Vv小秘书")
+                    .setContentText("Vv小秘书正在后台运行")
+                    .setContentIntent(pendingIntent)
+                    .setChannelId(id)
+                    .setAutoCancel(true);
+        }else{
+            notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("Vv小秘书")
+                    .setContentText("Vv小秘书正在后台运行")
+                    .setAutoCancel(true);
+        }
+        notification = notificationBuilder.build();
+        startForeground(1, notification);
+        
+//        notificationManager.notify(0, notification);
+    }
+    
     
     public static Properties prop = null;
     public static void initPropertiesFile(Context context) {
