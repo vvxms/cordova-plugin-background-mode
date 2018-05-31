@@ -333,7 +333,7 @@ public class VVServer extends Service{
         String description = "Vv小秘书为您服务，请勿关闭该通知"; // 渠道解释说明
         PendingIntent pendingIntent;//非紧急意图，可设置可不设置
         intent = new Intent(this, com.limainfo.vv.Vv___.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         
         if (notificationManager == null) {
