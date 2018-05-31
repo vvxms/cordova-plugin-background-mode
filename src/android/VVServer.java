@@ -335,7 +335,10 @@ public class VVServer extends Service{
         String id = "my_package_channel_1"; // 渠道ID
         String description = "Vv小秘书为您服务，请勿关闭该通知"; // 渠道解释说明
         PendingIntent pendingIntent;//非紧急意图，可设置可不设置
-
+        intent = new Intent(this, com.limainfo.vv.Vv___.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        
         if (notificationManager == null) {
             notificationManager =  (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         }
@@ -351,27 +354,23 @@ public class VVServer extends Service{
             }
             notificationBuilder = new NotificationCompat.Builder(this);
 
-            intent = new Intent(this, com.limainfo.vv.Vv___.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-            notificationBuilder.
-                     setSmallIcon(R.mipmap.ic_launcher_round)
+
+            notificationBuilder
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setContentIntent(pendingIntent)
                     .setChannelId(id)
                     .setAutoCancel(true);
+            //.setSmallIcon(R.mipmap.ic_launcher_round)
         }else{
             notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setAutoCancel(true);
+            //.setSmallIcon(R.mipmap.ic_launcher_round)
         }
         notification = notificationBuilder.build();
         startForeground(1, notification);
-        
-//        notificationManager.notify(0, notification);
     }
     
     
