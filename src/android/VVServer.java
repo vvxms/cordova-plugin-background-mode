@@ -86,10 +86,8 @@ public class VVServer extends Service{
                 @Override
                 public void run() {
                     tempTime++;
-                    if(tempTime%5 == 0){
-                          Message message = new Message();
-                          message.what = 5;
-                          handler.sendMessage(message);
+                    if(tempTime%30 == 0){
+                        WriteLog(VVServer.this,"VVServer定时器30s一次Log \n");
                     }
               
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
@@ -158,10 +156,6 @@ public class VVServer extends Service{
                 case 4:
                     if(isOpenDebugModel)
                         Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_SHORT).show();
-                    break;
-                case 5:                  
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer-wakeMainActivityTime"+String.valueOf(wakeMainActivityTime/1000),Toast.LENGTH_SHORT).show();
                     break;
                 case 6:
                     if(isOpenDebugModel)
@@ -252,14 +246,12 @@ public class VVServer extends Service{
         
 
         //直接启动一个
-        /*
         if(isStop){
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }else{
             stopTimer();    
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
-        */
         //setForeground(); 
         setNotificationChannel("Vv小秘书");
     }
