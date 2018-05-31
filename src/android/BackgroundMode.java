@@ -261,8 +261,8 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.WriteLog(cordova.getActivity(), " 设定闹钟，设定的秒数:" + args.getString(0)+"\n");
             StartJobServer(Integer.parseInt( args.getString(0) ) );
             alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
-            return true;
-            /*
+            //return true;
+            
             //当前时间的总秒数
             long curTime = System.currentTimeMillis();
             //设定的时间
@@ -278,7 +278,6 @@ public class BackgroundMode extends CordovaPlugin {
                 Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
             }
             return true;
-            */
         }
         
         if(action.equals("moveTaskToBack")){
