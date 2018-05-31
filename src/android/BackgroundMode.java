@@ -119,7 +119,7 @@ public class BackgroundMode extends CordovaPlugin {
             Toast.makeText(cordova.getActivity(),"Android 8.0 startForegroundService",Toast.LENGTH_SHORT).show();
             cordova.getActivity().startForegroundService(new Intent(cordova.getActivity(),VVServer.class));
         }else {
-            Toast.makeText(this,"低版本启动服务",Toast.LENGTH_SHORT).show();
+            Toast.makeText(cordova.getActivity(),"低版本启动服务",Toast.LENGTH_SHORT).show();
             cordova.getActivity().startService(new Intent(cordova.getActivity(),VVServer.class));
         }
         
