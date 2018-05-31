@@ -107,7 +107,7 @@ public class BackgroundMode extends CordovaPlugin {
         this.mWebView = webView;
         CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
         if(isOpenDebugModel)
-            Toast.makeText(cordova.getActivity(), "initialize", Toast.LENGTH_LONG).show();
+            VVServer.WriteLog(cordova.getActivity(), " initialize");
     }
     
     @Override
@@ -226,7 +226,6 @@ public class BackgroundMode extends CordovaPlugin {
         } 
         
         if(action.equals("StartIPC")){
-            //StartJobServer();
             if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){
                 Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
                 cordova.getActivity().startService(intent);
@@ -242,8 +241,6 @@ public class BackgroundMode extends CordovaPlugin {
         }
        
         if (action.equals("BringToFrontBySetTime")) {
-    
-            
             if(args.getString(0).equals("")){
                 VVServer.WriteLog(cordova.getActivity(), " 时间点设置为空!\n");
                 return true;
@@ -251,15 +248,15 @@ public class BackgroundMode extends CordovaPlugin {
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000; 
             VVServer.WriteLog(cordova.getActivity(), " 设定闹钟，设定的秒数:" + args.getString(0)+"\n");
-            //StartJobServer(Integer.parseInt( args.getString(0) ) );
+            //使用JobService启动一个一次性任务
+            //StartJobServer(Integer.parseInt( args.getString(0) ) );//有bug暂时不用
+            //使用AlarmManager启动一个一次性任务
             alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
-            //return true;
             
             //当前时间的总秒数
             long curTime = System.currentTimeMillis();
             //设定的时间
             long setTime = curTime + time;
-                     
             SharedPreferences sharedPreferences = cordova.getActivity().getSharedPreferences("TimeFile", MODE_PRIVATE);
             if(sharedPreferences!=null){
                 sharedPreferences.edit().putString("Time",String.valueOf(setTime)).commit();
@@ -267,7 +264,7 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.wakeMainActivityTime  = setTime;
             if(isOpenDebugModel)           
             { 
-                Toast.makeText(cordova.getActivity(),"设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString(), Toast.LENGTH_SHORT).show();
+                VVServer.WriteLog(cordova.getActivity(), "设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString()+"\n");
             }
             return true;
         }
@@ -333,7 +330,6 @@ public class BackgroundMode extends CordovaPlugin {
       }
     }
     
-        
     public void StartJobServerBackUp(){
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
               JobScheduler jobScheduler = (JobScheduler) cordova.getActivity().getSystemService("jobscheduler");
