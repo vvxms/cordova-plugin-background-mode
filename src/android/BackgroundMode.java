@@ -122,7 +122,6 @@ public class BackgroundMode extends CordovaPlugin {
             cordova.getActivity().startService(new Intent(cordova.getActivity(), VVServer.class));//程序启动的时候就启动vvservice服务    
         }
                 
-        //StartJobServer();
         if(!MyJobService.isServiceWork(cordova.getActivity(),"de.appplant.cordova.plugin.background.LocalCastielService")){        
             Intent intent = new Intent(cordova.getActivity(), LocalCastielService.class);
             cordova.getActivity().startService(intent);
@@ -131,12 +130,8 @@ public class BackgroundMode extends CordovaPlugin {
             Intent intent1 = new Intent(cordova.getActivity(), RemoteCastielService.class);
             cordova.getActivity().startService(intent1);
         }     
-        if(isOpenDebugModel){
-           Toast.makeText(cordova.getActivity(),"StartIPC", Toast.LENGTH_LONG).show();
-        }     
         if(isOpenDebugModel)
-            Toast.makeText(cordova.getActivity(), "pluginInitialize", Toast.LENGTH_LONG).show();
-        
+            VVServer.WriteLog(cordova.getActivity(), " pluginInitialize");
     }
 
     // codebeat:disable[ABC]
@@ -250,16 +245,13 @@ public class BackgroundMode extends CordovaPlugin {
     
             
             if(args.getString(0).equals("")){
-                if(isOpenDebugModel)
-                {
-                    Toast.makeText(cordova.getActivity(),"时间点设置为空！", Toast.LENGTH_SHORT).show();
-                }
+                VVServer.WriteLog(cordova.getActivity(), " 时间点设置为空!\n");
                 return true;
             }
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000; 
             VVServer.WriteLog(cordova.getActivity(), " 设定闹钟，设定的秒数:" + args.getString(0)+"\n");
-            StartJobServer(Integer.parseInt( args.getString(0) ) );
+            //StartJobServer(Integer.parseInt( args.getString(0) ) );
             alarm(cordova.getActivity(),Integer.parseInt( args.getString(0) ) );
             //return true;
             
