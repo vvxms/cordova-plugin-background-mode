@@ -87,7 +87,7 @@ public class VVServer extends Service{
                 public void run() {
                     tempTime++;
                     if(tempTime%30 == 0){
-                        WriteLog(VVServer.this,"VVServer定时器30s一次Log \n");
+                        WriteLog(VVServer.this,"----30s----\n");
                     }
               
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
@@ -145,22 +145,6 @@ public class VVServer extends Service{
                     }
                     WriteLog(VVServer.this,"尝试拉起--结束\n");
                     break;
-                case 2:  
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer-时间差"+String.valueOf(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000),Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_SHORT).show();
-                    break;
-                case 4:
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer配置文件新建了",Toast.LENGTH_SHORT).show();
-                    break;
-                case 6:
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"saveProp",Toast.LENGTH_SHORT).show();
-                    break;
             }
             return true;
         }
@@ -169,8 +153,6 @@ public class VVServer extends Service{
   @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onBind",Toast.LENGTH_SHORT).show();
         return null;
     }
 
@@ -178,9 +160,6 @@ public class VVServer extends Service{
     private Handler mHanler = new Handler(Looper.getMainLooper());
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();  
-        
         if(intent!=null)
         {
             if(intent.getAction()!=null){
@@ -199,9 +178,6 @@ public class VVServer extends Service{
             }
 
         }
-        
-
-        
         
         return START_STICKY;
     }
@@ -227,10 +203,6 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();  
-        if(isOpenDebugModel)
-            Toast.makeText(VVServer.this,"VVServer-onCreate",Toast.LENGTH_LONG).show();
-        
-        
         SharedPreferences sharedPreferencesRead = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if(sharedPreferencesRead!=null){
             String strTime = sharedPreferencesRead.getString("Time","");
@@ -238,10 +210,7 @@ public class VVServer extends Service{
                 wakeMainActivityTime = Long.parseLong(strTime);
             }
         }else{
-            if(isOpenDebugModel)
-            {
-                Toast.makeText(VVServer.this,"VVServer：读取文件失败，文件不存在",Toast.LENGTH_LONG).show();
-            }
+            WriteLog(VVServer.this,"VVServer：读取文件失败，文件不存在\n");
         }
         
 
@@ -262,11 +231,9 @@ public class VVServer extends Service{
             VVServer.this.startForeground(PID, getNotification());
             return;
         }
-
         if (null == mConnection) {
             mConnection = new AssistServiceConnection();
         }
-
         this.bindService(new Intent(VVServer.this, AssistService.class), mConnection,
                 Service.BIND_AUTO_CREATE);
     }
@@ -362,66 +329,6 @@ public class VVServer extends Service{
         startForeground(1, notification);
     }
     
-    
-    public static Properties prop = null;
-    public static void initPropertiesFile(Context context) {
-        prop = loadConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties");
-        if (prop == null) {
-            // 配置文件不存在的时候创建配置文件 初始化配置信息
-            prop = new Properties();
-            prop.put("time","1000");
-            prop.put("class","com.limainfo.vv.Vv___");
-            saveConfig(context, "/data/data/" + context.getPackageName()+ "/config.properties", prop);
-        }
-    }
-
-    /**
-     * 保存配置文件
-     * <p>
-     * Title: saveConfig
-     * <p>
-     * <p>
-     * Description:
-     * </p>
-     *
-     * @param context
-     * @param file
-     * @param properties
-     * @return
-     */
-    public static boolean saveConfig(Context context, String file,
-                                     Properties properties) {
-        try {
-            File fil = new File(file);
-            if (!fil.exists())
-                fil.createNewFile();
-            FileOutputStream s = new FileOutputStream(fil);
-            properties.store(s, "");
-        } catch (Exception e) {
-            if(isOpenDebugModel){
-//                     Message message = new Message();      
-//                     message.what = 6;     
-//                     handler.sendMessage(message);
-            }
-//             errorlog1 = e.toString();
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public static Properties loadConfig(Context context, String file) {
-        Properties properties = new Properties();
-        try {
-            FileInputStream s = new FileInputStream(file);
-            properties.load(s);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return properties;
-    }
-    
     private PowerManager.WakeLock wakeLock;
     private void WakeScreen(){
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
@@ -431,8 +338,6 @@ public class VVServer extends Service{
                 return;
             }
         }
-        
-
         
         int level = PowerManager.SCREEN_DIM_WAKE_LOCK |
                     PowerManager.ACQUIRE_CAUSES_WAKEUP;
