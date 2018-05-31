@@ -70,9 +70,8 @@ public class VVServer extends Service{
             log += "  ";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss 
             Date date = new Date(System.currentTimeMillis()); 
-            log += simpleDateFormat.format(date);
+            log += simpleDateFormat.format(date)+" ";
             log += strLog;
-
             sharedPreferences.edit().putString("Log", log).commit();
         }
     }
@@ -95,6 +94,7 @@ public class VVServer extends Service{
               
                     if(wakeMainActivityTime/1000 - System.currentTimeMillis()/1000 == 0)
                     {
+                        WriteLog(VVServer.this,"VVServer定时器读配置文件尝试拉起 \n");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
@@ -132,9 +132,6 @@ public class VVServer extends Service{
             switch (msg.what){
                 case 1:
                     WriteLog(VVServer.this,"尝试拉起--开始\n");
-                    if(isOpenDebugModel)
-                        Toast.makeText(VVServer.this,"VVServer时间到了",Toast.LENGTH_SHORT).show();
-      
                     Intent notificationIntent;     
                     notificationIntent = new Intent(VVServer.this, com.limainfo.vv.Vv___.class);     
                     WakeScreen();    
@@ -198,7 +195,7 @@ public class VVServer extends Service{
                     mHanler.post(new Runnable() {
                     @Override
                     public void run() {
-                        WriteLog(VVServer.this,"启动闹钟\n");
+                        WriteLog(VVServer.this,"AlarmManager尝试启动闹钟\n");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
