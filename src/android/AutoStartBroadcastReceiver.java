@@ -20,7 +20,6 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(action_boot)){
-//              Toast.makeText(context,"开机自启动",Toast.LENGTH_SHORT).show();
              Intent i = new Intent(context, VVServer.class);
              context.startService(i);
              Intent intent0 = new Intent(context, LocalCastielService.class);
@@ -35,8 +34,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
             Class<?> mClass;
             try {   
                 if(classinfo != null){
-//                     Toast.makeText(context,"包名" + classinfo,Toast.LENGTH_SHORT).show();
-                    mClass = Class.forName(VVServer.prop.get("class").toString());  
+                    mClass = Class.forName("com.limainfo.vv.Vv___");  
                     Intent notificationIntent;
                     notificationIntent = new Intent(context, mClass);
                     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -59,12 +57,9 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
         }
         
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
-//             Toast.makeText(context,"时间变化了",Toast.LENGTH_SHORT).show();
             if (!isServiceWork(context,"de.appplant.cordova.plugin.background.VVServer")) {
                 Intent intent5 = new Intent(context, VVServer.class);
                 context.startService(intent5);
-//                 Intent intents = new Intent(context, com.phonegap.helloworld.VV_KeppAlive_demo.class);
-//                 context.startActivity(intents);
             }  
         }
     }
