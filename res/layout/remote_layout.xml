@@ -20,7 +20,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="#FFFFFF"
             android:maxLines="1"
             android:text="闹钟将在14:30分时响起" />
 
@@ -30,7 +30,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="#FFFFFF"
             android:maxLines="1"
             android:text="您的信用卡还款日快到了，请注意及时还款" />
 
