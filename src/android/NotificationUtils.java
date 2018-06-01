@@ -1,4 +1,4 @@
-package com.yimasoft.android8servicetest;
+package de.appplant.cordova.plugin.background;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -24,7 +24,7 @@ public class NotificationUtils {
     public static PendingIntent mPendingIntent = null;//非紧急意图，可设置可不设置
     public static Intent mintent = null;
 
-    public static RemoteViews bigContentView;
+    public static RemoteViews bigContentView = null;
 
 
     public static String channelNameDefault = "Vv小秘书_default";//"通知渠道名称";//渠道名字
@@ -84,7 +84,7 @@ public class NotificationUtils {
 
         //自定义bigContentView
         if (Build.VERSION.SDK_INT >= 16) {
-            bigContentView = new RemoteViews(context.getPackageName(), R.layout.remote_layout);
+            bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(this, "layout", "remote_layout"));
 //                    - setTextViewText(viewId, text)                     设置文本
 //                    - setTextColor(viewId, color)                       设置文本颜色
 //                    - setTextViewTextSize(viewId, units, size)          设置文本大小
@@ -92,7 +92,7 @@ public class NotificationUtils {
 //                    - setImageViewResource(viewId, srcId)               根据图片资源设置图片
 //                    - setViewPadding(viewId, left, top, right, bottom)  设置Padding间距
 //                    - setOnClickPendingIntent(viewId, mPendingIntent)    设置点击事件
-            bigContentView.setOnClickPendingIntent(R.id.button, mPendingIntent);
+            bigContentView.setOnClickPendingIntent(Meta.getResId(this, "drawable", "del_32px"), mPendingIntent);
             mNotification.bigContentView = bigContentView;
         }
         return mNotification;
@@ -123,7 +123,6 @@ public class NotificationUtils {
     public static void upDataNotificationIcon(int  id,int resId){
         if(bigContentView!=null&&mNotificationManager!=null){
                 bigContentView.setImageViewResource(id, resId);
-//            bigContentView.setIcon();
                 mNotificationManager.notify(1, mNotification);
         }
     }
