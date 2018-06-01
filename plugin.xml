@@ -191,6 +191,17 @@
             src="aidl/android/CastielProgressConnection.aidl"
             target-dir="src/de/appplant/cordova/plugin/background" />
             
+	 <source-file src="src/android/Meta.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+	    
+	 <resource-file src="res/layout/remote_layout.xml"
+            target="res/layout/remote_layout.xml" />
+	    
+	 <resource-file src="res/drawable/t.png"
+            target="res/drawable/t.png" />
+	    
+	 <resource-file src="res/drawable/del_32px.png"
+            target="res/drawable/del_32px.png" />
             
     </platform>
 
