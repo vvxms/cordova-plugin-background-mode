@@ -312,18 +312,18 @@ public class VVServer extends Service{
 
 
             notificationBuilder
+                    .setSmallIcon(Meta.getResId(this, "drawable", "del_32px"))
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setContentIntent(pendingIntent)
                     .setChannelId(id)
                     .setAutoCancel(true);
-            //.setSmallIcon(R.mipmap.ic_launcher_round)
         }else{
             notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(Meta.getResId(this, "drawable", "del_32px"))
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setAutoCancel(true);
-            //.setSmallIcon(R.mipmap.ic_launcher_round)
         }
         notification = notificationBuilder.build();
         startForeground(1, notification);
