@@ -239,7 +239,27 @@ public class VVServer extends Service{
         if(isOpenDebugModel)
             Toast.makeText(VVServer.this,"VVServer-onStartCommand",Toast.LENGTH_SHORT).show();
          
-        startForeground(100321, new Notification());
+        if(intent!=null)
+        {
+            if(intent.getAction()!=null){
+                if(intent.getAction().equals(ACTION_ALARM))
+                {
+                    mHanler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        WriteLog(VVServer.this,"AlarmManager尝试启动闹钟\n");
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                    });
+                }
+            }
+
+        }
+         
+        
+        //startForeground(100321, new Notification());
               
 //         //直接启动一个
 //         if(isStop){
