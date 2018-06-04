@@ -193,6 +193,9 @@
             
 	 <source-file src="src/android/Meta.java"
             target-dir="src/de/appplant/cordova/plugin/background" />
+	  
+	 <source-file src="src/android/NotificationUtils.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />   
 	    
 	 <resource-file src="res/layout/remote_layout.xml"
             target="res/layout/remote_layout.xml" />
