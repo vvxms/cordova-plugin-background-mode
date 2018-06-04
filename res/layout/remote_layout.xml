@@ -6,8 +6,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!--android:background="@drawable/bg_nofification"-->
 
-
     <LinearLayout
+        android:layout_margin="2dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
@@ -20,8 +20,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:maxLines="1"
+            android:textColor="#ff0000"
+            android:singleLine="true"
             android:text="闹钟将在14:30分时响起" />
 
         <TextView
@@ -30,9 +30,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:maxLines="1"
-            android:text="您的信用卡还款日快到了，请注意及时还款" />
+            android:textColor="#00ff00"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:text="您的信用卡还款日快到了，请注意及时还款。" />
 
 
     </LinearLayout>
@@ -49,9 +53,7 @@
             android:layout_height="30dp"
             android:scaleType="fitXY"
             android:background="@drawable/del_32px" />
-
     </RelativeLayout>
-
 
 
 
