@@ -276,7 +276,7 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.WriteLog(cordova.getActivity(), " 发送通知Start");
             Intent mintent = null;
             try {
-                mintent = new Intent(cordova.getActivity(), Class.forName("com.limainfo.vv.Vv___"));
+                mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
             } catch (ClassNotFoundException e) {
                 VVServer.WriteLog(cordova.getActivity(), " 发送通知错误"+e.toString());
                 e.printStackTrace();
@@ -291,12 +291,15 @@ public class BackgroundMode extends CordovaPlugin {
         }
                 
         if(action.equals("setNotificationText")){
-              VVServer.WriteLog(cordova.getActivity(), " 更改内容Start");
+            VVServer.WriteLog(cordova.getActivity(), " 更改内容Start");
             if(args.getString(0)==null && args.getString(1)!=null){
+                VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--1");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),null,args.getString(1));
             }else if(args.getString(0)!=null && args.getString(1)==null){
+                VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--2");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),args.getString(0),null);
             }else if(args.getString(0)!=null && args.getString(1)!=null){
+                VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--3");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),args.getString(0),args.getString(1));
             }
             VVServer.WriteLog(cordova.getActivity(), " 更改内容END");
