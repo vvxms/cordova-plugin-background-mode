@@ -94,8 +94,21 @@ exports.StartIPC = function() {
     cordova.exec(null, null, 'BackgroundMode', 'StartIPC', []);
 };
 
-exports.GetLog = function(success) {
+exports.sendNotification = function(success) {
     cordova.exec(success, null, 'BackgroundMode', 'GetLog', []);
+};
+
+exports.setNotificationText = function(success) {
+    cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
+};
+
+exports.setNotificationButtonClickIntent = function(success) {
+    cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
+};
+
+
+exports.GetLog = function(success) {
+    cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
 };
 
 exports.TestBugly = function() {
