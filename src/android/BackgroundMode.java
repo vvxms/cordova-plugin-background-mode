@@ -292,13 +292,13 @@ public class BackgroundMode extends CordovaPlugin {
                 
         if(action.equals("setNotificationText")){
             VVServer.WriteLog(cordova.getActivity(), " 更改内容Start");
-            if(args.getString(0)==null && args.getString(1)!=null){
+            if(args.getString(0).equals("") && !args.getString(1).equals("")){
                 VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--1");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),null,args.getString(1));
-            }else if(args.getString(0)!=null && args.getString(1)==null){
+            }else if(!args.getString(0).equals("") && args.getString(1).equals("")){
                 VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--2");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),args.getString(0),null);
-            }else if(args.getString(0)!=null && args.getString(1)!=null){
+            }else if(!args.getString(0).equals("") && !args.getString(1).equals("")){
                 VVServer.WriteLog(cordova.getActivity(), " 更改内容Start--3");
                 NotificationUtils.upDataNotificationText(cordova.getActivity(),args.getString(0),args.getString(1));
             }
