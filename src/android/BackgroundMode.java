@@ -273,11 +273,15 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equals("sendNotification")){
-            Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
-            mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
-            NotificationUtils.sendNotification(mActivity, NotificationManager.IMPORTANCE_MAX, Meta.getResId(mActivity, "drawable", "del_32px"),args.getString(0),args.getString(1),args.getString(2),tempNotificationId,mPendingIntent);
-            tempNotificationId++;
+            try {
+                Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
+                mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
+                NotificationUtils.sendNotification(mActivity, NotificationManager.IMPORTANCE_MAX, Meta.getResId(mActivity, "drawable", "del_32px"),args.getString(0),args.getString(1),args.getString(2),tempNotificationId,mPendingIntent);
+                tempNotificationId++;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             return true;
         }
                 
@@ -289,13 +293,19 @@ public class BackgroundMode extends CordovaPlugin {
             }else if(args.getString(0)!=null && args.getString(1)!=null){
                 NotificationUtils.upDataNotificationText(mActivity,args.getString(0),args.getString(1));
             }
+            return true;
         }
         
         if(action.equals("setNotificationButtonClickIntent")){
-            Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
-            mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
-            NotificationUtils.setButtonIntent(mActivity,mPendingIntent);
+            try {
+                Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
+                mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
+                NotificationUtils.setButtonIntent(mActivity,mPendingIntent);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }            
+            return true;
         }
         
         if(action.equals("moveTaskToBack")){
