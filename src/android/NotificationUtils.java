@@ -104,7 +104,7 @@ public class NotificationUtils {
      * @param args1 首行文字
      * @param args2 次行文字
      */
-    public static void upDataNotificationText(String  args1,String args2){
+    public static void upDataNotificationText(Context context,String  args1,String args2){
         if(bigContentView!=null&&mNotificationManager!=null){
             if(args1!=null)
                 bigContentView.setTextViewText(Meta.getResId(context, "id", "textView_1"), args1);
@@ -133,7 +133,7 @@ public class NotificationUtils {
      *  设置通知栏按钮的意图
      * @param pendingIntent 意图
      */
-    public static void setButtonIntent(PendingIntent pendingIntent){
+    public static void setButtonIntent(Context context,PendingIntent pendingIntent){
         bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), pendingIntent);
         mNotificationManager.notify(1, mNotification);
     }
