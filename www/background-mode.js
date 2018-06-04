@@ -102,12 +102,12 @@ exports.TestBugly = function() {
     cordova.exec(null, null, 'BackgroundMode', 'TestBugly', []);
 };
 
-exports.sendNotification = function() {
-    cordova.exec(null, null, 'BackgroundMode', 'sendNotification', []);
+exports.sendNotification = function(arg0,arg1,agr2) {
+    cordova.exec(null, null, 'BackgroundMode', 'sendNotification', [arg0,arg1,agr2]);
 };
 
-exports.setNotificationText = function() {
-    cordova.exec(null, null, 'BackgroundMode', 'setNotificationText', []);
+exports.setNotificationText = function(arg0,arg1) {
+    cordova.exec(null, null, 'BackgroundMode', 'setNotificationText', [arg0,arg1]);
 };
 
 exports.setNotificationButtonClickIntent = function() {
