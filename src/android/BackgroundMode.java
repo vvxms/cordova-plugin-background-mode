@@ -283,11 +283,11 @@ public class BackgroundMode extends CordovaPlugin {
                 
         if(action.equals("setNotificationText")){
             if(args.getString(0)==null && args.getString(1)!=null){
-                NotificationUtils.upDataNotificationText(null,args.getString(1));
+                NotificationUtils.upDataNotificationText(mActivity,null,args.getString(1));
             }else if(args.getString(0)!=null && args.getString(1)==null){
-                NotificationUtils.upDataNotificationText(args.getString(0),null);
+                NotificationUtils.upDataNotificationText(mActivity,args.getString(0),null);
             }else if(args.getString(0)!=null && args.getString(1)!=null){
-                NotificationUtils.upDataNotificationText(args.getString(0),args.getString(1));
+                NotificationUtils.upDataNotificationText(mActivity,args.getString(0),args.getString(1));
             }
         }
         
@@ -295,7 +295,7 @@ public class BackgroundMode extends CordovaPlugin {
             Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
             mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
-            NotificationUtils.setButtonIntent(mPendingIntent);
+            NotificationUtils.setButtonIntent(mActivity,mPendingIntent);
         }
         
         if(action.equals("moveTaskToBack")){
