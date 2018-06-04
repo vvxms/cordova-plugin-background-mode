@@ -100,19 +100,31 @@ public class NotificationUtils {
 
 
     /**
-     * 根据图片资源设置图片
+     * 设置文字
      * @param args1 首行文字
      * @param args2 次行文字
      */
     public static void upDataNotificationText(Context context,String  args1,String args2){
-        if(bigContentView!=null&&mNotificationManager!=null){
+        VVServer.WriteLog(context, " upDataNotificationText---0");
+        if(bigContentView!=null && mNotificationManager!=null){
+            VVServer.WriteLog(context, " upDataNotificationText---1");
             if(args1!=null)
+            {
                 bigContentView.setTextViewText(Meta.getResId(context, "id", "textView_1"), args1);
+                VVServer.WriteLog(context, " upDataNotificationText---2");
+            }
             if(args2!=null)
+            {
                 bigContentView.setTextViewText(Meta.getResId(context, "id", "textView_2"), args2);
+                VVServer.WriteLog(context, " upDataNotificationText---3");
+            }
             if(args1!=null||args2!=null)
+            {
                 mNotificationManager.notify(1, mNotification);
+                VVServer.WriteLog(context, " upDataNotificationText---4");
+            }
         }
+        VVServer.WriteLog(context, " upDataNotificationText---5");
     }
 
     /**
