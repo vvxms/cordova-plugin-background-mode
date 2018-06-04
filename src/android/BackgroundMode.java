@@ -278,7 +278,7 @@ public class BackgroundMode extends CordovaPlugin {
              
             Intent intent = new Intent(cordova.getActivity(), VVServer.class);
             intent.setAction(VVServer.ACTION_ALARM);
-            PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getService(cordova.getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             
             /*Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
