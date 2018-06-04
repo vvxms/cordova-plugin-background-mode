@@ -234,6 +234,8 @@ public class VVServer extends Service{
         return null;
     }
 
+    public static String ACTION_ALARM = "action_alarm";
+    private Handler mHanler = new Handler(Looper.getMainLooper());
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(isOpenDebugModel)
