@@ -221,8 +221,12 @@ public class VVServer extends Service{
             stopTimer();    
             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
         }
-        //setForeground(); 
-        setNotificationChannel("Vv小秘书");
+        //setForeground(); //未适配8.0的
+        //setNotificationChannel("Vv小秘书");//适配8.0的
+        
+        //适配8.0并加入通知栏自定义布局的
+        Notification notification = NotificationUtils.init(this,Meta.getResId(this, "drawable", "del_32px"),"com.limainfo.vv.Vv___");
+        startForeground(1, notification);
     }
     
     public void setForeground() {
