@@ -50,6 +50,8 @@ import android.util.Log;
 import android.content.SharedPreferences;
 import android.view.WindowManager;
 
+import android.app.NotificationManager;
+
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 import com.tencent.bugly.crashreport.CrashReport;
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -98,6 +100,7 @@ public class BackgroundMode extends CordovaPlugin {
     
     public static Activity mActivity;
     public static CordovaWebView mWebView;
+    private int tempNotificationId = 2;//发送的通知的Id
     private static boolean isOpenDebugModel = false;
   
     @Override
@@ -267,6 +270,32 @@ public class BackgroundMode extends CordovaPlugin {
                 VVServer.WriteLog(cordova.getActivity(), "设定的秒数(毫秒)  " + String.valueOf(time) + "\n存储的时间 " + new Date(setTime).toString()+"\n");
             }
             return true;
+        }
+        
+        if(action.equals("sendNotification")){
+            Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
+            mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
+            NotificationUtils.sendNotification(mActivity, NotificationManager.IMPORTANCE_MAX, Meta.getResId(mActivity, "drawable", "del_32px"),args.getString(0),args.getString(1),args.getString(2),tempNotificationId,mPendingIntent);
+            tempNotificationId++;
+            return true;
+        }
+                
+        if(action.equals("setNotificationText")){
+            if(args.getString(0)==null && args.getString(1)!=null){
+                NotificationUtils.upDataNotificationText(null,args.getString(1));
+            }else if(args.getString(0)!=null && args.getString(1)==null){
+                NotificationUtils.upDataNotificationText(args.getString(0),null);
+            }else if(args.getString(0)!=null && args.getString(1)!=null){
+                NotificationUtils.upDataNotificationText(args.getString(0),args.getString(1));
+            }
+        }
+        
+        if(action.equals("setNotificationButtonClickIntent")){
+            Intent mintent = new Intent(mActivity, Class.forName("com.limainfo.vv.Vv___"));
+            mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent mPendingIntent = PendingIntent.getActivity(mActivity, 0, mintent, 0);
+            NotificationUtils.setButtonIntent(mPendingIntent);
         }
         
         if(action.equals("moveTaskToBack")){
