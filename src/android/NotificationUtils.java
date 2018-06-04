@@ -77,14 +77,14 @@ public class NotificationUtils {
                     .setSmallIcon(icon)
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
-                    .setPriority(Notification.PRIORITY_MAX)
+                    .setPriority(Notification.PRIORITY_MAX)//在通知栏顶部显示
                     .setAutoCancel(true);
         }
         mNotification = mNotificationBuilder.build();
 
         //自定义bigContentView
         if (Build.VERSION.SDK_INT >= 16) {
-            bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(this, "layout", "remote_layout"));
+            bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
 //                    - setTextViewText(viewId, text)                     设置文本
 //                    - setTextColor(viewId, color)                       设置文本颜色
 //                    - setTextViewTextSize(viewId, units, size)          设置文本大小
@@ -92,7 +92,7 @@ public class NotificationUtils {
 //                    - setImageViewResource(viewId, srcId)               根据图片资源设置图片
 //                    - setViewPadding(viewId, left, top, right, bottom)  设置Padding间距
 //                    - setOnClickPendingIntent(viewId, mPendingIntent)    设置点击事件
-            bigContentView.setOnClickPendingIntent(Meta.getResId(this, "drawable", "del_32px"), mPendingIntent);
+            bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
             mNotification.bigContentView = bigContentView;
         }
         return mNotification;
@@ -107,9 +107,9 @@ public class NotificationUtils {
     public static void upDataNotificationText(String  args1,String args2){
         if(bigContentView!=null&&mNotificationManager!=null){
             if(args1!=null)
-                bigContentView.setTextViewText(R.id.textView_1, args1);
+                bigContentView.setTextViewText(Meta.getResId(context, "id", "textView_1"), args1);
             if(args2!=null)
-                bigContentView.setTextViewText(R.id.textView_2, args2);
+                bigContentView.setTextViewText(Meta.getResId(context, "id", "textView_2"), args2);
             if(args1!=null||args2!=null)
                 mNotificationManager.notify(1, mNotification);
         }
@@ -134,7 +134,7 @@ public class NotificationUtils {
      * @param pendingIntent 意图
      */
     public static void setButtonIntent(PendingIntent pendingIntent){
-        bigContentView.setOnClickPendingIntent(R.id.button, pendingIntent);
+        bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), pendingIntent);
         mNotificationManager.notify(1, mNotification);
     }
 
