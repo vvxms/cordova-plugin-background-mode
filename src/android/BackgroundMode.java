@@ -275,15 +275,20 @@ public class BackgroundMode extends CordovaPlugin {
             //获取到的秒数
             long time = Integer.parseInt(args.getString(0))*1000;      
             AlarmManager am = (AlarmManager) cordova.getActivity().getSystemService(cordova.getActivity().ALARM_SERVICE);
+             
+            Intent intent = new Intent(context, VVServer.class);
+            intent.setAction(VVServer.ACTION_ALARM);
+            PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             
-            Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
+            /*Intent notificationIntent = new Intent(cordova.getActivity(), cordova.getActivity().getClass());
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0); 
+            PendingIntent pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, notificationIntent, 0); */
             
             if(Build.VERSION.SDK_INT < 19){
                 am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
             }else{
-                am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
+                am.setAlarmClock(new AlarmManager.AlarmClockInfo(System.currentTimeMillis() + time, pendingIntent), pendingIntent);
+                //am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
             }
             return true;
         }
