@@ -51,6 +51,7 @@ import android.content.SharedPreferences;
 import android.view.WindowManager;
 
 import android.app.NotificationManager;
+import android.os.PowerManager;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 import com.tencent.bugly.crashreport.CrashReport;
