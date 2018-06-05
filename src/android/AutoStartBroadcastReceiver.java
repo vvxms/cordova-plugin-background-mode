@@ -21,14 +21,19 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         VVServer.WriteLog(context, " 进入AutoStartBroadcastReceiver");
         if (intent.getAction().equals(action_boot)){
-             VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---开始");
-             Intent i = new Intent(context, VVServer.class);
-             context.startService(i);
-             Intent intent0 = new Intent(context, LocalCastielService.class);
-             context.startService(intent0);
-             Intent intent1 = new Intent(context, RemoteCastielService.class);
-             context.startService(intent1);
-             VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---结束");
+            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---开始");
+            Intent i = new Intent(context, VVServer.class);
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+                context.startForegroundService(i);
+            }
+            else {
+                context.startService(i);
+            }            
+            Intent intent0 = new Intent(context, LocalCastielService.class);
+            context.startService(intent0);
+            Intent intent1 = new Intent(context, RemoteCastielService.class);
+            context.startService(intent1);
+            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---结束");
         }
 
         if(intent.getAction().equals(action_WakePage)){    
