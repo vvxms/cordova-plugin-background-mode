@@ -513,7 +513,8 @@ public class BackgroundMode extends CordovaPlugin {
                     //               intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
                     intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                     intent.setData(Uri.parse("package:" + packageName));
-                    activity.startActivityForResult(intent, REQUEST_IGNORE_BATTERY_CODE);
+                    activity.startActivity(intent);
+//                     activity.startActivityForResult(intent, REQUEST_IGNORE_BATTERY_CODE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -521,19 +522,19 @@ public class BackgroundMode extends CordovaPlugin {
         }
     }
     
-    private static int REQUEST_IGNORE_BATTERY_CODE = 9527;
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
-                //TODO something
-            }
-        }else if (resultCode == Activity.RESULT_CANCELED){
-            if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
-                Toast.makeText(cordova.getActivity(),"请开启忽略电池优化",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//     private static int REQUEST_IGNORE_BATTERY_CODE = 9527;
+//     @Override
+//     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//         if (resultCode == Activity.RESULT_OK) {
+//             if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
+//                 //TODO something
+//             }
+//         }else if (resultCode == Activity.RESULT_CANCELED){
+//             if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
+//                 Toast.makeText(cordova.getActivity(),"请开启忽略电池优化",Toast.LENGTH_SHORT).show();
+//             }
+//         }
+//     }
     
     /**
      * Called when the activity will be destroyed.
