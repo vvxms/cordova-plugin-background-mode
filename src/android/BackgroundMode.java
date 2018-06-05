@@ -523,11 +523,11 @@ public class BackgroundMode extends CordovaPlugin {
     private static int REQUEST_IGNORE_BATTERY_CODE = 9527;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
                 //TODO something
             }
-        }else if (resultCode == RESULT_CANCELED){
+        }else if (resultCode == Activity.RESULT_CANCELED){
             if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
                 Toast.makeText(cordova.getActivity(),"请开启忽略电池优化",Toast.LENGTH_SHORT).show();
             }
