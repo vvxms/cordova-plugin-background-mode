@@ -19,17 +19,20 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     static final String action_WakePage ="VV_Test";
     @Override
     public void onReceive(Context context, Intent intent) {
+        VVServer.WriteLog(context, " 进入AutoStartBroadcastReceiver");
         if (intent.getAction().equals(action_boot)){
+             VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---开始");
              Intent i = new Intent(context, VVServer.class);
              context.startService(i);
              Intent intent0 = new Intent(context, LocalCastielService.class);
              context.startService(intent0);
              Intent intent1 = new Intent(context, RemoteCastielService.class);
              context.startService(intent1);
+             VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---结束");
         }
 
         if(intent.getAction().equals(action_WakePage)){    
-            
+            VVServer.WriteLog(context, " 广播拉起程序---开始");
             String classinfo = intent.getExtras().getString("ClassInfo");
             Class<?> mClass;
             try {   
@@ -51,16 +54,17 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
             } catch (ClassNotFoundException e) 
             {    
-//                 Toast.makeText(context,"包名获取失败"+e.toString(),Toast.LENGTH_SHORT).show();
                 e.printStackTrace();  
-            }                         
+            }   
+            VVServer.WriteLog(context, " 广播拉起结束---开始");
         }
         
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {//如果广播是每分钟发送一次的时间广播
+            VVServer.WriteLog(context, " 一分钟一次广播---进入");
             if (!isServiceWork(context,"de.appplant.cordova.plugin.background.VVServer")) {
                 Intent intent5 = new Intent(context, VVServer.class);
                 context.startService(intent5);
-            }  
+            }
         }
     }
 
