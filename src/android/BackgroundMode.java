@@ -508,7 +508,7 @@ public class BackgroundMode extends CordovaPlugin {
             try {
                 Intent intent = new Intent();
                 String packageName = activity.getPackageName();
-                VVServer.WriteLog(cordova.getActivity(), "包名: "+packageName);
+                VVServer.WriteLog(activity, "包名: "+packageName);
                 PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
                 if (!pm.isIgnoringBatteryOptimizations(packageName)) {
                     //               intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
