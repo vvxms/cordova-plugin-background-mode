@@ -111,6 +111,8 @@ public class BackgroundMode extends CordovaPlugin {
         CrashReport.initCrashReport(this.cordova.getActivity().getApplicationContext());
         if(isOpenDebugModel)
             VVServer.WriteLog(cordova.getActivity(), " initialize");
+        
+        isIgnoreBatteryOption(mActivity);
     }
     
     @Override
@@ -495,6 +497,43 @@ public class BackgroundMode extends CordovaPlugin {
         stopService();
     }
 
+    /**
+     * 针对N以上的Doze模式
+     *
+     * @param activity
+     */
+    public static void isIgnoreBatteryOption(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                Intent intent = new Intent();
+                String packageName = activity.getPackageName();
+                PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                    //               intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(Uri.parse("package:" + packageName));
+                    activity.startActivityForResult(intent, REQUEST_IGNORE_BATTERY_CODE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private static int REQUEST_IGNORE_BATTERY_CODE = 9527;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
+                //TODO something
+            }
+        }else if (resultCode == RESULT_CANCELED){
+            if (requestCode == REQUEST_IGNORE_BATTERY_CODE){
+                Toast.makeText(cordova.getActivity(),"请开启忽略电池优化",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    
     /**
      * Called when the activity will be destroyed.
      */
