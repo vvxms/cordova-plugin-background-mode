@@ -353,10 +353,15 @@ public class BackgroundMode extends CordovaPlugin {
         Intent intent = new Intent(context, VVServer.class);
         intent.setAction(VVServer.ACTION_ALARM);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if(Build.VERSION.SDK_INT < 19){
+       if(Build.VERSION.SDK_INT < 19){
             am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time*1000, pendingIntent);
         }else{
-            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time*1000, pendingIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                am.setAlarmClock(new AlarmManager.AlarmClockInfo(System.currentTimeMillis() + time*1000, pendingIntent), pendingIntent);
+            }else
+            {
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time*1000, pendingIntent);
+            }
         }
     }
     
