@@ -20,9 +20,9 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
     static final String action_WakePage ="VV_Test";
     @Override
     public void onReceive(Context context, Intent intent) {
-        VVServer.WriteLog(context, " 进入AutoStartBroadcastReceiver");
+        VVServer.WriteLog(context, " 进入AutoStartBroadcastReceiver\n");
         if (intent.getAction().equals(action_boot)){
-            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---开始");
+            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---开始\n");
             Intent i = new Intent(context, VVServer.class);
             if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
                 context.startForegroundService(i);
@@ -30,11 +30,11 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
             else {
                 context.startService(i);
             }            
-            Intent intent0 = new Intent(context, LocalCastielService.class);
-            context.startService(intent0);
-            Intent intent1 = new Intent(context, RemoteCastielService.class);
-            context.startService(intent1);
-            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---结束");
+//             Intent intent0 = new Intent(context, LocalCastielService.class);
+//             context.startService(intent0);
+//             Intent intent1 = new Intent(context, RemoteCastielService.class);
+//             context.startService(intent1);
+            VVServer.WriteLog(context, " 启动VVServer、LocalCastielService、RemoteCastielService---结束\n");
         }
 
         if(intent.getAction().equals(action_WakePage)){    
