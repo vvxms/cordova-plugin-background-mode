@@ -49,6 +49,7 @@ import android.app.job.JobScheduler;
 import android.util.Log;
 import android.content.SharedPreferences;
 import android.view.WindowManager;
+import android.text.TextUtils;
 
 import android.app.NotificationManager;
 import android.os.PowerManager;
@@ -183,7 +184,7 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equalsIgnoreCase("StartJobServer")){
-            //StartJobServer();
+            launchAppDetail(cordova.getActivity().getPackageName(),"");
             callback.success();
             return true;
         }
@@ -348,6 +349,29 @@ public class BackgroundMode extends CordovaPlugin {
             }
         });
         callbackContext.success(message);
+    }
+    
+        
+    /**
+     * 启动到应用商店app详情界面
+     *
+     * @param appPkg    目标App的包名
+     * @param marketPkg 应用商店包名 ,如果为 "" 则由系统弹出应用商店列表供用户选择,否则调转到目标市场的应用详情界面，某些应用商店可能会失败
+     */
+    public void launchAppDetail(String appPkg, String marketPkg) {
+        try {
+            if (TextUtils.isEmpty(appPkg)) return;
+
+            Uri uri = Uri.parse("market://details?id=" + appPkg);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            if (!TextUtils.isEmpty(marketPkg)) {
+                intent.setPackage(marketPkg);
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
       
