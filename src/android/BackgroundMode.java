@@ -368,7 +368,7 @@ public class BackgroundMode extends CordovaPlugin {
                 intent.setPackage(marketPkg);
             }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            cordova.getActivity().startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }
