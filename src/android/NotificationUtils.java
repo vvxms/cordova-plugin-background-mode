@@ -25,6 +25,7 @@ public class NotificationUtils {
     public static Intent mintent = null;
 
     public static RemoteViews bigContentView = null;
+    public static boolean mIsSetContentView = false;
 
 
     public static String channelNameDefault = "Vv小秘书_default";//"通知渠道名称";//渠道名字
@@ -83,7 +84,7 @@ public class NotificationUtils {
         mNotification = mNotificationBuilder.build();
 
         //自定义bigContentView
-        if (Build.VERSION.SDK_INT >= 16) {
+        if (Build.VERSION.SDK_INT >= 16 && mIsSetContentView) {
             bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
 //                    - setTextViewText(viewId, text)                     设置文本
 //                    - setTextColor(viewId, color)                       设置文本颜色
