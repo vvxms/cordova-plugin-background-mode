@@ -114,7 +114,6 @@ public class BackgroundMode extends CordovaPlugin {
         if(isOpenDebugModel)
             VVServer.WriteLog(cordova.getActivity(), " initialize");
         
-        isIgnoreBatteryOption(mActivity);//是否忽略电池优化
     }
     
     @Override
@@ -177,6 +176,34 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
+           
+        if(action.equalsIgnoreCase("ignoreBatteryOption")){
+            isIgnoreBatteryOption(mActivity);//是否忽略电池优化
+            return true;
+        }
+        
+                   
+        if(action.equalsIgnoreCase("launchAppMarketDetail")){
+            //跳转到应用商店详情界面
+            launchAppDetail(mActivity.getPackageName(),"");
+            return true;
+        }
+        
+                   
+        if(action.equalsIgnoreCase("launchAppMarketSearch")){
+            //跳转到应用商店搜索界面
+            try {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("market://search?q="+ mActivity.getPackageName()));
+                mActivity.startActivity(i);
+            } catch (Exception e) {
+                Toast.makeText(mActivity, "您的手机没有安装Android应用市场", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+            return true;
+        }
+        
+        //跳转到自启动界面
         if(action.equalsIgnoreCase("GotoAutoStartManagerPage")){
             jumpStartInterface();
             callback.success();
@@ -184,7 +211,7 @@ public class BackgroundMode extends CordovaPlugin {
         }
         
         if(action.equalsIgnoreCase("StartJobServer")){
-            launchAppDetail(cordova.getActivity().getPackageName(),"");
+            //暂时不需要jobserver
             callback.success();
             return true;
         }
