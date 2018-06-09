@@ -114,6 +114,21 @@ exports.setNotificationButtonClickIntent = function() {
     cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
 };
 
+//电池优化
+exports.ignoreBatteryOption = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'ignoreBatteryOption', []);
+};
+
+//跳转到应用商店详情界面
+exports.launchAppMarketDetail = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'launchAppMarketDetail', []);
+};
+
+//跳转到应用商店搜索界面
+exports.launchAppMarketSearch = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'launchAppMarketSearch', []);
+};
+
 //加QQ
 exports.joinQQChatPage = function(arg0) {
     cordova.exec(null, null, 'BackgroundMode', 'joinQQChatPage', [arg0]);
