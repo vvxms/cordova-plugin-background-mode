@@ -114,6 +114,16 @@ exports.setNotificationButtonClickIntent = function() {
     cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
 };
 
+//加QQ
+exports.joinQQChatPage = function(arg0) {
+    cordova.exec(null, null, 'BackgroundMode', 'joinQQChatPage', [arg0]);
+};
+
+//加QQ群
+exports.joinQQGroupPage = function(arg0) {
+    cordova.exec(null, null, 'BackgroundMode', 'joinQQGroupPage', [arg0]);
+};
+
 /*************
  * INTERFACE *
  *************/
