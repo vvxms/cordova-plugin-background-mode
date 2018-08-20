@@ -139,6 +139,11 @@ exports.joinQQGroupPage = function(arg0) {
     cordova.exec(null, null, 'BackgroundMode', 'joinQQGroupPage', [arg0]);
 };
 
+exports.goToJoinQqGroup_IOS  = function() {
+    cordova.exec(null, null, 'BackgroundMode', 'goToJoinQqGroup)', []);
+};
+
+
 /*************
  * INTERFACE *
  *************/
