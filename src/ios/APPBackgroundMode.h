@@ -29,6 +29,6 @@
 // Deactivate the background mode
 - (void) disable:(CDVInvokedUrlCommand*)command;
 //open qq and join group
-- (void) goToJoinQqGroup:(CDVInvokedUrlCommand*)command;
+- (void) goToJoinQqGroup_IOS:(CDVInvokedUrlCommand*)command;
 
 @end
