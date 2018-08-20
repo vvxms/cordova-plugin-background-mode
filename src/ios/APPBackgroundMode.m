@@ -123,9 +123,9 @@ NSString* const kAPPBackgroundEventDeactivate = @"deactivate";
  }
 
 /**
- * goToJoinQqGroup 
+ * goToJoinQqGroup_IOS 
  */
-- (void) goToJoinQqGroup:(CDVInvokedUrlCommand*)command
+- (void) goToJoinQqGroup_IOS:(CDVInvokedUrlCommand*)command
 {
    NSString *urlStr = [NSString stringWithFormat:@"mqqapi://card/show_pslcard?src_type=internal&version=1&uin=%@&key=%@&card_type=group&source=external", @"709923920",@"8fe148d040b235c45c3f5353ab758e502d2769365d3a686ba954973a1b3f490c"];
     NSURL *url = [NSURL URLWithString:urlStr];
