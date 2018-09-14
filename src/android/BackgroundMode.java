@@ -389,6 +389,11 @@ public class BackgroundMode extends CordovaPlugin {
             return true;
         }
         
+        if(action.equals("getMobileInfo")){
+            callback.success(getMobileInfo());
+            return true;
+        }
+        
         BackgroundExt.execute(this, action, callback);
         return true;
     }
@@ -489,13 +494,18 @@ public class BackgroundMode extends CordovaPlugin {
         cordova.getActivity().registerReceiver(mOnepxReceiver, intentFilter);
     }
     
-          /**
+     /**
      * Get Mobile Type
      *
      * @return
      */
     private static String getMobileType() {
         return Build.MANUFACTURER;
+    }
+    
+    pirvate static String getMobileInfo(){
+        //Log.e("手机"," 型号:"+Build.MODEL+" 品牌:"+ Build.MANUFACTURER);
+        return Build.MANUFACTURER + "," + Build.MODEL + "," + android.os.Build.DISPLAY;
     }
     
     public void jumpStartInterface(){
