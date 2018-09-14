@@ -138,12 +138,12 @@ exports.joinQQGroupPage = function(arg0) {
 };
 
 exports.goToJoinQqGroup_IOS  = function() {
-    cordova.exec(null, null, 'BackgroundMode', 'goToJoinQqGroup)', []);
+    cordova.exec(null, null, 'BackgroundMode', 'goToJoinQqGroup', []);
 };
 
 //获取手机的信息
 exports.getMobileInfo  = function(success) {
-    cordova.exec(success, null, 'BackgroundMode', 'getMobileInfo)', []);
+    cordova.exec(success, null, 'BackgroundMode', 'getMobileInfo', []);
 };
 
 
