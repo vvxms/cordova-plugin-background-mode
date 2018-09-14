@@ -506,7 +506,7 @@ public class BackgroundMode extends CordovaPlugin {
     private static String getMobileInfo(){
         //Log.e("手机"," 型号:"+Build.MODEL+" 品牌:"+ Build.MANUFACTURER);
         String str = Build.MANUFACTURER + "," + Build.MODEL + "," + Build.DISPLAY;
-        VVServer.WriteLog(cordova.getActivity(), str);
+        VVServer.WriteLog(mActivity, str);
         return str;
     }
     
