@@ -76,12 +76,10 @@ exports.BringToFront = function() {
 exports.BringToFrontBySetTime = function(time) {
     var fn = function() {
         alert('BringToFrontBySetTime-success');
- 
         };
     
     var fn1 = function() {
         alert('BringToFrontBySetTime-failed');
- 
         };
     cordova.exec(null, null, 'BackgroundMode', 'BringToFrontBySetTime', [time]);
 };
@@ -141,6 +139,11 @@ exports.joinQQGroupPage = function(arg0) {
 
 exports.goToJoinQqGroup_IOS  = function() {
     cordova.exec(null, null, 'BackgroundMode', 'goToJoinQqGroup)', []);
+};
+
+//获取手机的信息
+exports.getMobileInfo  = function(success) {
+    cordova.exec(success, null, 'BackgroundMode', 'getMobileInfo)', []);
 };
 
 
