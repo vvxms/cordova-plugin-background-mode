@@ -225,7 +225,7 @@ public class VVServer extends Service{
         //setNotificationChannel("Vv小秘书");//适配8.0的
         
         //适配8.0并加入通知栏自定义布局的
-        Notification notification = NotificationUtils.init(this,Meta.getResId(this, "drawable", "del_32px"),"com.limainfo.vv.Vv___");
+        Notification notification = NotificationUtils.init(this,Meta.getResId(this, "drawable", "logo_32"),"com.limainfo.vv.Vv___");
         startForeground(1, notification);
     }
     
@@ -316,7 +316,7 @@ public class VVServer extends Service{
 
 
             notificationBuilder
-                    .setSmallIcon(Meta.getResId(this, "drawable", "del_32px"))
+                    .setSmallIcon(Meta.getResId(this, "drawable", "logo_32"))
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setContentIntent(pendingIntent)
@@ -324,7 +324,7 @@ public class VVServer extends Service{
                     .setAutoCancel(true);
         }else{
             notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(Meta.getResId(this, "drawable", "del_32px"))
+                    .setSmallIcon(Meta.getResId(this, "drawable", "logo_32"))
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setAutoCancel(true);
