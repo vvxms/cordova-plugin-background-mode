@@ -25,7 +25,7 @@ public class NotificationUtils {
     public static Intent mintent = null;
 
     public static RemoteViews bigContentView = null;
-    public static boolean mIsSetContentView = false;
+    public static boolean mIsSetContentView = true;
 
 
     public static String channelNameDefault = "Vv小秘书_default";//"通知渠道名称";//渠道名字
