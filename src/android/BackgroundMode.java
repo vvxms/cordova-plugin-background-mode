@@ -340,7 +340,7 @@ public class BackgroundMode extends CordovaPlugin {
             }
             mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent mPendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, mintent, 0);
-            NotificationUtils.sendNotification(cordova.getActivity(), NotificationManager.IMPORTANCE_MAX, Meta.getResId(cordova.getActivity(), "drawable", "del_32px"),args.getString(0),args.getString(1),args.getString(2),tempNotificationId,mPendingIntent);
+            NotificationUtils.sendNotification(cordova.getActivity(), NotificationManager.IMPORTANCE_MAX, Meta.getResId(cordova.getActivity(), "drawable", "logo_32"),args.getString(0),args.getString(1),args.getString(2),tempNotificationId,mPendingIntent);
             tempNotificationId++;            
             VVServer.WriteLog(cordova.getActivity(), " 发送通知End");
             return true;
