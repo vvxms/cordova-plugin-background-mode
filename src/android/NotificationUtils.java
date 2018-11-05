@@ -82,6 +82,8 @@ public class NotificationUtils {
                     .setAutoCancel(true);
         }
         mNotification = mNotificationBuilder.build();
+        
+        mNotification.flags =  Notification.FLAG_ONGOING_EVENT;
 
         //自定义bigContentView
         if (Build.VERSION.SDK_INT >= 16 && mIsSetContentView) {
@@ -94,7 +96,8 @@ public class NotificationUtils {
 //                    - setViewPadding(viewId, left, top, right, bottom)  设置Padding间距
 //                    - setOnClickPendingIntent(viewId, mPendingIntent)    设置点击事件
             bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
-            mNotification.bigContentView = bigContentView;
+            //mNotification.bigContentView = bigContentView;
+            mNotification.contentView = bigContentView;
         }
         return mNotification;
     }
