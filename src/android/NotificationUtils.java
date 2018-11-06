@@ -47,6 +47,7 @@ public class NotificationUtils {
             mintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
             mPendingIntent = PendingIntent.getActivity(context, 0, mintent, 0);
         } catch (ClassNotFoundException e) {
+            VVServer.WriteLog(context, e.toString() + "\n");
             e.printStackTrace();
         }
 
@@ -73,6 +74,8 @@ public class NotificationUtils {
                     .setPriority(Notification.PRIORITY_MAX)
                     .setChannelId(channelIdDefault)//关键!!!!!!!!!!!
                     .setAutoCancel(true);
+            
+            VVServer.WriteLog(context, Android O chanel + "\n");
         }else{
             mNotificationBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(icon)
@@ -80,11 +83,11 @@ public class NotificationUtils {
                     .setContentText("Vv小秘书正在后台运行")
                     .setPriority(Notification.PRIORITY_MAX)//在通知栏顶部显示
                     .setAutoCancel(true);
+            VVServer.WriteLog(context, Normal Android Sdk chanel + "\n");
         }
         mNotification = mNotificationBuilder.build();
         
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT;
-        
                 
         RemoteViews contentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "content_view"));
         //contentView.setTextViewText(R.id.tv_normal, getResources().getString(R.string.notification_normal));
