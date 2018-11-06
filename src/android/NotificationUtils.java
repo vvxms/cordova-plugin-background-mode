@@ -96,7 +96,7 @@ public class NotificationUtils {
         {
             mNotification.bigContentView = bigContentView;
         }
-        mNotification.contentView = bigContentView;
+        //mNotification.contentView = bigContentView;
         
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT; 
         mNotification.defaults|=Notification.DEFAULT_SOUND;
