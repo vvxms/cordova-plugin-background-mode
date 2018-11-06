@@ -6,11 +6,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by loi on 2018/5/31.
@@ -51,7 +56,7 @@ public class NotificationUtils {
         }
 
 //         bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
-        bigContentView = new RemoteViews(context.getPackageName(), R.layout.content_view);
+        bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "content_view"));
         //bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -146,8 +151,6 @@ public class NotificationUtils {
         }
     }
     
-    
-        
     public static void sendBigPicNotification(Context context,int bAssetDirOrDataDir,String imgPathOrName) {
         if(bigContentView!=null && mNotificationManager!=null)
         {
@@ -168,6 +171,24 @@ public class NotificationUtils {
         }
     }
 
+    /** 根据路径获取Bitmap图片
+     * @param context
+     * @param fileName assets目录下的图片名
+     * @return
+     */
+    public static Bitmap getAssetsBitmap(Context context, String fileName){
+        AssetManager assetManager = context.getAssets();
+        InputStream inputStream = null;
+        try {
+            inputStream = assetManager.open(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        return bitmap;
+    }
+
+    
     /**
      *  设置通知栏按钮的意图
      * @param pendingIntent 意图
@@ -188,7 +209,7 @@ public class NotificationUtils {
      * @param pendingIntent 点击这个通知的意图
      */
     public static void sendNotification(Context context,int importance,int icon, String title, String content,String innerContent, int notificationId,PendingIntent pendingIntent){
-if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){//8.0及以上系统
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){//8.0及以上系统
             mNotificationBuilder = new NotificationCompat.Builder(context,channelIdDefault);
         }else {//8.0以下系统
             mNotificationBuilder = new NotificationCompat.Builder(context);
