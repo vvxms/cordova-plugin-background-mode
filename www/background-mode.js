@@ -108,6 +108,11 @@ exports.setNotificationText = function(arg0,arg1) {
     cordova.exec(null, null, 'BackgroundMode', 'setNotificationText', [arg0,arg1]);
 };
 
+exports.sendBigPicNotification = function(arg0,arg1) {
+    cordova.exec(null, null, 'BackgroundMode', 'sendBigPicNotification', [arg0,arg1]);
+};
+
+
 exports.setNotificationButtonClickIntent = function() {
     cordova.exec(null, null, 'BackgroundMode', 'setNotificationButtonClickIntent', []);
 };
