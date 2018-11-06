@@ -50,8 +50,9 @@ public class NotificationUtils {
             e.printStackTrace();
         }
 
-        bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
-        bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
+//         bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
+        bigContentView = new RemoteViews(context.getPackageName(), R.layout.content_view);
+        //bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance_high = NotificationManager.IMPORTANCE_HIGH;
@@ -92,11 +93,11 @@ public class NotificationUtils {
         }
         mNotification = mNotificationBuilder.build();
         
-        if (Build.VERSION.SDK_INT >= 16) 
-        {
-            mNotification.bigContentView = bigContentView;
-        }
-        mNotification.contentView = bigContentView;
+//         if (Build.VERSION.SDK_INT >= 16) 
+//         {
+//             mNotification.bigContentView = bigContentView;
+//         }
+//         mNotification.contentView = bigContentView;
         
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT; 
         mNotification.defaults|=Notification.DEFAULT_SOUND;
@@ -142,6 +143,28 @@ public class NotificationUtils {
         if(bigContentView!=null&&mNotificationManager!=null){
                 bigContentView.setImageViewResource(id, resId);
                 mNotificationManager.notify(1, mNotification);
+        }
+    }
+    
+    
+        
+    public static void sendBigPicNotification(Context context,int bAssetDirOrDataDir,String imgPathOrName) {
+        if(bigContentView!=null && mNotificationManager!=null)
+        {
+            Bitmap bitmap = null;
+            if(bAssetDirOrDataDir == 1)
+                bitmap = getAssetsBitmap(context,imgPathOrName);
+            else if(bAssetDirOrDataDir == 0)
+                bitmap= BitmapFactory.decodeFile(imgPathOrName);
+
+            if(bitmap!=null){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    //mNotification.bigContentView = bigContentView;
+                    mNotification.contentView = bigContentView;
+                    bigContentView.setImageViewBitmap(Meta.getResId(context, "id", "imgView"),bitmap);
+                    mNotificationManager.notify(1, mNotification);
+                }
+            }
         }
     }
 
