@@ -23,7 +23,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:singleLine="true"
-            android:text="闹钟将在14:30分时响起" />
+            android:text="Vv小秘书" />
 
         <TextView
             android:id="@+id/textView_2"
@@ -37,7 +37,7 @@
             android:focusableInTouchMode="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:ellipsize="marquee"
-            android:text="您的信用卡还款日快到了，请注意及时还款。" />
+            android:text="Vv小秘书竭诚为你服务！" />
 
 
     </LinearLayout>
