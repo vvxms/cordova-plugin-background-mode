@@ -90,7 +90,7 @@ public class NotificationUtils {
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT;
                 
         RemoteViews contentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "content_view"));
-        contentView.setTextViewText(Meta.getResId(context, "id", "textview"), "Vv小助手");
+        contentView.setTextViewText(Meta.getResId(context, "id", "title_head"), "Vv小助手");
         mNotification.contentView = contentView;
 
         //自定义bigContentView
