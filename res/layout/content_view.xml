@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:src="@drawable/ic_launcher_background"
         android:id="@+id/imgView"
         android:scaleType="fitXY"
         android:layout_width="match_parent"
