@@ -73,7 +73,7 @@ public class NotificationUtils {
                     .setContentIntent(mPendingIntent)
                     .setPriority(Notification.PRIORITY_MAX)
                     .setChannelId(channelIdDefault)//关键!!!!!!!!!!!
-                    .setAutoCancel(true);
+                    .setAutoCancel(false);
             
             VVServer.WriteLog(context, "Android O chanel" + "\n");
         }else{
@@ -82,7 +82,7 @@ public class NotificationUtils {
                     .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     .setPriority(Notification.PRIORITY_MAX)//在通知栏顶部显示
-                    .setAutoCancel(true);
+                    .setAutoCancel(false);
             VVServer.WriteLog(context, "Normal Android Sdk chanel" + "\n");
         }
         mNotification = mNotificationBuilder.build();
@@ -106,6 +106,7 @@ public class NotificationUtils {
             bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
             mNotification.bigContentView = bigContentView;
         }
+        mNotificationManager.notify(0,mNotification);
         return mNotification;
     }
 
