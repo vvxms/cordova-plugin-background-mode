@@ -75,7 +75,7 @@ public class NotificationUtils {
                     .setSmallIcon(icon)
                     .setContentTitle("Vv小秘书_测试")
                     .setContentText("Vv小秘书正在后台运行")
-                    .setContent(bigContentView)
+                    //.setContent(bigContentView)
                     .setContentIntent(mPendingIntent)
                     .setPriority(Notification.PRIORITY_MAX)//设置优先级,级别高的排在前面
                     .setChannelId(channelIdOne)//关键!!!!!!!!!!!
@@ -85,12 +85,18 @@ public class NotificationUtils {
                     .setSmallIcon(icon)
                     .setContentTitle("Vv小秘书_测试")
                     .setContentText("Vv小秘书正在后台运行")
-                    .setContent(bigContentView)
+                    //.setContent(bigContentView)
                     .setContentIntent(mPendingIntent)
                     .setPriority(Notification.PRIORITY_MAX)
                     .setAutoCancel(false);
         }
         mNotification = mNotificationBuilder.build();
+        
+        if (Build.VERSION.SDK_INT >= 16) 
+        {
+            mNotification.bigContentView = bigContentView;
+        }
+        mNotification.contentView = bigContentView;
         
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT; 
         mNotification.defaults|=Notification.DEFAULT_SOUND;
