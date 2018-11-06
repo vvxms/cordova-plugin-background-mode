@@ -75,7 +75,7 @@ public class NotificationUtils {
                     .setChannelId(channelIdDefault)//关键!!!!!!!!!!!
                     .setAutoCancel(true);
             
-            VVServer.WriteLog(context, Android O chanel + "\n");
+            VVServer.WriteLog(context, "Android O chanel" + "\n");
         }else{
             mNotificationBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(icon)
@@ -83,7 +83,7 @@ public class NotificationUtils {
                     .setContentText("Vv小秘书正在后台运行")
                     .setPriority(Notification.PRIORITY_MAX)//在通知栏顶部显示
                     .setAutoCancel(true);
-            VVServer.WriteLog(context, Normal Android Sdk chanel + "\n");
+            VVServer.WriteLog(context, "Normal Android Sdk chanel" + "\n");
         }
         mNotification = mNotificationBuilder.build();
         
