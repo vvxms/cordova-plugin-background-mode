@@ -73,7 +73,7 @@ public class NotificationUtils {
             mNotificationBuilder = new NotificationCompat.Builder(context);
             mNotificationBuilder
                     .setSmallIcon(icon)
-                    .setContentTitle("Vv小秘书_测试")
+                    .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     //.setContent(bigContentView)
                     .setContentIntent(mPendingIntent)
@@ -83,7 +83,7 @@ public class NotificationUtils {
         }else{
             mNotificationBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(icon)
-                    .setContentTitle("Vv小秘书_测试")
+                    .setContentTitle("Vv小秘书")
                     .setContentText("Vv小秘书正在后台运行")
                     //.setContent(bigContentView)
                     .setContentIntent(mPendingIntent)
