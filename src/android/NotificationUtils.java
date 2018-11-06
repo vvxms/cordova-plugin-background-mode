@@ -50,9 +50,8 @@ public class NotificationUtils {
             e.printStackTrace();
         }
 
-        RemoteViews contentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "content_view"));
-        contentView.setTextViewText(Meta.getResId(context, "id", "title_head"), "Vv小助手");
-        mNotification.contentView = contentView;
+        bigContentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "remote_layout"));
+        bigContentView.setOnClickPendingIntent(R.id.button, mPendingIntent);
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance_high = NotificationManager.IMPORTANCE_HIGH;
