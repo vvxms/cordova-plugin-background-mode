@@ -90,7 +90,7 @@ public class NotificationUtils {
         mNotification.flags =  Notification.FLAG_ONGOING_EVENT;
                 
         RemoteViews contentView = new RemoteViews(context.getPackageName(), Meta.getResId(context, "layout", "content_view"));
-        //contentView.setTextViewText(R.id.tv_normal, getResources().getString(R.string.notification_normal));
+        contentView.setTextViewText(Meta.getResId(context, "id", "textview"), "Vv小助手");
         mNotification.contentView = contentView;
 
         //自定义bigContentView
@@ -106,7 +106,7 @@ public class NotificationUtils {
             bigContentView.setOnClickPendingIntent(Meta.getResId(context, "id", "button"), mPendingIntent);
             mNotification.bigContentView = bigContentView;
         }
-        mNotificationManager.notify(0,mNotification);
+        //mNotificationManager.notify(0,mNotification);
         return mNotification;
     }
 
