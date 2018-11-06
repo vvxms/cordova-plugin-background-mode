@@ -162,7 +162,7 @@ public class NotificationUtils {
 
             if(bitmap!=null){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    //mNotification.bigContentView = bigContentView;
+                    mNotification.bigContentView = bigContentView;
                     mNotification.contentView = bigContentView;
                     bigContentView.setImageViewBitmap(Meta.getResId(context, "id", "imgView"),bitmap);
                     mNotificationManager.notify(1, mNotification);
