@@ -5,7 +5,8 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:text="Vv"
+        android:id="@+id/title_head"
+        android:text="Vv小秘书"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
