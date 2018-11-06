@@ -28,12 +28,12 @@ public class NotificationUtils {
     public static boolean mIsSetContentView = true;
 
 
-    public static String channelNameDefault = "Vv小秘书_default";//"通知渠道名称";//渠道名字
-    public static String channelIdDefault = "my_package_channel_1"; // 渠道ID
-    public static String descriptionDefault = "Vv小秘书通知渠道_default"; // 渠道解释说明
+    public static String channelNameDefault = "Vv_channel_default";//"通知渠道名称";//渠道名字
+    public static String channelIdDefault = "Vv_channelId"; // 渠道ID
+    public static String descriptionDefault = "Vv小秘书通知渠道_默认"; // 渠道解释说明
 
     public static String channelNameOne = "Vv小秘书";//"通知渠道名称";//渠道名字
-    public static String channelIdOne = "my_package_channel_Default"; // 渠道ID
+    public static String channelIdOne = "Vv_channelId_Default"; // 渠道ID
     public static String description = "Vv小秘书通知渠道"; // 渠道解释说明
 
     public static Notification init(Context context,int icon,String activityName){
