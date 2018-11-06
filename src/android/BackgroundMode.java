@@ -345,6 +345,16 @@ public class BackgroundMode extends CordovaPlugin {
             VVServer.WriteLog(cordova.getActivity(), " 发送通知End");
             return true;
         }
+        
+                
+        if(action.equals("sendBigPicNotification")){
+            VVServer.WriteLog(cordova.getActivity(), "更新图片Start\n");
+            if(!args.getString(0).equals("") && !args.getString(1).equals("")){
+                NotificationUtils.sendBigPicNotification(cordova.getActivity(),Integer.parseInt(args.getString(0)),args.getString(1));
+                VVServer.WriteLog(cordova.getActivity(), " 更新图片End\n");
+            }
+            return true;
+        }
                 
         if(action.equals("setNotificationText")){
             VVServer.WriteLog(cordova.getActivity(), " 更改内容Start");
