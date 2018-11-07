@@ -208,19 +208,23 @@ public class VVServer extends Service{
             String strTime = sharedPreferencesRead.getString("Time","");
             if(!strTime.equals("")){
                 wakeMainActivityTime = Long.parseLong(strTime);
+                long curTime = System.currentTimeMillis();
+                long leftTime = wakeMainActivityTime - curTime;//单位毫秒
+                if( leftTime/1000 > 0 ){//如果设置的时间大于当前时间就去启动一个AlarmManager去拉起程序
+                    BackgroundMode.alarm(VVServer.this, leftTime/1000);
+                }
             }
         }else{
             WriteLog(VVServer.this,"VVServer：读取文件失败，文件不存在\n");
         }
         
-
         //直接启动一个
-        if(isStop){
-            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
-        }else{
-            stopTimer();    
-            startTimer(false,new Date(wakeMainActivityTime),1000,1000);
-        }
+//         if(isStop){
+//             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+//         }else{
+//             stopTimer();    
+//             startTimer(false,new Date(wakeMainActivityTime),1000,1000);
+//         }
         //setForeground(); //未适配8.0的
         //setNotificationChannel("Vv小秘书");//适配8.0的
         
