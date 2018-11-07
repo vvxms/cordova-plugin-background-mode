@@ -442,7 +442,7 @@ public class BackgroundMode extends CordovaPlugin {
     }
     
       
-    public void alarm(Context context,int time){
+    public static void alarm(Context context,int time){
         AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         Intent intent = new Intent(context, VVServer.class);
         intent.setAction(VVServer.ACTION_ALARM);
