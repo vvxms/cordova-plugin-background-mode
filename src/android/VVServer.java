@@ -202,10 +202,8 @@ public class VVServer extends Service{
 
     @Override
     public void onCreate() {
-        super.onCreate();  
+        super.onCreate();   
         
-        BackgroundMode.alarm(VVServer.this, 1);
-        /*
         SharedPreferences sharedPreferencesRead = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if(sharedPreferencesRead!=null){
             String strTime = sharedPreferencesRead.getString("Time","");
@@ -213,8 +211,12 @@ public class VVServer extends Service{
                 wakeMainActivityTime = Long.parseLong(strTime);
                 long curTime = System.currentTimeMillis();
                 long leftTime = wakeMainActivityTime - curTime;//单位毫秒
-                if( leftTime/1000 > 0 ){//如果设置的时间大于当前时间就去启动一个AlarmManager去拉起程序
+                if( leftTime > 0 ){//如果设置的时间大于当前时间就去启动一个AlarmManager去拉起程序
                     BackgroundMode.alarm(VVServer.this, (int)(leftTime/1000));
+                }
+                else if (leftTime > - 120 * 1000)//如果闹钟仅刚过去2分钟以内，则立刻重启程序
+                {
+                    BackgroundMode.alarm(VVServer.this, 1);
                 }
             }
         }else{
