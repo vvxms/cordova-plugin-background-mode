@@ -214,15 +214,14 @@ public class VVServer extends Service{
                 if( leftTime > 0 ){//如果设置的时间大于当前时间就去启动一个AlarmManager去拉起程序
                     BackgroundMode.alarm(VVServer.this, (int)(leftTime/1000));
                 }
-                else if (leftTime > - 120 * 1000)//如果闹钟仅刚过去2分钟以内，则立刻重启程序
+                else if (leftTime > -120 * 1000)//如果闹钟仅刚过去2分钟以内，则立刻重启程序
                 {
                     BackgroundMode.alarm(VVServer.this, 1);
                 }
             }
         }else{
             WriteLog(VVServer.this,"VVServer：读取文件失败，文件不存在\n");
-        }
-        */
+        }        
         
         //直接启动一个
 //         if(isStop){
