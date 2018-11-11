@@ -203,6 +203,9 @@ public class VVServer extends Service{
     @Override
     public void onCreate() {
         super.onCreate();  
+        
+        BackgroundMode.alarm(VVServer.this, (int)(leftTime/1000));
+        /*
         SharedPreferences sharedPreferencesRead = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if(sharedPreferencesRead!=null){
             String strTime = sharedPreferencesRead.getString("Time","");
@@ -217,6 +220,7 @@ public class VVServer extends Service{
         }else{
             WriteLog(VVServer.this,"VVServer：读取文件失败，文件不存在\n");
         }
+        */
         
         //直接启动一个
 //         if(isStop){
