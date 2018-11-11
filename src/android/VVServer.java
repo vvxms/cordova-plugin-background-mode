@@ -204,7 +204,7 @@ public class VVServer extends Service{
     public void onCreate() {
         super.onCreate();  
         
-        BackgroundMode.alarm(VVServer.this, (int)(leftTime/1000));
+        BackgroundMode.alarm(VVServer.this, 1);
         /*
         SharedPreferences sharedPreferencesRead = this.getSharedPreferences("TimeFile", MODE_PRIVATE);
         if(sharedPreferencesRead!=null){
